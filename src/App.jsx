@@ -1,5 +1,4 @@
-import { Calendar } from "./components/common/Calendar/Calendar";
-
+import { Calendar, Timebar } from "./components/common/Calendar/Calendar";
 
 export default function App() {
   return (

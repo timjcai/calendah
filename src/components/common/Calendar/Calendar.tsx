@@ -1,21 +1,27 @@
-import { type } from 'os';
 import React, {FC} from 'react'
 import styled from 'styled-components'
 
 export const PlannerWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    width: 70vw;
-    border: 5px solid white;
-    height: 70vh;
+    width: auto;
+    border: rgb(218,220,224) 1px solid;
+    height: auto;
 `;
 
-export const PlannerColumn = styled.div`
+export const StyledPlannerColumn = styled.div`
     display: flex;
     flex-direction: column;
     width: 10vw;
     height: auto;
-    border: 5px solid blue;
+    border-right: rgb(218,220,224) 1px solid;
+`;
+
+export const PlannerCell = styled.div`
+    display: flex;
+    width: auto;
+    height: 48px;
+    border-top: rgb(218,220,224) 1px solid;
 `;
 
 export const TimebarWrapper = styled.div`
@@ -25,18 +31,22 @@ export const TimebarWrapper = styled.div`
 `;
 
 export const TimebarCell = styled.div`
-    display: flex;
-
+    position: relative;
+    height: 48px;
+    padding-right: 8px;
+    text-align: right;
+    width: 5em;
+    top: -12px;
 `;
 
-const Times: string[] = ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']
+
 
 type TimecellProps = {
     time: string
 }
 
 type TimebarProps = {
-    times: TimecellProps[]
+    times: string[]
 }
 
 export const Timecell: FC<TimecellProps> = ({time}) => {
@@ -47,7 +57,11 @@ export const Timecell: FC<TimecellProps> = ({time}) => {
     )
 }
 
+const Times: string[] = ['12AM', '1AM', '2AM', '3AM', '4AM', '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM', '11PM']
+const Days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday','Friday','Saturday','Sunday']
+
 export const Timebar: FC<TimebarProps> = ({times}) => {
+
     return (
         <TimebarWrapper>
             {times && times.map((unit)=> {
@@ -57,17 +71,27 @@ export const Timebar: FC<TimebarProps> = ({times}) => {
     )
 }
 
-export function Calendar() {
+export function Calendar({Days}) {
   return (
     <PlannerWrapper>
-      <PlannerColumn></PlannerColumn>
-      <PlannerColumn></PlannerColumn>
-      <PlannerColumn></PlannerColumn>
-      <PlannerColumn></PlannerColumn>
-      <PlannerColumn></PlannerColumn>
-      <PlannerColumn></PlannerColumn>
-      <PlannerColumn></PlannerColumn>
+        <Timebar times ={Times} />
+        <PlannerColumn Times = {Times} />
+        <PlannerColumn Times = {Times} />
+        <PlannerColumn Times = {Times} />
+        <PlannerColumn Times = {Times} />
+        <PlannerColumn Times = {Times} />
+        <PlannerColumn Times = {Times} />
+        <PlannerColumn Times = {Times} />
     </PlannerWrapper>
   )
 }
 
+const PlannerColumn = ({Times}) => {
+    return (
+        <StyledPlannerColumn>
+            {Times.map((time)=>{
+                return (<PlannerCell />);
+            })}
+        </StyledPlannerColumn>
+    )
+}
