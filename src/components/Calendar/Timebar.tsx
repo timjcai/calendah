@@ -1,7 +1,7 @@
 import React, {FC} from 'react'
 import styled from 'styled-components'
 import { TimecellProps, TimebarProps } from '../types/calendar';
-import { Text } from '../common/Text/Text';
+import { Paragraph } from '../common/Text/Text';
 
 export const TimebarWrapper = styled.div`
     display: flex;
@@ -14,14 +14,14 @@ export const TimebarCell = styled.div`
     height: 48px;
     padding-right: 8px;
     text-align: right;
-    width: 5em;
+    width: var(--timebar-width);
     top: -12px;
 `;
 
 export const Timecell: FC<TimecellProps> = ({time}) => {
     return (
         <TimebarCell>
-            <span><Text color={'grey'}>{time}</Text></span>
+            <span><Paragraph color={'grey'}>{time}</Paragraph></span>
         </TimebarCell>
     );
 }

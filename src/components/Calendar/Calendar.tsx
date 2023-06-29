@@ -2,6 +2,7 @@ import React, {FC} from 'react'
 import styled from 'styled-components'
 import { TimebarProps, TimecellProps, ViewProps } from '../types/calendar';
 import { Timebar } from './Timebar';
+import { DateHeader } from './DateHeader';
 
 export const PlannerWrapper = styled.div`
     display: flex;
@@ -15,7 +16,7 @@ export const PlannerWrapper = styled.div`
 export const StyledPlannerColumn = styled.div`
     display: flex;
     flex-direction: column;
-    width: 10vw;
+    width: var(--planner-width);
     height: auto;
     border-right: var(--shell-line) 1px solid;
 `;
@@ -36,9 +37,9 @@ export const StyledCalendar = styled.div`
 export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
     return (
         <StyledCalendar>
-            <div>
+            <DateHeader>
                 <h1>heading</h1>
-            </div>
+            </DateHeader>
             <PlannerWrapper>
                 <Timebar times ={times} />
                 {days && days.map((day)=>{

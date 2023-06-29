@@ -1,3 +1,6 @@
 :root {
     --shell-line: rgb(218,220,224,0.9);
+    --timebar-width: 5em;
+    --planner-width: 10vw;
 }
+
