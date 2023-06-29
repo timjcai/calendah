@@ -1,4 +1,6 @@
-export const dayAbbreviations = {
+import { daysType, monthType } from "../types"
+
+export const dayAbbreviations: {[key in daysType]: string } = {
     Sunday: 'SUN',
     Monday: 'MON',
     Tuesday: 'TUE',
@@ -8,7 +10,7 @@ export const dayAbbreviations = {
     Saturday: 'SAT',
 }
 
-export const monthAbbreviations = {
+export const monthAbbreviations: {[key in monthType]: string }= {
     January: 'JAN',
     February: 'FEB',
     March: 'MAR',

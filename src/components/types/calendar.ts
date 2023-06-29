@@ -12,10 +12,10 @@ export type ViewProps = {
   }
 
 export type DateProps = {
-    date?: datenumberType;
-    month?: monthType;
-    year?: number;
-    day?: daysType;
+    date: datenumberType;
+    month: monthType;
+    year: number;
+    day: daysType;
 }
 
 export type daysType = 
