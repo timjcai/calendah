@@ -1,4 +1,7 @@
-import { daysType, monthType } from "../components/types"
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
+import { InputType, daysType, monthType } from "../components/types"
+import { faBell, faCalendar, faComment, faFolderOpen, faUser } from "@fortawesome/free-regular-svg-icons"
+import { faLocationDot, faVideo } from "@fortawesome/free-solid-svg-icons"
 
 export const dayAbbreviations: {[key in daysType]: string } = {
     Sunday: 'SUN',
@@ -10,7 +13,7 @@ export const dayAbbreviations: {[key in daysType]: string } = {
     Saturday: 'SAT',
 }
 
-export const monthAbbreviations: {[key in monthType]: string }= {
+export const monthAbbreviations: {[key in monthType]: string } = {
     January: 'JAN',
     February: 'FEB',
     March: 'MAR',
@@ -23,4 +26,14 @@ export const monthAbbreviations: {[key in monthType]: string }= {
     October: 'OCT',
     November: 'NOV',
     December: 'DEC',
+}
+
+export const iconMapping: {[key in InputType]: IconDefinition} = {
+    location: faLocationDot,
+    meeting: faVideo,
+    notification: faBell,
+    calendar: faCalendar,
+    description: faComment,
+    attachments: faFolderOpen,
+    guests: faUser
 }
