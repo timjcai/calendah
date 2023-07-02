@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import { Paragraph, Heading2 } from '../common/Text'
 import { DateProps } from '../types';
-import { dayAbbreviations, monthAbbreviations } from '../common/Slug';
+import { dayAbbreviations, monthAbbreviations } from '../../db/Mapping';
 
 export const StyledDateHeader = styled.div`
     display: flex;

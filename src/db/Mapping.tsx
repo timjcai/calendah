@@ -1,4 +1,4 @@
-import { daysType, monthType } from "../types"
+import { daysType, monthType } from "../components/types"
 
 export const dayAbbreviations: {[key in daysType]: string } = {
     Sunday: 'SUN',
