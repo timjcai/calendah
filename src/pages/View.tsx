@@ -10,9 +10,9 @@ const CalendarViewSettings: ViewProps = {
 
 export const View = () => {
   return (
-    <>
+    <div className="flex flex-row w-screen h-screen">
         <Sidebar />
         <BaseCalendar times={CalendarViewSettings['times']} days={CalendarViewSettings['days']} />
-    </>
+    </div>
   )
 }
