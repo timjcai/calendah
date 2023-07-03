@@ -25,6 +25,10 @@ const NavMapping = {
     calendar: {
         label: "View",
         linkpath: "/"
+    },
+    test: {
+        label: "Test",
+        linkpath: "/test"
     }
 }
 
@@ -45,6 +49,7 @@ export const Navbar = () => {
             <div>
                 <NavButton navigation = {NavMapping['calendar']}/>
                 <NavButton navigation = {NavMapping['settings']}/>
+                <NavButton navigation = {NavMapping['test']}/>
             </div>
         </NavWrapper>
     )

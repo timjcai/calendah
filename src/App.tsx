@@ -3,7 +3,7 @@ import { Sidebar } from "./components/Sidebar/Sidebar";
 import { BaseCalendar } from "./components/Calendar/Calendar";
 import { ViewProps } from './components/types/calendar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Settings, View, New } from './pages'
+import { Settings, View, New, Test } from './pages'
 import { Navbar } from './components/Navbar/Navbar';
 
 const CalendarViewSettings: ViewProps = {
@@ -20,6 +20,7 @@ export default function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/new" element={<New />} />
           <Route path="/" element={<View />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </div>

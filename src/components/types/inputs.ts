@@ -8,4 +8,4 @@ export type InputType =
     | "guests"
 
 export type HotkeyType = 
-    | 
+    | "D"
