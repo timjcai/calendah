@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { EventCard } from '../components/Calendar/EventCard';
 
 export const Test = () => {
     const [pageData, setPageData] = useState(null)
@@ -35,12 +36,7 @@ export const Test = () => {
       {pageData && pageData.map((item)=>{
         return (
             <div>
-                <p>{item.id}</p>
-                <p>{item.title}</p>
-                <p>{item.description}</p>
-                <p>{item.guests}</p>
-                <p>{item.duedate}</p>
-                <p>{item.location}</p>
+                <EventCard props={item} />
             </div>
         )
       })}
