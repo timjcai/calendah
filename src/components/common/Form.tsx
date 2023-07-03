@@ -33,8 +33,8 @@ export const InputForm = () => {
         <div className="flex flex-col">
             <NewEventInput label={'location'} />
             <NewEventInput label={'meeting'} />
+            <NewEventInput label={'attachments'} />
             <NewEventInput label={'notification'} />
-            <NewEventInput label={'calendar'} />
             <NewEventInput label={'description'} />
             <NewEventInput label={'guests'} />
         </div>

@@ -37,3 +37,7 @@ export const iconMapping: {[key in InputType]: IconDefinition} = {
     attachments: faFolderOpen,
     guests: faUser
 }
+
+export const hotkeyMapping : {[key in string]: HotkeyType} = {
+    
+}

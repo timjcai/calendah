@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { TimebarProps, TimecellProps, ViewProps, DateProps } from '../types';
 import { Timebar } from './Timebar';
@@ -43,15 +43,37 @@ const thisWeekdata: DateProps[] = [
     {date: 2, month: 'July', day: 'Sunday', year: 2023},
 ]
 
+
 export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
     const [thisWeek, setThisWeek] = useState()
+    
+    const doubleClickHandler = (event) => {
+        if (event.detail == 2) {
+            console.log('create new event here')
+        }
+    }
+
+    const handleKeyPress = useCallback((event) => {
+        console.log(`Key pressed: ${event.key}`);
+    }, []);
+    
+    useEffect(() => {
+        // attach the event listener
+        document.addEventListener('keydown', handleKeyPress);
+    
+        // remove the event listener
+        return () => {
+          document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [handleKeyPress]);
+
     return (
-        <StyledCalendar>
+        <StyledCalendar onClick={doubleClickHandler}>
             <DateHeader thisWeek={thisWeekdata} />
             <PlannerWrapper>
                 <Timebar times ={times} />
                 {days && days.map((day)=>{
-                    return (<PlannerColumn times={times}/>);
+                    return (<PlannerColumn times={times} />);
                 })}
             </PlannerWrapper>
         </StyledCalendar>
@@ -59,10 +81,12 @@ export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
 }
 
 const PlannerColumn = ({times}) => {
+
+
     return (
         <StyledPlannerColumn>
             {times.map((time)=>{
-                return (<PlannerCell />);
+                return (<PlannerCell/>);
             })}
         </StyledPlannerColumn>
     )
