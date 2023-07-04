@@ -1,4 +1,5 @@
 import React from 'react'
+import "react-widgets/styles.css";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { BaseCalendar } from "./components/Calendar/Calendar";
 import { ViewProps } from './components/types/calendar';

@@ -1,5 +1,5 @@
 {
-    "time-zone": "UTC + 10",
-    "start_of_the_week": "Monday"
-
+    "time_zone": "UTC + 10",
+    "start_of_the_week": "Monday",
+    "view_size": 7
 }

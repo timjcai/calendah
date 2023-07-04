@@ -1,13 +1,13 @@
 import React, {FC} from 'react'
 import styled from 'styled-components'
 import { Icon } from './Icon';
-import { InputType } from '../types';
+import { CommonStylingProps, InputType } from '../types';
 import { iconMapping } from '../../db/Mapping';
 
-export const StyledInput = styled.input`
+export const StyledInput = styled.input<CommonStylingProps>`
     border: 1px solid black;
     margin: 1em;
-    width: 50%;
+    width: ${props => props.width};
     border-radius: 8px;
     padding: 0.25em;
 `;
@@ -22,7 +22,7 @@ export const NewEventInput: FC<InputProps> = ({label}) => {
     return (
         <div> 
             <Icon icon={icon} color={'black'} />
-            <StyledInput defaultValue={label} />
+            <StyledInput defaultValue={label} width={'50%'} />
         </div>
     );
 }
