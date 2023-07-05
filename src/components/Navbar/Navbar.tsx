@@ -6,7 +6,7 @@ import { StyledInput } from '../common/Form';
 import { thisWeek } from '../../utils/DateUtils';
 import DatePicker from "react-widgets/DatePicker";
 
-const NavWrapper = styled.div`
+export const NavWrapper = styled.div`
     display: flex;
     width: 100vw;
     justify-content: space-between;
@@ -16,7 +16,7 @@ const NavWrapper = styled.div`
     padding: 1em 5em 1em 5em;
 `;
 
-const NavMapping = {
+export const NavMapping = {
     new: {
         label: "Create new",
         linkpath: "/new"
@@ -49,6 +49,7 @@ export const DateSearchBar = () => {
     const [dateSearchQuery, setDateSearchQuery] = useState('')
     
     const updateInputValue = (e) => {
+
         setDateSearchQuery(e)
         console.log(thisWeek(dateSearchQuery))
     }

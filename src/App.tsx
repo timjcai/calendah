@@ -16,7 +16,6 @@ export default function App() {
   return (
     <div className="flex flex-col">
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/settings" element={<Settings />} />
           <Route path="/new" element={<New />} />

@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Sidebar } from '../components/Sidebar/Sidebar'
 import { BaseCalendar } from '../components/Calendar/Calendar'
 import { ViewProps } from '../components/types'
 import { WeekContext } from '../context/Context'
 import { thisWeek } from '../utils/DateUtils'
+import DatePicker from "react-widgets/DatePicker";
+import { NavWrapper, NavButton, NavMapping } from '../components/Navbar/Navbar'
 
 const CalendarViewSettings: ViewProps = {
     times: ['12 AM', '1 AM', '2 AM', '3 AM', '4 AM', '5 AM', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM'],
@@ -11,8 +13,29 @@ const CalendarViewSettings: ViewProps = {
 }
 
 export const View = () => {
+  const [dateSearchQuery, setDateSearchQuery] = useState(thisWeek(new Date()))
+    
+  const updateInputValue = (e) => {
+      setDateSearchQuery(thisWeek(e))
+  }
+
   return (
-    <WeekContext.Provider value={thisWeek(new Date())}>
+    <WeekContext.Provider value={dateSearchQuery}>
+      <NavWrapper>
+          <NavButton navigation = {NavMapping['new']}/>
+          <div>
+            <DatePicker
+                defaultValue={new Date()}
+                valueFormat={{ dateStyle: "medium" }}
+                onChange={updateInputValue}
+            />
+          </div>
+          <div>
+              <NavButton navigation = {NavMapping['calendar']}/>
+              <NavButton navigation = {NavMapping['settings']}/>
+              <NavButton navigation = {NavMapping['test']}/>
+          </div>
+      </NavWrapper>
       <div className="flex flex-row w-screen h-screen">
           <Sidebar />
           <BaseCalendar times={CalendarViewSettings['times']} days={CalendarViewSettings['days']} />
