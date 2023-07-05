@@ -1,8 +1,9 @@
-import React, {FC, useCallback, useEffect, useState} from 'react'
+import React, {FC, useCallback, useEffect, useState, useContext} from 'react'
 import styled from 'styled-components'
 import { TimebarProps, TimecellProps, ViewProps, DateProps } from '../types';
 import { Timebar } from './Timebar';
 import { DateHeader } from './DateHeader';
+import { WeekContext } from '../../context/Context';
 
 export const PlannerWrapper = styled.div`
     display: flex;
@@ -33,7 +34,7 @@ export const StyledCalendar = styled.div`
     flex-direction: column;
 `;
 
-const thisWeekdata: DateProps[] = [
+const thisWeekdata2: DateProps[] = [
     {date: 26, month: 'June', day: 'Monday', year: 2023},
     {date: 27, month: 'June', day: 'Tuesday', year: 2023},
     {date: 28, month: 'June', day: 'Wednesday', year: 2023},
@@ -45,7 +46,7 @@ const thisWeekdata: DateProps[] = [
 
 
 export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
-    const [thisWeek, setThisWeek] = useState()
+    const thisWeekdata = useContext(WeekContext)
     
     const doubleClickHandler = (event) => {
         if (event.detail == 2) {
@@ -56,7 +57,7 @@ export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
     const handleKeyPress = useCallback((event) => {
         console.log(`Key pressed: ${event.key}`);
     }, []);
-    
+
     useEffect(() => {
         // attach the event listener
         document.addEventListener('keydown', handleKeyPress);

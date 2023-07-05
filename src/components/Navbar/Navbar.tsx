@@ -49,8 +49,6 @@ export const DateSearchBar = () => {
     const [dateSearchQuery, setDateSearchQuery] = useState('')
     
     const updateInputValue = (e) => {
-        console.log(e)
-        console.log(e.toDateString())
         setDateSearchQuery(e)
         console.log(thisWeek(dateSearchQuery))
     }

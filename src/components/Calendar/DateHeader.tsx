@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import { Paragraph, Heading2 } from '../common/Text'
 import { DateProps } from '../types';
-import { dayAbbreviations, monthAbbreviations } from '../../db/Mapping';
+import { dayAbbreviations, monthAbbreviations, dayMappingFromIndex, monthMappingFromIndex  } from '../../db/Mapping';
 
 export const StyledDateHeader = styled.div`
     display: flex;
@@ -20,11 +20,18 @@ export const PaddedDiv = styled.div`
 
 
 export const DateHeader = ({thisWeek}) => {
+    
     return (
         <StyledDateHeader>
             <PaddedDiv></PaddedDiv>
             {thisWeek.map((dayPair)=> {
-                return (<DHCell date={dayPair['date']} day={dayPair['day']} month={dayPair['month']}/>);
+                return (
+                    <DHCell 
+                        date={dayPair.getDate()} 
+                        day={dayMappingFromIndex[dayPair.getDay()]} 
+                        month={monthMappingFromIndex[dayPair.getMonth()]}
+                    />
+                );
             })}
         </StyledDateHeader>
     );

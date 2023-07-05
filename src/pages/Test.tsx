@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { EventCard } from '../components/Calendar/EventCard';
+import { dayMappingFromIndex, monthMappingFromIndex } from '../db/Mapping';
 
-export const Test = () => {
+const Test2 = () => {
     const [pageData, setPageData] = useState(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -43,4 +44,26 @@ export const Test = () => {
     </div>
   )
 }
+export const Test = () => {
+    const testData: string[] = [
+        'Sun Jul 02 2023 16:45:19 GMT+1000 (Australian Eastern Standard Time)', 
+        'Mon Jul 03 2023 16:45:19 GMT+1000 (Australian Eastern Standard Time)', 
+        'Tue Jul 04 2023 16:45:19 GMT+1000 (Australian Eastern Standard Time)', 
+        'Wed Jul 05 2023 16:45:19 GMT+1000 (Australian Eastern Standard Time)', 
+        'Thu Jul 06 2023 16:45:19 GMT+1000 (Australian Eastern Standard Time)', 
+        'Fri Jul 07 2023 16:45:19 GMT+1000 (Australian Eastern Standard Time)', 
+        'Sat Jul 08 2023 16:45:19 GMT+1000 (Australian Eastern Standard Time)'
+    ]
+    console.log(testData)
+    const dateTestData = []
+    testData.map((item) => {
+        dateTestData.push(new Date(item))
+    })
+    console.log(dateTestData)
 
+    console.log(dateTestData[0].getDate())
+    console.log(dayMappingFromIndex[dateTestData[0].getDay()])
+    console.log(monthMappingFromIndex[dateTestData[0].getMonth()])
+}
+
+// Testing

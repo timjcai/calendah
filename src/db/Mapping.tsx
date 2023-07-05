@@ -1,7 +1,7 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
 import { InputType, daysType, monthType } from "../components/types"
 import { faBell, faCalendar, faComment, faFolderOpen, faUser } from "@fortawesome/free-regular-svg-icons"
-import { faLocationDot, faVideo } from "@fortawesome/free-solid-svg-icons"
+import { faLocationDot, faMagnifyingGlass, faVideo } from "@fortawesome/free-solid-svg-icons"
 
 export const dayAbbreviations: {[key in daysType]: string } = {
     Sunday: 'SUN',
@@ -12,6 +12,16 @@ export const dayAbbreviations: {[key in daysType]: string } = {
     Friday: 'FRI',
     Saturday: 'SAT',
 }
+
+export const dayMappingFromIndex: daysType[] = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+]
 
 export const monthAbbreviations: {[key in monthType]: string } = {
     January: 'JAN',
@@ -28,6 +38,21 @@ export const monthAbbreviations: {[key in monthType]: string } = {
     December: 'DEC',
 }
 
+export const monthMappingFromIndex: monthType[] = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+]
+
 export const iconMapping: {[key in InputType]: IconDefinition} = {
     location: faLocationDot,
     meeting: faVideo,
@@ -35,7 +60,8 @@ export const iconMapping: {[key in InputType]: IconDefinition} = {
     calendar: faCalendar,
     description: faComment,
     attachments: faFolderOpen,
-    guests: faUser
+    guests: faUser,
+    search: faMagnifyingGlass
 }
 
 export const hotkeyMapping : {[key in string]: HotkeyType} = {
