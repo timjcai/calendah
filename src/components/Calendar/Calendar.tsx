@@ -65,21 +65,21 @@ export const BaseCalendar: FC<ViewProps> = ({times})=> {
             <DateHeader thisWeek={thisWeekdata} />
             <PlannerWrapper>
                 <Timebar times ={times} />
-                {thisWeekdata.map((day)=>{
-                    return (<PlannerColumn times={times} />);
+                {thisWeekdata.map((date)=>{
+                    return (<PlannerColumn key={generateColumnId(date)} times={times} id={generateColumnId(date)}/>);
                 })}
             </PlannerWrapper>
         </StyledCalendar>
     )
 }
 
-const PlannerColumn = ({times}) => {
+const PlannerColumn = (props: {times: string[], id: string}) => {
     const viewSize = useContext(ViewSizeContext)
 
     return (
         <StyledPlannerColumn $width={calcIndividualColWidth(viewSize)}>
-            {times.map((time)=>{
-                return (<PlannerCell/>);
+            {props.times.map((time)=>{
+                return (<PlannerCell key={time}/>);
             })}
         </StyledPlannerColumn>
     )
