@@ -18,6 +18,11 @@ export type DateProps = {
     day: daysType;
 }
 
+export type DateProps2 = {
+    date: Date;
+    key: string;
+}
+
 export type daysType = 
     | 'Monday' 
     | 'Tuesday' 

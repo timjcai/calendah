@@ -12,7 +12,7 @@ import { addDays, toDate } from "date-fns"
 
 
 // sets the week and returns an array starting from Monday
-export const thisWeek = (input: Date) => {
+export const thisWeek = (input: Date): Date[] => {
     const dateArray = new Array(7)
     dateArray.fill([])
     const startDay = input.getDay()
@@ -24,4 +24,12 @@ export const thisWeek = (input: Date) => {
         }
     }
     return dateArray
+}
+
+export const generateDateId = (input: Date): string => {
+    const date = input.getDate()
+    const month = input.getMonth()
+    const year = input.getFullYear()
+
+    return `${date}-${month}-${year}`
 }

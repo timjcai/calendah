@@ -9,3 +9,5 @@ export const TimezoneContext = createContext(settings.time_zone)
 export const ViewSizeContext = createContext(settings.view_size)
 
 export const WeekContext = createContext(thisWeek(new Date()))
+
+export const TodayContext = createContext(new Date())

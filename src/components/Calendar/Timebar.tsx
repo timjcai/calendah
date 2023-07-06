@@ -31,7 +31,7 @@ export const Timebar: FC<TimebarProps> = ({times}) => {
     return (
         <TimebarWrapper>
             {times && times.map((unit)=> {
-                return(<Timecell time={unit} />)
+                return(<Timecell key={unit} time={unit} />)
             })}
         </TimebarWrapper>
     );
