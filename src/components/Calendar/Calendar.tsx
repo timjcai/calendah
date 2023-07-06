@@ -36,21 +36,10 @@ export const StyledCalendar = styled.div`
     flex-direction: column;
 `;
 
-const thisWeekdata2: DateProps[] = [
-    {date: 26, month: 'June', day: 'Monday', year: 2023},
-    {date: 27, month: 'June', day: 'Tuesday', year: 2023},
-    {date: 28, month: 'June', day: 'Wednesday', year: 2023},
-    {date: 29, month: 'June', day: 'Thursday', year: 2023},
-    {date: 30, month: 'June', day: 'Friday', year: 2023},
-    {date: 1, month: 'July', day: 'Saturday', year: 2023},
-    {date: 2, month: 'July', day: 'Sunday', year: 2023},
-]
-
-
 export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)
 
-    
+
     const doubleClickHandler = (event) => {
         if (event.detail == 2) {
             console.log('create new event here')
