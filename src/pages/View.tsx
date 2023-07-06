@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Sidebar } from '../components/Sidebar/Sidebar'
 import { BaseCalendar } from '../components/Calendar/Calendar'
 import { NavWrapper, NavButton, NavMapping } from '../components/Navbar/Navbar'
 
 import { ViewProps } from '../components/types'
-import { WeekContext, TodayContext, ViewSizeContext } from '../context/Context'
+import { WeekContext, TodayContext, ViewSizeContext, SelectDateContext } from '../context/Context'
 import { thisWeek } from '../utils/DateUtils'
 
 import DatePicker from "react-widgets/DatePicker";
@@ -18,41 +18,49 @@ const CalendarViewSettings: ViewProps = {
 
 export const View = () => {
   const [viewSize, setViewSize] = useState(settings.view_size)
-  const [dateSearchQuery, setDateSearchQuery] = useState(thisWeek(new Date(), viewSize))
   const [todayDate, setTodayDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(todayDate)
+  const [dateSearchQuery, setDateSearchQuery] = useState(thisWeek(selectedDate, viewSize))
 
     
   const updateInputValue = (date: Date) => {
-      setDateSearchQuery(thisWeek(date, viewSize))
+      setSelectedDate(date)
   }
+
+  useEffect(() => {
+    console.log(selectedDate)
+    setDateSearchQuery(thisWeek(selectedDate, viewSize))
+  }, [selectedDate])
 
   return (
     <ViewSizeContext.Provider value={viewSize}>
       <WeekContext.Provider value={dateSearchQuery}>
         <TodayContext.Provider value={todayDate}>
-          <NavWrapper>
-              <NavButton navigation = {NavMapping['new']}/>
-              <div>
-                <DatePicker
-                    defaultValue={new Date()}
-                    valueFormat={{ dateStyle: "medium" }}
-                    onChange={(value: Date) => updateInputValue(value) }
-                />
-              </div>
-              <div>
-                  <NavButton navigation = {NavMapping['calendar']}/>
-                  <NavButton navigation = {NavMapping['settings']}/>
-                  <NavButton navigation = {NavMapping['test']}/>
-              </div>
-          </NavWrapper>
-          <div className="flex flex-row w-screen h-screen">
-              {/* <Sidebar /> */}
-              <Calendar 
-                defaultValue={new Date()}
-                onChange={updateInputValue}
-                />
-              <BaseCalendar times={CalendarViewSettings['times']} />
-          </div>
+          <SelectDateContext.Provider value={selectedDate}>
+            <NavWrapper>
+                <NavButton navigation = {NavMapping['new']}/>
+                <div>
+                  <DatePicker
+                      defaultValue={todayDate}
+                      valueFormat={{ dateStyle: "medium" }}
+                      onChange={(value: Date) => updateInputValue(value) }
+                  />
+                </div>
+                <div>
+                    <NavButton navigation = {NavMapping['calendar']}/>
+                    <NavButton navigation = {NavMapping['settings']}/>
+                    <NavButton navigation = {NavMapping['test']}/>
+                </div>
+            </NavWrapper>
+            <div className="flex flex-row w-screen h-screen">
+                {/* <Sidebar /> */}
+                <Calendar 
+                  defaultValue={todayDate}
+                  onChange={updateInputValue}
+                  />
+                <BaseCalendar times={CalendarViewSettings['times']} />
+            </div>
+          </SelectDateContext.Provider>
         </TodayContext.Provider>
       </WeekContext.Provider>
     </ViewSizeContext.Provider>

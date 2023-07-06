@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Paragraph, Heading2 } from '../common/Text'
 import { CommonStylingProps, DateProps2 } from '../types';
 import { dayAbbreviations, monthAbbreviations, dayMappingFromIndex, monthMappingFromIndex  } from '../../db/Mapping';
-import { TodayContext, ViewSizeContext } from '../../context/Context';
+import { SelectDateContext, TodayContext, ViewSizeContext } from '../../context/Context';
 import { generateDateId } from '../../utils/DateUtils';
 import { calcIndividualColWidth } from '../../utils';
 
@@ -61,6 +61,7 @@ export const DateHeader = (props: {thisWeek: Date[]} ) => {
 export const DHCell: FC<DateProps2> = ({date}) => {
     const todayDate = useContext(TodayContext)
     const viewSize = useContext(ViewSizeContext)
+    const selectDate = useContext(SelectDateContext)
 
     const dateNumber = date.getDate()
     const day = dayMappingFromIndex[date.getDay()]
@@ -71,6 +72,10 @@ export const DHCell: FC<DateProps2> = ({date}) => {
         dayHeading = (
             <SelectedBubble><Heading2>{dateNumber}</Heading2></SelectedBubble>
         )
+    } else if (dateNumber === selectDate.getDate()) {
+        dayHeading = (
+            <SelectedBubble bgcolor={'var(--yellow)'}><Heading2>{dateNumber}</Heading2></SelectedBubble>
+        ) 
     }
 
     return (
