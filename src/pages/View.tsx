@@ -21,6 +21,7 @@ export const View = () => {
   const [todayDate, setTodayDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(todayDate)
   const [dateSearchQuery, setDateSearchQuery] = useState(thisWeek(selectedDate, viewSize))
+  const [calendarEvents, setCalendarEvents] = useState(null)
 
     
   const updateInputValue = (date: Date) => {
@@ -30,6 +31,15 @@ export const View = () => {
   useEffect(() => {
     setDateSearchQuery(thisWeek(selectedDate, viewSize))
   }, [selectedDate])
+
+  useEffect(()=> {
+    fetch("http://localhost:3000/api/v1/calendars/1/events")
+    .then(response => response.json())
+    .then(data => setCalendarEvents(data))
+    .catch(error => console.log(error))
+  },[])
+
+  console.log(calendarEvents)
 
   return (
     <ViewSizeContext.Provider value={viewSize}>
