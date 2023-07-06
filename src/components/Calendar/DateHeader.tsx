@@ -13,7 +13,7 @@ export const StyledDateHeader = styled.div`
 `;
 
 export const StyledCell = styled.div<CommonStylingProps>`
-    width: ${props => props.width};
+    width: ${props => props.$width};
     text-align: center;
 `;
 
@@ -27,16 +27,17 @@ export type dateHeadingProps = {
     padding: string
 }
 
-const BubbleWrapper = styled.div`
-    background-color: red;
+const BubbleWrapper = styled.div<CommonStylingProps>`
+    background-color: ${props=> props.$bgcolor};
+    color: ${props=>props.$color};
     border-radius: 8px;
     width: 3em;
     margin: auto;
 `;
 
-export const SelectedBubble = ({children}) => {
+export const SelectedBubble = ({children, bgcolor, color = 'white'}) => {
     return (
-        <BubbleWrapper>
+        <BubbleWrapper $bgcolor={bgcolor} $color={color}>
             {children}
         </BubbleWrapper>
     );
@@ -69,12 +70,12 @@ export const DHCell: FC<DateProps2> = ({date}) => {
     let dayHeading = <Heading2>{dateNumber}</Heading2>
     if (dateNumber === todayDate.getDate()) {
         dayHeading = (
-            <SelectedBubble><Heading2>{dateNumber}</Heading2></SelectedBubble>
+            <SelectedBubble bgcolor={'var(--blue)'}><Heading2>{dateNumber}</Heading2></SelectedBubble>
         )
     }
 
     return (
-        <StyledCell width={calcIndividualColWidth(viewSize)}>
+        <StyledCell $width={calcIndividualColWidth(viewSize)}>
             <Paragraph>{dayAbbreviations[day]}</Paragraph>
             {dayHeading}
             <Paragraph>{monthAbbreviations[month]}</Paragraph>

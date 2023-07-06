@@ -19,7 +19,7 @@ export const PlannerWrapper = styled.div`
 export const StyledPlannerColumn = styled.div<CommonStylingProps>`
     display: flex;
     flex-direction: column;
-    width: ${props => props.width};
+    width: ${props => props.$width};
     height: auto;
     border-right: var(--shell-line) 1px solid;
 `;
@@ -88,7 +88,7 @@ const PlannerColumn = ({times}) => {
     const viewSize = useContext(ViewSizeContext)
 
     return (
-        <StyledPlannerColumn width={calcIndividualColWidth(viewSize)}>
+        <StyledPlannerColumn $width={calcIndividualColWidth(viewSize)}>
             {times.map((time)=>{
                 return (<PlannerCell/>);
             })}
