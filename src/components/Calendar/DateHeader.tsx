@@ -69,7 +69,7 @@ export const DHCell: FC<DateProps2> = ({date}) => {
     const month = monthMappingFromIndex[date.getMonth()]
 
     let dayHeading = <Heading2>{dateNumber}</Heading2>
-    if (dateNumber === todayDate.getDate()) {
+    if (dateNumber === todayDate.getDate() && date.getMonth() === todayDate.getMonth() && date.getFullYear() === todayDate.getFullYear()) {
         dayHeading = (
             <SelectedBubble bgcolor={'var(--blue)'}><Heading2>{dateNumber}</Heading2></SelectedBubble>
         )

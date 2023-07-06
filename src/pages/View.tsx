@@ -28,7 +28,6 @@ export const View = () => {
   }
 
   useEffect(() => {
-    console.log(selectedDate)
     setDateSearchQuery(thisWeek(selectedDate, viewSize))
   }, [selectedDate])
 
@@ -64,7 +63,6 @@ export const View = () => {
         </TodayContext.Provider>
       </WeekContext.Provider>
     </ViewSizeContext.Provider>
-
 
   )
 }
