@@ -1,23 +1,12 @@
-export const today = new Date()
-
-export const randomDate = new Date("2024-03-15")
-
 import { addDays, toDate } from "date-fns"
 
-// console.log(randomDate)
-// console.log(today.getDate())
-// console.log(today.getFullYear())
-// console.log(today.getDay())
-// console.log(today.getMonth())
-
-
 // sets the week and returns an array starting from Monday
-export const thisWeek = (input: Date): Date[] => {
-    const dateArray = new Array(7)
+export const thisWeek = (input: Date, size: number): Date[] => {
+    const dateArray = new Array(size)
     dateArray.fill([])
     const startDay = input.getDay()
     dateArray[startDay] = input
-    for (let i = 0; i < 7; i++ ) {
+    for (let i = 0; i < size; i++ ) {
         if (dateArray[i].length===0) {
             const date = toDate(addDays(input, (i-startDay)))
             dateArray[i] = date
@@ -32,4 +21,13 @@ export const generateDateId = (input: Date): string => {
     const year = input.getFullYear()
 
     return `${date}-${month}-${year}`
+}
+
+export const generateColumnId = (input: Date): string => {
+    const day = input.getDay()
+    const date = input.getDate()
+    const month = input.getMonth()
+    const year = input.getFullYear()
+
+    return `col${day}--${date}-${month}-${year}`
 }

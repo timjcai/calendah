@@ -1,18 +1,19 @@
 import React, { FC, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { Paragraph, Heading2 } from '../common/Text'
-import { DateProps2 } from '../types';
+import { CommonStylingProps, DateProps2 } from '../types';
 import { dayAbbreviations, monthAbbreviations, dayMappingFromIndex, monthMappingFromIndex  } from '../../db/Mapping';
-import { TodayContext } from '../../context/Context';
+import { TodayContext, ViewSizeContext } from '../../context/Context';
 import { generateDateId } from '../../utils/DateUtils';
+import { calcIndividualColWidth } from '../../utils';
 
 export const StyledDateHeader = styled.div`
     display: flex;
     flex-direction: row;
 `;
 
-export const StyledCell = styled.div`
-    width: var(--planner-width);
+export const StyledCell = styled.div<CommonStylingProps>`
+    width: ${props => props.width};
     text-align: center;
 `;
 
@@ -59,6 +60,7 @@ export const DateHeader = (props: {thisWeek: Date[]} ) => {
 
 export const DHCell: FC<DateProps2> = ({date}) => {
     const todayDate = useContext(TodayContext)
+    const viewSize = useContext(ViewSizeContext)
 
     const dateNumber = date.getDate()
     const day = dayMappingFromIndex[date.getDay()]
@@ -72,7 +74,7 @@ export const DHCell: FC<DateProps2> = ({date}) => {
     }
 
     return (
-        <StyledCell>
+        <StyledCell width={calcIndividualColWidth(viewSize)}>
             <Paragraph>{dayAbbreviations[day]}</Paragraph>
             {dayHeading}
             <Paragraph>{monthAbbreviations[month]}</Paragraph>

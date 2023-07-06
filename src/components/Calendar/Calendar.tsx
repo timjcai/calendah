@@ -1,9 +1,11 @@
 import React, {FC, useCallback, useEffect, useState, useContext} from 'react'
 import styled from 'styled-components'
-import { TimebarProps, TimecellProps, ViewProps, DateProps } from '../types';
+import { TimebarProps, TimecellProps, ViewProps, DateProps, CommonStylingProps } from '../types';
 import { Timebar } from './Timebar';
 import { DateHeader } from './DateHeader';
-import { WeekContext } from '../../context/Context';
+import { ViewSizeContext, WeekContext } from '../../context/Context';
+import { generateColumnId, thisWeek } from '../../utils/DateUtils';
+import { calcIndividualColWidth } from '../../utils';
 
 export const PlannerWrapper = styled.div`
     display: flex;
@@ -14,10 +16,10 @@ export const PlannerWrapper = styled.div`
     z-index: -1;
 `;
 
-export const StyledPlannerColumn = styled.div`
+export const StyledPlannerColumn = styled.div<CommonStylingProps>`
     display: flex;
     flex-direction: column;
-    width: var(--planner-width);
+    width: ${props => props.width};
     height: auto;
     border-right: var(--shell-line) 1px solid;
 `;
@@ -45,8 +47,9 @@ const thisWeekdata2: DateProps[] = [
 ]
 
 
-export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
+export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)
+
     
     const doubleClickHandler = (event) => {
         if (event.detail == 2) {
@@ -73,7 +76,7 @@ export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
             <DateHeader thisWeek={thisWeekdata} />
             <PlannerWrapper>
                 <Timebar times ={times} />
-                {days && days.map((day)=>{
+                {thisWeekdata.map((day)=>{
                     return (<PlannerColumn times={times} />);
                 })}
             </PlannerWrapper>
@@ -82,10 +85,10 @@ export const BaseCalendar: FC<ViewProps> = ({days, times})=> {
 }
 
 const PlannerColumn = ({times}) => {
-
+    const viewSize = useContext(ViewSizeContext)
 
     return (
-        <StyledPlannerColumn>
+        <StyledPlannerColumn width={calcIndividualColWidth(viewSize)}>
             {times.map((time)=>{
                 return (<PlannerCell/>);
             })}

@@ -8,7 +8,6 @@ export type TimebarProps = {
 
 export type ViewProps = {
     times: string[],
-    days: string[]
   }
 
 export type DateProps = {
