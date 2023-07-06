@@ -5,7 +5,7 @@ import { NavWrapper, NavButton, NavMapping } from '../components/Navbar/Navbar'
 
 import { ViewProps } from '../components/types'
 import { WeekContext, TodayContext, ViewSizeContext, SelectDateContext } from '../context/Context'
-import { thisWeek } from '../utils/DateUtils'
+import { generateStartandEndDate, thisWeek } from '../utils/DateUtils'
 
 import DatePicker from "react-widgets/DatePicker";
 import Calendar from "react-widgets/Calendar";
@@ -20,8 +20,10 @@ export const View = () => {
   const [viewSize, setViewSize] = useState(settings.view_size)
   const [todayDate, setTodayDate] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(todayDate)
-  const [dateSearchQuery, setDateSearchQuery] = useState(thisWeek(selectedDate, viewSize))
-  const [calendarEvents, setCalendarEvents] = useState(null)
+  const [dateRange, setDateRange] = useState(thisWeek(selectedDate, viewSize))
+  const [startDate, setStartDate] = useState(generateStartandEndDate(dateRange)[0])
+  const [endDate, setEndDate] = useState(generateStartandEndDate(dateRange)[1])
+  const [calendarEvents, setCalendarEvents] = useState('')
 
     
   const updateInputValue = (date: Date) => {
@@ -29,21 +31,26 @@ export const View = () => {
   }
 
   useEffect(() => {
-    setDateSearchQuery(thisWeek(selectedDate, viewSize))
+    setDateRange(thisWeek(selectedDate, viewSize))
+    setStartDate(generateStartandEndDate(dateRange)[0])
+    setEndDate(generateStartandEndDate(dateRange)[1])
+    console.log(startDate)
+    console.log(endDate)
   }, [selectedDate])
 
-  useEffect(()=> {
-    fetch("http://localhost:3000/api/v1/calendars/1/events")
-    .then(response => response.json())
-    .then(data => setCalendarEvents(data))
-    .catch(error => console.log(error))
-  },[])
+    useEffect(()=> {
+      fetch(`http://localhost:3000/api/v1/calendars/1/events/${startDate}/${endDate}`)
+      .then(response => response.json())
+      .then(data => setCalendarEvents(data))
+      .catch(error => console.log(error))
+  
+      console.log(calendarEvents)
+    },[dateRange])
 
-  console.log(calendarEvents)
 
   return (
     <ViewSizeContext.Provider value={viewSize}>
-      <WeekContext.Provider value={dateSearchQuery}>
+      <WeekContext.Provider value={dateRange}>
         <TodayContext.Provider value={todayDate}>
           <SelectDateContext.Provider value={selectedDate}>
             <NavWrapper>

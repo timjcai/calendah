@@ -15,14 +15,6 @@ export const thisWeek = (input: Date, size: number): Date[] => {
     return dateArray
 }
 
-export const generateDateId = (input: Date): string => {
-    const date = input.getDate()
-    const month = input.getMonth()
-    const year = input.getFullYear()
-
-    return `${date}-${month}-${year}`
-}
-
 export const generateColumnId = (input: Date): string => {
     const day = input.getDay()
     const date = input.getDate()
@@ -30,4 +22,20 @@ export const generateColumnId = (input: Date): string => {
     const year = input.getFullYear()
 
     return `col${day}--${date}-${month}-${year}`
+}
+
+export const getYYYYMMDD = (input: Date): string => {
+    const date = input.getDate()
+    const month = input.getMonth() + 1
+    const year = input.getFullYear()
+
+    return `${year}-${month}-${date}`
+}
+
+export const generateStartandEndDate = (input: Date[]): string[] => {
+    const start_date = getYYYYMMDD(input[0])
+    const end_date_index = input.length -1
+    const end_date = getYYYYMMDD(input[end_date_index])
+
+    return [start_date, end_date]
 }

@@ -4,7 +4,7 @@ import { Paragraph, Heading2 } from '../common/Text'
 import { CommonStylingProps, DateProps2 } from '../types';
 import { dayAbbreviations, monthAbbreviations, dayMappingFromIndex, monthMappingFromIndex  } from '../../db/Mapping';
 import { SelectDateContext, TodayContext, ViewSizeContext } from '../../context/Context';
-import { generateDateId } from '../../utils/DateUtils';
+import { getYYYYMMDD } from '../../utils/DateUtils';
 import { calcIndividualColWidth } from '../../utils';
 
 export const StyledDateHeader = styled.div`
@@ -50,7 +50,7 @@ export const DateHeader = (props: {thisWeek: Date[]} ) => {
             {props.thisWeek.map((dayPair) => {
                 return (
                     <DHCell 
-                        key={generateDateId(dayPair)}
+                        key={getYYYYMMDD(dayPair)}
                         date={dayPair}
                     />
                 );

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { EventCard } from '../components/Calendar/EventCard';
 import { dayMappingFromIndex, monthMappingFromIndex } from '../db/Mapping';
+import { formatISO, parseISO }  from 'date-fns';
+
 
 export const Test = () => {
     const [pageData, setPageData] = useState(null)
@@ -31,13 +33,23 @@ export const Test = () => {
     if (loading) return "Loading...";
     if (error) return "Error!"
 
+    const date = (rubyDateString: string): Date => {
+        return new Date(rubyDateString)
+    }
+
   return (
     <div>
       <h1>Test page</h1>
       {pageData && pageData.map((item)=>{
+        console.log(item)
+        const theDate = date(item.duedate)
+        console.log(theDate)
         return (
             <div>
                 <EventCard props={item} />
+                <h1>{formatISO(new Date(item.duedate))}</h1>
+                <h1>{new Date(item.duedate).getDate()}</h1>
+                <h1>{formatISO(theDate)}</h1>
             </div>
         )
       })}
