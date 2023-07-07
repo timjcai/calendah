@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { EventCard } from '../components/Calendar/EventCard';
 import { dayMappingFromIndex, monthMappingFromIndex } from '../db/Mapping';
 import { formatISO, parseISO }  from 'date-fns';
+import { rubyDateConverter } from '../utils';
 
 
 export const Test = () => {
@@ -33,16 +34,13 @@ export const Test = () => {
     if (loading) return "Loading...";
     if (error) return "Error!"
 
-    const date = (rubyDateString: string): Date => {
-        return new Date(rubyDateString)
-    }
 
   return (
     <div>
       <h1>Test page</h1>
       {pageData && pageData.map((item)=>{
         console.log(item)
-        const theDate = date(item.duedate)
+        const theDate = rubyDateConverter(item.duedate)
         console.log(theDate)
         return (
             <div>

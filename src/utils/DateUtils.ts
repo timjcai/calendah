@@ -25,8 +25,8 @@ export const generateColumnId = (input: Date): string => {
 }
 
 export const getYYYYMMDD = (input: Date): string => {
-    const date = input.getDate()
-    const month = input.getMonth() + 1
+    const date = addZero(input.getDate())
+    const month = addZero(input.getMonth() + 1)
     const year = input.getFullYear()
 
     return `${year}-${month}-${date}`
@@ -39,3 +39,15 @@ export const generateStartandEndDate = (input: Date[]): string[] => {
 
     return [start_date, end_date]
 }
+
+export const rubyDateConverter = (rubyDateString: string): Date => {
+    return new Date(rubyDateString)
+}
+
+export const addZero = (input: number): string => {
+    if (input<10) {
+        return `0${input}`
+    } else {
+        return `${input}`
+    }
+} 

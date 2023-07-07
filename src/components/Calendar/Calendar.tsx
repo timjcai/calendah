@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { TimebarProps, TimecellProps, ViewProps, DateProps, CommonStylingProps } from '../types';
 import { Timebar } from './Timebar';
 import { DateHeader } from './DateHeader';
-import { ViewSizeContext, WeekContext } from '../../context/Context';
-import { generateColumnId, thisWeek } from '../../utils/DateUtils';
+import { EventContext, ViewSizeContext, WeekContext } from '../../context/Context';
+import { generateColumnId, thisWeek, getYYYYMMDD } from '../../utils/DateUtils';
 import { calcIndividualColWidth } from '../../utils';
+import { EventCard } from './EventCard';
 
 export const PlannerWrapper = styled.div`
     display: flex;
@@ -38,7 +39,7 @@ export const StyledCalendar = styled.div`
 
 export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)
-
+    const eventData = useContext(EventContext)
 
     const doubleClickHandler = (event) => {
         if (event.detail == 2) {
@@ -66,21 +67,36 @@ export const BaseCalendar: FC<ViewProps> = ({times})=> {
             <PlannerWrapper>
                 <Timebar times ={times} />
                 {thisWeekdata.map((date)=>{
-                    return (<PlannerColumn key={generateColumnId(date)} times={times} id={generateColumnId(date)}/>);
+                    const dayContent = eventData[getYYYYMMDD(date)]
+                    return (
+                        <PlannerColumn
+                            key={generateColumnId(date)} 
+                            times={times} 
+                            id={generateColumnId(date)}
+                            dayContent={dayContent}
+                        />
+                    );
                 })}
             </PlannerWrapper>
         </StyledCalendar>
     )
 }
 
-const PlannerColumn = (props: {times: string[], id: string}) => {
+const PlannerColumn = (props: {times: string[], id: string, dayContent}) => {
     const viewSize = useContext(ViewSizeContext)
+    const events = useContext(EventContext)
 
     return (
         <StyledPlannerColumn $width={calcIndividualColWidth(viewSize)}>
             {props.times.map((time)=>{
                 return (<PlannerCell key={time}/>);
             })}
+            {props.dayContent && props.dayContent.map((event)=> {
+                return (
+                    <EventCard props={event}/>
+                )
+                })
+            }
         </StyledPlannerColumn>
     )
 }

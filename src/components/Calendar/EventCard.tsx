@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 const CardWrapper = styled.div`
-    position: relative;
+    position: absolute;
     border-radius: 16px;
     border: 1px solid grey;
     margin-bottom: 1em;
+    z-index: 1;
+    width: inherit;
 `;
 
 export const EventCard = ({props}) => {

@@ -13,3 +13,5 @@ export const WeekContext = createContext(thisWeek(new Date(), settings.view_size
 export const TodayContext = createContext(new Date())
 
 export const SelectDateContext = createContext(new Date())
+
+export const EventContext = createContext(null)
