@@ -35,7 +35,7 @@ export const getYYYYMMDD = (input: Date): string => {
 export const generateStartandEndDate = (input: Date[]): string[] => {
     const start_date = getYYYYMMDD(input[0])
     const end_date_index = input.length -1
-    const end_date = getYYYYMMDD(input[end_date_index])
+    const end_date = endDatePlusOne(getYYYYMMDD(input[end_date_index]))
 
     return [start_date, end_date]
 }
@@ -51,3 +51,23 @@ export const addZero = (input: number): string => {
         return `${input}`
     }
 } 
+
+interface getTimeProps {
+    hours: number,
+    minutes: number
+}
+
+export const getTime = (input: Date): getTimeProps=> {
+    const hours = input.getHours()
+    const mins = input.getMinutes()
+    console.log(hours)
+    console.log(mins)
+    return {hours: hours, minutes: mins}
+}
+
+export const endDatePlusOne = (input: string): string => {
+    const test = input.split('-')
+    const newDate = parseInt(test[2])+1
+    test[2] = addZero(newDate)
+    return test.join('-')
+}

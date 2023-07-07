@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState, useContext} from 'react'
+import React, {FC, useCallback, useEffect, useState, useContext, useRef} from 'react'
 import styled from 'styled-components'
 import { TimebarProps, TimecellProps, ViewProps, DateProps, CommonStylingProps } from '../types';
 import { Timebar } from './Timebar';
@@ -14,7 +14,7 @@ export const PlannerWrapper = styled.div`
     width: auto;
     border: var(--shell-line) 1px solid;
     height: auto;
-    z-index: -1;
+    z-index: 1;
 `;
 
 export const StyledPlannerColumn = styled.div<CommonStylingProps>`
@@ -35,15 +35,17 @@ export const PlannerCell = styled.div`
 export const StyledCalendar = styled.div`
     display: flex;
     flex-direction: column;
+    margin-right: 1em;
 `;
 
 export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)
     const eventData = useContext(EventContext)
 
-    const doubleClickHandler = (event) => {
+    function doubleClickHandler(event) {
         if (event.detail == 2) {
-            console.log('create new event here')
+            // console.log('create new event here')
+            console.log(event.target.getBoundingClientRect())
         }
     }
 
@@ -62,9 +64,9 @@ export const BaseCalendar: FC<ViewProps> = ({times})=> {
     }, [handleKeyPress]);
 
     return (
-        <StyledCalendar onClick={doubleClickHandler}>
+        <StyledCalendar>
             <DateHeader thisWeek={thisWeekdata} />
-            <PlannerWrapper>
+            <PlannerWrapper onClick={doubleClickHandler}>
                 <Timebar times ={times} />
                 {thisWeekdata.map((date)=>{
                     const dayContent = eventData[getYYYYMMDD(date)]
