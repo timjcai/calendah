@@ -1,6 +1,6 @@
 import React, {createContext} from 'react'
 import settings from '../db/settings.json'
-import { thisWeek } from '../utils/DateUtils'
+import {thisWeek} from '../utils'
 
 export const TimezoneContext = createContext(settings.time_zone)
 
@@ -14,4 +14,4 @@ export const TodayContext = createContext(new Date())
 
 export const SelectDateContext = createContext(new Date())
 
-export const EventContext = createContext(null)
+export const EventContext = createContext(null);
