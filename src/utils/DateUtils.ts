@@ -60,8 +60,6 @@ interface getTimeProps {
 export const getTime = (input: Date): getTimeProps=> {
     const hours = input.getHours()
     const mins = input.getMinutes()
-    console.log(hours)
-    console.log(mins)
     return {hours: hours, minutes: mins}
 }
 

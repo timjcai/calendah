@@ -21,8 +21,10 @@ const CardWrapper = styled.div<CardWrapperProps>`
 `;
 
 function setEventCardTopPosition(duedate: string) {
+    console.log(duedate)
+    console.log(new Date(duedate))
     const cardHeight = getTime(new Date(duedate))
-    const unitHeight = (1242 - 152)/24
+    const unitHeight = 48
     const top = (unitHeight*cardHeight.hours) + 152
     return `${top}px`
 }
