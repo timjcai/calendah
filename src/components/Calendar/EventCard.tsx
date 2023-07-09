@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { getTime } from '../../utils';
+import { getLocalHour, getTime, getLocalMinute } from '../../utils';
 import { formatISO } from 'date-fns'
 
 interface CardWrapperProps {
@@ -21,11 +21,9 @@ const CardWrapper = styled.div<CardWrapperProps>`
 `;
 
 function setEventCardTopPosition(duedate: string) {
-    console.log(duedate)
-    console.log(new Date(duedate))
     const cardHeight = getTime(new Date(duedate))
     const unitHeight = 48
-    const top = (unitHeight*cardHeight.hours) + 152
+    const top = (unitHeight*cardHeight.hours) + (unitHeight/60 * cardHeight.minutes) + 152
     return `${top}px`
 }
 
@@ -33,7 +31,7 @@ export const EventCard = ({props}) => {
     return (
         <CardWrapper $height={'100px'} $top={ setEventCardTopPosition(props.duedate)}>
             <p>{props.title}</p>
-            <p>{props.duedate}</p>
+            <p>{getLocalHour(new Date(props.duedate))}:{getLocalMinute(new Date(props.duedate))}</p>
             <p>{props.location}</p>
             <p>{props.description}</p>
         </CardWrapper>
