@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { Button, StyledButton } from '../common/Button';
-import { StyledInput } from '../common/Form';
+import { StyledInput } from '../common/Form/Form';
 import { thisWeek } from '../../utils/DateUtils';
 import DatePicker from "react-widgets/DatePicker";
+import { ViewSizeContext } from '../../context/SettingsProvider';
 
 export const NavWrapper = styled.div`
     display: flex;
@@ -26,12 +27,16 @@ export const NavMapping = {
         linkpath: "/settings"
     },
     calendar: {
-        label: "View",
+        label: "Return to View",
         linkpath: "/"
     },
     test: {
         label: "Test",
         linkpath: "/test"
+    },
+    submit: {
+        label: "Submit",
+        linkpath: "/"
     }
 }
 
@@ -46,12 +51,13 @@ export const NavButton = ({navigation}) => {
 }
 
 export const DateSearchBar = () => {
+    const viewSize = useContext(ViewSizeContext)
     const [dateSearchQuery, setDateSearchQuery] = useState('')
     
     const updateInputValue = (e) => {
 
         setDateSearchQuery(e)
-        console.log(thisWeek(dateSearchQuery))
+        console.log(thisWeek(new Date(dateSearchQuery), viewSize))
     }
 
     return (

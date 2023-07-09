@@ -20,8 +20,8 @@ const CardWrapper = styled.div<CardWrapperProps>`
     top: ${props=>props.$top};
 `;
 
-function setEventCardTopPosition(duedate: string) {
-    const cardHeight = getTime(new Date(duedate))
+function setEventCardTopPosition(starttime: string) {
+    const cardHeight = getTime(new Date(starttime))
     const unitHeight = 48
     const top = (unitHeight*cardHeight.hours) + (unitHeight/60 * cardHeight.minutes) + 152
     return `${top}px`
@@ -29,9 +29,9 @@ function setEventCardTopPosition(duedate: string) {
 
 export const EventCard = ({props}) => {
     return (
-        <CardWrapper $height={'100px'} $top={ setEventCardTopPosition(props.duedate)}>
+        <CardWrapper $height={'100px'} $top={ setEventCardTopPosition(props.starttime)}>
             <p>{props.title}</p>
-            <p>{getLocalHour(new Date(props.duedate))}:{getLocalMinute(new Date(props.duedate))}</p>
+            <p>{getLocalHour(new Date(props.starttime))}:{getLocalMinute(new Date(props.starttime))}</p>
             <p>{props.location}</p>
             <p>{props.description}</p>
         </CardWrapper>

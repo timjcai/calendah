@@ -7,6 +7,7 @@ export type InputType =
     | "attachments" 
     | "guests"
     | "search"
+    | "title"
 
 export type HotkeyType = 
     | "D"

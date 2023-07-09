@@ -11,7 +11,10 @@ export const StyledButton = styled.button`
 `;
 
 export const Button = ({children}) => {
-    <StyledButton>
-        {children}
-    </StyledButton>
+    return (
+        <StyledButton>
+            {children}
+        </StyledButton>
+    )
+
 }
