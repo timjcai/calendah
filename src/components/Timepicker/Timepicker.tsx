@@ -43,6 +43,10 @@ export const Timepicker = () => {
         (isHidden) ? setIsHidden(false) : setIsHidden(true)
     }
 
+    function selectTime(e) {
+        setTime(e.target.innerHTML)
+    }
+
     function closest15min(input: Date): string {
         const minutes = addZero((Math.round(input.getMinutes()/15) * 15) % 60);
         const hours = input.getHours()
@@ -79,7 +83,7 @@ export const Timepicker = () => {
     return (
             <div class="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false">
             <ComboBoxInput ref={btnRef} type="text" id="myInput" aria-autocomplete="list" aria-controls="dropdownOptions" value={time} onClick={toggleDropDown}/>
-                <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={isHidden}>
+                <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={isHidden} onClick={selectTime}>
                     {avaliableTimes.map((unittime)=>{
                         if (currentTime === unittime) {
                             return (<ComboBoxListItem key={unittime} role="option" aria-selected="true">{unittime}</ComboBoxListItem>);
