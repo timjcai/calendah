@@ -1,7 +1,7 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
 import { BCP47Type, InputType, daysType, monthType, timezoneData } from "../components/types"
 import { faBell, faCalendar, faComment, faFolderOpen, faUser } from "@fortawesome/free-regular-svg-icons"
-import { faHeading, faLocationDot, faMagnifyingGlass, faVideo } from "@fortawesome/free-solid-svg-icons"
+import { faC, faClock, faHeading, faLocationDot, faMagnifyingGlass, faVideo } from "@fortawesome/free-solid-svg-icons"
 
 export const dayAbbreviations: {[key in daysType]: string } = {
     Sunday: 'SUN',
@@ -62,7 +62,8 @@ export const iconMapping: {[key in InputType]: IconDefinition} = {
     attachments: faFolderOpen,
     guests: faUser,
     search: faMagnifyingGlass,
-    title: faHeading
+    title: faHeading,
+    datetime: faClock
 }
 
 export const languageDataMapping: {[key in BCP47Type]: timezoneData } = {

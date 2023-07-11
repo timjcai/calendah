@@ -21,10 +21,10 @@ export const StyledForm = styled.form`
     flex-direction: row;
 `;
 
-export const FormCol = styled.div`
+export const FormCol = styled.div<labelProps>`
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: ${props => props.width};
 `;
 
 export const StyledLabel = styled.label<labelProps>`
@@ -34,16 +34,28 @@ export const StyledLabel = styled.label<labelProps>`
     font-size: 20px;
 `;
 
+export const StyledFieldset = styled.fieldset<labelProps>`
+    display: flex;
+    flex-direction: ${props => props.direction};
+    width: ${props => props.width};
+    justify-content: space-between;
+    place-items: baseline;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 0.75em 0.5em 0.75em 1em;
+`
+
 export interface InputProps {
     label: InputType;
     size?: string;
 }
 
 export interface inputStylingProps {
-    size: string;
-    width: string;
+    size?: string;
+    width?: string;
 }
 
 export interface labelProps {
-    direction: string;
+    direction?: string;
+    width?: string;
 }

@@ -34,7 +34,7 @@ export const avaliableTimes = [
     "11:00 PM","11:15 PM","11:30 PM","11:45 PM"
   ];
 
-export const Timepicker = () => {
+export const Timepicker = ({label}) => {
     const [isHidden, setIsHidden] = useState(true)
     const [time, setTime] = useState(convert24to12time(closest15min(new Date())))
     const btnRef = useRef();
@@ -81,8 +81,8 @@ export const Timepicker = () => {
     }, [])
 
     return (
-            <div class="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false">
-            <ComboBoxInput ref={btnRef} type="text" id="myInput" aria-autocomplete="list" aria-controls="dropdownOptions" value={time} onClick={toggleDropDown}/>
+            <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+                <ComboBoxInput label={label} ref={btnRef} type="text" id="myInput" aria-autocomplete="list" aria-controls="dropdownOptions" value={time} onClick={toggleDropDown}/>
                 <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={isHidden} onClick={selectTime}>
                     {avaliableTimes.map((unittime)=>{
                         if (currentTime === unittime) {
@@ -110,7 +110,8 @@ export const ComboBoxInput = styled.input`
 
 export const ComboBoxList = styled.ul`
     position: absolute;
-    left: 14px;
+    left: inherit;
+    margin-left: 15px;
     width: inherit;
     max-height: 150px;
     overflow-y: auto;

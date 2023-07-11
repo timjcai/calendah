@@ -8,6 +8,7 @@ export type InputType =
     | "guests"
     | "search"
     | "title"
+    | "datetime"
 
 export type HotkeyType = 
     | "D"

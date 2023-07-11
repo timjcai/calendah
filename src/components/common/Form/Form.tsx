@@ -1,55 +1,97 @@
-import React, {FC} from 'react'
+import React, {FC, useState} from 'react'
 import { Icon } from '../Icon';
 import { iconMapping } from '../../../db/Mapping';
 import { StyledButton } from '../Button';
 
 import DatePicker from "react-widgets/DatePicker";
-import { StyledLabel, StyledInput, StyledForm, FormCol, InputProps } from './Form.styles';
+import { StyledLabel, StyledInput, StyledForm, FormCol, InputProps, StyledFieldset } from './Form.styles';
+import { Timepicker } from '../../Timepicker/Timepicker';
 
+import {useForm, FormProvider, useFormContext} from 'react-hook-form'
 
-
-export const NewEventInput: FC<InputProps> = ({label, size = 'small'}) => {
+export const FormInputText = ({label, size = 'small'}) => {
     const icon = iconMapping[label]
+    const {register} = useFormContext()
 
     return (
         <StyledLabel direction={'row'}> 
-            <Icon icon={icon} color={'black'} />
-            <StyledInput name={label} placeholder={`Add ${label}`} width={'88%'} size={size}/>
+            <Icon icon={icon} color={'#73767A'} />
+            <StyledInput placeholder={`Add ${label}`} width={'88%'} size={size} {...register(label)}/>
         </StyledLabel>
     );
 }
 
+export const FormInputDateTime = ({label}) => {
+    const icon = iconMapping[label]
+    const {register} = useFormContext()
+
+    return (
+        <StyledLabel direction={'row'}> 
+            <Icon icon={icon} color={'#73767A'} />
+            <StyledFieldset className='starttime' direction={'row'} width={'88%'} >
+                    <DatePicker defaultValue={new Date()}/>
+                    <Timepicker label={'starttime'}/>
+                    <p>to</p>
+            </StyledFieldset>
+            <StyledFieldset>
+                    <DatePicker defaultValue={new Date()}/>
+                    <Timepicker label={'endtime'}/>
+            </StyledFieldset>
+        </StyledLabel>
+    )
+}
+
+export 
+
+interface IFormInput {
+    title: String
+    description: String
+    guests: String
+    location: String
+    meeting: String
+    attachments: String
+    starttime: Date
+    endtime: Date
+}
 
 export const InputForm = () => {
-    const formConstructor = ['title', 'description', 'guests', 'location', 'meeting', 'attachments']
+    const [errors, setErrors] = useState({})
+    const methods = useForm()
 
-    function handleFormSubmit(event: Event) {
-        event.preventDefault()
-        const form = event.target;
-        const formData = new FormData(form)
-        const formJson = Object.fromEntries(formData.entries());
-        console.log(formJson);  
+    function handleFormInput(event: Event) {
+        event.preventDefault();
+        console.log(event.target)
+    }
+
+    // const validateData = () => {
+    //     let errors = {};
+    // }
+
+    const handleFormSubmit = (formValues) => {
+        console.log(formValues)
+        // console.log(form)
+        // const formData = new FormData(form)
+        // const formJson = Object.fromEntries(formData.entries());
+        // console.log(formJson);  
     }
 
     return (
-        <StyledForm className="flex flex-col" method="post" onSubmit={handleFormSubmit}>
-            <FormCol>
-                <NewEventInput label={'title'} />
-                <StyledLabel direction={'column'}> 
-                    Start time:<DatePicker defaultValue={new Date()}/> 
-                    End time:<DatePicker defaultValue={new Date()}/> 
-                </StyledLabel>
+        <FormProvider {...methods}>
+            <StyledForm className="flex flex-col" method="post" onSubmit={methods.handleSubmit(handleFormSubmit)}>
+                <FormCol width={'70%'}>
+                    <FormInputText label={'title'} />
+                    <FormInputDateTime label={'datetime'}/>
+                    <FormInputText label={'location'} />
+                    <FormInputText label={'meeting'} />
+                    <FormInputText label={'attachments'} />
+                    <FormInputText label={'description'} size={'large'} />
+                </FormCol>
+                <FormCol width={'30%'}>
+                    <StyledButton type="submit">Submit</StyledButton>
+                    <FormInputText label={'guests'} />
+                </FormCol>
+            </StyledForm>
+        </FormProvider>
 
-                <NewEventInput label={'location'} />
-                <NewEventInput label={'meeting'} />
-                <NewEventInput label={'attachments'} />
-                <NewEventInput label={'description'} size={'large'}/>
-            </FormCol>
-            <FormCol>
-                <StyledButton type="submit">Submit</StyledButton>
-                <NewEventInput label={'guests'} />
-            </FormCol>
-        </StyledForm>
     );
-
 }
