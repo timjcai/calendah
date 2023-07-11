@@ -1,3 +1,3 @@
 export * from './DateUtils';
 export * from './LayoutUtils';
-export * from './TimezoneUtils';
+export * from './TimeUtils';

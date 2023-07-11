@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useId, useRef, useState} from 'react'
 import { Icon } from '../Icon';
 import { iconMapping } from '../../../db/Mapping';
 import { StyledButton } from '../Button';
@@ -6,8 +6,9 @@ import { StyledButton } from '../Button';
 import DatePicker from "react-widgets/DatePicker";
 import { StyledLabel, StyledInput, StyledForm, FormCol, InputProps, StyledFieldset } from './Form.styles';
 import { Timepicker } from '../../Timepicker/Timepicker';
+import ReactDatePicker from "react-datepicker";
 
-import {useForm, FormProvider, useFormContext} from 'react-hook-form'
+import {useForm, FormProvider, useFormContext , useController, Controller} from 'react-hook-form'
 
 export const FormInputText = ({label, size = 'small'}) => {
     const icon = iconMapping[label]
@@ -23,21 +24,62 @@ export const FormInputText = ({label, size = 'small'}) => {
 
 export const FormInputDateTime = ({label}) => {
     const icon = iconMapping[label]
-    const {register} = useFormContext()
+    const [todayDate, setTodayDate] = useState(new Date())
+    const {register, control } = useFormContext()
 
     return (
         <StyledLabel direction={'row'}> 
             <Icon icon={icon} color={'#73767A'} />
             <StyledFieldset className='starttime' direction={'row'} width={'88%'} >
-                    <DatePicker defaultValue={new Date()}/>
-                    <Timepicker label={'starttime'}/>
+                <Controller
+                    control={control}
+                    name="startdate"
+                    render={({ field: { value, ...fieldProps } }) => {
+                        return (
+                            <DatePicker 
+                                {...fieldProps}
+                                defaultValue={todayDate} 
+                                selected={value}
+                            />
+                        );
+                    }}>
+                </Controller>
+                <Controller
+                    control={control}
+                    name="starttime"
+                    render={({ field : {value} }) => {
+                        return (
+                            <Timepicker 
+                                input={value}
+                            />
+                            // <DatePicker 
+                            //     {...fieldProps}
+                            //     defaultValue={startDate} 
+                            //     selected={value}
+                            // />
+                        );
+                    }}>
+                </Controller>
                     <p>to</p>
             </StyledFieldset>
             <StyledFieldset>
-                    <DatePicker defaultValue={new Date()}/>
-                    <Timepicker label={'endtime'}/>
+                <Controller
+                        control={control}
+                        name="enddate"
+                        render={({ field: { value, ...fieldProps } }) => {
+                            return (
+                                <DatePicker 
+                                    {...fieldProps}
+                                    defaultValue={todayDate} 
+                                    selected={value}
+                                />
+                            );
+                        }}>
+                    </Controller>
+                    <Timepicker />
             </StyledFieldset>
         </StyledLabel>
+        
     )
 }
 
@@ -50,8 +92,8 @@ interface IFormInput {
     location: String
     meeting: String
     attachments: String
-    starttime: Date
-    endtime: Date
+    starttime: String
+    endtime: String
 }
 
 export const InputForm = () => {
@@ -67,8 +109,28 @@ export const InputForm = () => {
     //     let errors = {};
     // }
 
-    const handleFormSubmit = (formValues) => {
+    const validateData = (formValues) => {
+        const {title, startDate, startTime, endDate, endTime, location, meeting, attachments, description, guests} = formValues
+        if (!title) {
+            console.log('no title provided')
+        }
+        if (!location) {
+            console.log('no location provided')
+        }
+        if (!meeting) {
+            console.log('no meeting provided')
+        }
+        if (!attachments) {
+            console.log('no attachments provided')
+        }
+        if (!description) {
+            console.log('no description provided')
+        }
         console.log(formValues)
+    }
+
+    const handleFormSubmit = (formValues) => {
+        validateData(formValues)
         // console.log(form)
         // const formData = new FormData(form)
         // const formJson = Object.fromEntries(formData.entries());

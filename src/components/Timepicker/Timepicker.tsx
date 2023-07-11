@@ -1,11 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react'
 import styled from 'styled-components'
 import { CalendarViewSettings } from '../../pages/View'
-import { addZero } from '../../utils';
-
-export const StyledSelect = styled.select`
-    scrollHeight: 10px;
-`;
+import { addZero, getLocalTime, convert24to12time, closest15min } from '../../utils';
+import { ComboBoxInput, ComboBoxList, ComboBoxListItem } from './Timepicker.styles';
 
 export const avaliableTimes = [
     "12:00 AM", "12:15 AM","12:30 AM","12:45 AM",
@@ -44,25 +41,8 @@ export const Timepicker = ({label}) => {
     }
 
     function selectTime(e) {
-        setTime(e.target.innerHTML)
-    }
-
-    function closest15min(input: Date): string {
-        const minutes = addZero((Math.round(input.getMinutes()/15) * 15) % 60);
-        const hours = input.getHours()
-
-        return `${hours}:${minutes}`
-    }
-
-    function convert24to12time(input: Date|string): string {
-       const array = input.toString().split(':')
-       const hours = parseInt(array[0])
-       const minutes = parseInt(array[1])
-       if ( hours > 12) {
-            return `${addZero(hours - 12)}:${addZero(minutes)} PM`;
-       } else {
-            return `${addZero(hours)}:${addZero(minutes)} AM`;
-       }
+        const thisTime = e.target.getAttribute('value')
+        setTime(thisTime)
     }
 
     const currentTime = convert24to12time(closest15min(new Date()))
@@ -82,13 +62,13 @@ export const Timepicker = ({label}) => {
 
     return (
             <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false">
-                <ComboBoxInput label={label} ref={btnRef} type="text" id="myInput" aria-autocomplete="list" aria-controls="dropdownOptions" value={time} onClick={toggleDropDown}/>
+                <ComboBoxInput label={label} ref={btnRef} aria-controls="dropdownOptions" value={time} onClick={toggleDropDown} />
                 <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={isHidden} onClick={selectTime}>
                     {avaliableTimes.map((unittime)=>{
                         if (currentTime === unittime) {
-                            return (<ComboBoxListItem key={unittime} role="option" aria-selected="true">{unittime}</ComboBoxListItem>);
+                            return (<ComboBoxListItem key={unittime} role="option" aria-selected="true" value={unittime}>{unittime}</ComboBoxListItem>);
                         } else {
-                            return (<ComboBoxListItem key={unittime} role="option" aria-selected="false">{unittime}</ComboBoxListItem>);
+                            return (<ComboBoxListItem key={unittime} role="option" aria-selected="false" value={unittime}>{unittime}</ComboBoxListItem>);
                         }
                     })}
                 </ComboBoxList>
@@ -96,37 +76,3 @@ export const Timepicker = ({label}) => {
     )
 }
 
-
-
-export const ComboBoxInput = styled.input`
-    border-radius: 5px;
-    padding: 0.75em 1em 0.75em 1em;
-    font-size: 14px;
-    background-color: #EFF1F2;
-    margin: 1em;
-    color: black;
-    width: 8em;
-`;
-
-export const ComboBoxList = styled.ul`
-    position: absolute;
-    left: inherit;
-    margin-left: 15px;
-    width: inherit;
-    max-height: 150px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    background-color: #EFF1F2;
-    font-size: 14px;
-    width: 8em;
-`;
-
-export const ComboBoxListItem = styled.li`
-    padding: 0.75em 1em 0.75em 1em;
-    color: #9399A6;
-
-    &:hover {
-        background-color: var(--blue);
-        transition: ease 0.1s;
-      }
-`;
