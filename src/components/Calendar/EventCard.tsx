@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { getLocalHour, getTime, getLocalMinute } from '../../utils';
 import { formatISO } from 'date-fns'
@@ -9,12 +9,13 @@ interface CardWrapperProps {
     $top?: string;
     $bgcolor?: string;
     $zindex?: number;
+    $active?: boolean;
 }
 
 const CardWrapper = styled.div<CardWrapperProps>`
     position: absolute;
     border-radius: 4px;
-    border: 1px solid grey;
+    border: ${props=> props.$active ? '2px solid white': '1px solid grey'};
     font-size: 12px;
     margin-bottom: 1em;
     z-index: ${props=>props.$zindex};
@@ -27,6 +28,7 @@ const CardWrapper = styled.div<CardWrapperProps>`
     p {
         margin: 3px 0px 5px 5px;
     }
+
 `;
 
 const setTimePosition = (time: string) => {
@@ -43,12 +45,30 @@ const findHeight = (starttime, endtime) => {
 export const EventCard = ({props}) => {
     const {id, starttime, endtime, title, location, description, calendar_id} = props
 
+    const [isActive, setIsActive] = useState(false)
+    const [draggable, setDraggable] = useState(false);
+    const [eventCardHeight, setEventCardHeight] = useState(findHeight(starttime, endtime))
+    const [topPosition, setTopPosition] = useState(setTimePosition(starttime))
+
+    const setEventCardPosition = (e) => {
+        if (draggable === true) {
+            const mouseTracker=e.target.getBoundingClientRect()
+            console.log(e)
+        } else {
+            return 
+        }
+    }
+
     return (
         <CardWrapper 
-            $height={`${findHeight(starttime, endtime)}`} 
-            $top={ `${setTimePosition(starttime)}px`} 
+            $height={`${eventCardHeight}px`}
+            $top={ `${topPosition}px`} 
             $bgcolor={settings.calendar_color[calendar_id]} 
             $zindex={id}
+            onPointerDown={e=>setDraggable(true)}
+            onPointerUp={e=>setDraggable(false)}
+            onPointerMove={e=>setEventCardPosition(e)}
+            $active={isActive||draggable}
         >
             <p><strong>{title}</strong></p>
             <p>{getLocalHour(new Date(starttime))}:{getLocalMinute(new Date(starttime))}-{getLocalHour(new Date(endtime))}:{getLocalMinute(new Date(endtime))}</p>
