@@ -1,5 +1,11 @@
 {
     "time_zone": "en-AU",
     "start_of_the_week": "Monday",
-    "view_size": 7
+    "view_size": 7,
+    "calendar_color": {
+        "1": "#BAD7F2",
+        "2": "#F2E2BA",
+        "3": "#F2BAC9",
+        "4": "#BAF2BB"
+    }
 }

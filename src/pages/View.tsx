@@ -28,7 +28,7 @@ export const View = () => {
   const [loading, setLoading] = useState(true);
 
     
-  const updateInputValue = (date: Date) => {
+  const updateInputValue = (date: Date | null | undefined ) => {
       setSelectedDate(date)
   }
 
@@ -47,7 +47,7 @@ export const View = () => {
             throw response;
         })
         .then (data => {
-            // console.log(data)
+            console.log(data)
             setCalendarEvents(data)
         })
         .catch(error => {
@@ -74,7 +74,7 @@ export const View = () => {
                       <DatePicker
                           defaultValue={todayDate}
                           valueFormat={{ dateStyle: "medium" }}
-                          onChange={(value: Date) => updateInputValue(value) }
+                          onChange={(value: Date | null | undefined ) => updateInputValue(value) }
                       />
                     </div>
                     <div>

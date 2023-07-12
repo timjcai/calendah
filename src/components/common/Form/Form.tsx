@@ -50,7 +50,7 @@ export const FormInputDateTime = ({label}) => {
                     render={({ field : {value} }) => {
                         return (
                             <Timepicker 
-                                input={value}
+                                selected={value}
                             />
                             // <DatePicker 
                             //     {...fieldProps}

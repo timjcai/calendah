@@ -1,42 +1,18 @@
-import React, {FC, useCallback, useEffect, useState, useContext, useRef} from 'react'
-import styled from 'styled-components'
-import { TimebarProps, TimecellProps, ViewProps, DateProps, CommonStylingProps } from '../types';
+import React, {FC, useCallback, useEffect, useContext } from 'react'
+
+import { TimebarProps, TimecellProps, ViewProps, DateProps } from '../types';
+
 import { Timebar } from './Timebar';
 import { DateHeader } from './DateHeader';
-import { EventContext, ViewSizeContext, WeekContext } from '../../context/Context';
-import { generateColumnId, thisWeek, getYYYYMMDD } from '../../utils/DateUtils';
-import { calcIndividualColWidth } from '../../utils';
 import { EventCard } from './EventCard';
 
-export const PlannerWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: auto;
-    border: var(--shell-line) 1px solid;
-    height: auto;
-    z-index: 1;
-`;
+import { EventContext, ViewSizeContext, WeekContext } from '../../context/Context';
 
-export const StyledPlannerColumn = styled.div<CommonStylingProps>`
-    display: flex;
-    flex-direction: column;
-    width: ${props => props.$width};
-    height: auto;
-    border-right: var(--shell-line) 1px solid;
-`;
+import { generateColumnId, thisWeek, getYYYYMMDD } from '../../utils/DateUtils';
+import { calcIndividualColWidth } from '../../utils';
 
-export const PlannerCell = styled.div`
-    display: flex;
-    width: auto;
-    height: 48px;
-    border-top: var(--shell-line) 1px solid;
-`;
+import { StyledCalendar, StyledPlannerColumn, PlannerWrapper, PlannerCell } from './Calendar.styles';
 
-export const StyledCalendar = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-right: 1em;
-`;
 
 export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { CalendarViewSettings } from '../../pages/View'
 import { addZero, getLocalTime, convert24to12time, closest15min } from '../../utils';
 import { ComboBoxInput, ComboBoxList, ComboBoxListItem } from './Timepicker.styles';
+import { useFormContext } from 'react-hook-form';
 
 export const avaliableTimes = [
     "12:00 AM", "12:15 AM","12:30 AM","12:45 AM",
@@ -35,6 +36,7 @@ export const Timepicker = ({label}) => {
     const [isHidden, setIsHidden] = useState(true)
     const [time, setTime] = useState(convert24to12time(closest15min(new Date())))
     const btnRef = useRef();
+    const {register} = useFormContext()
 
     function toggleDropDown() {
         (isHidden) ? setIsHidden(false) : setIsHidden(true)
@@ -42,10 +44,9 @@ export const Timepicker = ({label}) => {
 
     function selectTime(e) {
         const thisTime = e.target.getAttribute('value')
+        console.log(thisTime)
         setTime(thisTime)
     }
-
-    const currentTime = convert24to12time(closest15min(new Date()))
 
     useEffect(()=> {
         function closeDropDown(e) {
@@ -61,15 +62,11 @@ export const Timepicker = ({label}) => {
     }, [])
 
     return (
-            <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false">
-                <ComboBoxInput label={label} ref={btnRef} aria-controls="dropdownOptions" value={time} onClick={toggleDropDown} />
+            <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false" >
+                <ComboBoxInput label={label} ref={btnRef} aria-controls="dropdownOptions" defaultValue={time} onClick={toggleDropDown} />
                 <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={isHidden} onClick={selectTime}>
                     {avaliableTimes.map((unittime)=>{
-                        if (currentTime === unittime) {
-                            return (<ComboBoxListItem key={unittime} role="option" aria-selected="true" value={unittime}>{unittime}</ComboBoxListItem>);
-                        } else {
-                            return (<ComboBoxListItem key={unittime} role="option" aria-selected="false" value={unittime}>{unittime}</ComboBoxListItem>);
-                        }
+                        return (<ComboBoxListItem key={unittime} role="option" value={unittime}>{unittime}</ComboBoxListItem>);
                     })}
                 </ComboBoxList>
             </div>
