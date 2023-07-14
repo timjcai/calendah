@@ -4,9 +4,8 @@ import { iconMapping } from '../../../db/Mapping';
 import { StyledButton } from '../Button';
 
 import DatePicker from "react-widgets/DatePicker";
-import { StyledLabel, StyledInput, StyledForm, FormCol, InputProps, StyledFieldset } from './Form.styles';
+import { StyledLabel, StyledInput, StyledForm, FormCol, InputProps, StyledFieldset, StyledTimeInput } from './Form.styles';
 import { Timepicker } from '../../Timepicker/Timepicker';
-import ReactDatePicker from "react-datepicker";
 
 import {useForm, FormProvider, useFormContext , useController, Controller} from 'react-hook-form'
 
@@ -25,47 +24,16 @@ export const FormInputText = ({label, size = 'small'}) => {
 export const FormInputDateTime = ({label}) => {
     const icon = iconMapping[label]
     const [todayDate, setTodayDate] = useState(new Date())
-    const {register, control } = useFormContext()
+    const [startTime, setStartTime] = useState(null)
+    const { control } = useFormContext()
 
     return (
-        <StyledLabel direction={'row'}> 
-            <Icon icon={icon} color={'#73767A'} />
-            <StyledFieldset className='starttime' direction={'row'} width={'88%'} >
-                <Controller
-                    control={control}
-                    name="startdate"
-                    render={({ field: { value, ...fieldProps } }) => {
-                        return (
-                            <DatePicker 
-                                {...fieldProps}
-                                defaultValue={todayDate} 
-                                selected={value}
-                            />
-                        );
-                    }}>
-                </Controller>
-                <Controller
-                    control={control}
-                    name="starttime"
-                    render={({ field : {value} }) => {
-                        return (
-                            <Timepicker 
-                                selected={value}
-                            />
-                            // <DatePicker 
-                            //     {...fieldProps}
-                            //     defaultValue={startDate} 
-                            //     selected={value}
-                            // />
-                        );
-                    }}>
-                </Controller>
-                    <p>to</p>
-            </StyledFieldset>
-            <StyledFieldset>
-                <Controller
+            <StyledLabel direction={'row'}> 
+                <Icon icon={icon} color={'#73767A'} />
+                <StyledFieldset className='starttime' direction={'row'} width={'88%'} >
+                    <Controller
                         control={control}
-                        name="enddate"
+                        name="startdate"
                         render={({ field: { value, ...fieldProps } }) => {
                             return (
                                 <DatePicker 
@@ -76,14 +44,28 @@ export const FormInputDateTime = ({label}) => {
                             );
                         }}>
                     </Controller>
-                    <Timepicker />
-            </StyledFieldset>
-        </StyledLabel>
-        
+                    <Timepicker label={'starttime'}/>
+                        <p>to</p>
+                </StyledFieldset>
+                <StyledFieldset>
+                    <Controller
+                            control={control}
+                            name="enddate"
+                            render={({ field: { value, ...fieldProps } }) => {
+                                return (
+                                    <DatePicker 
+                                        {...fieldProps}
+                                        defaultValue={todayDate} 
+                                        selected={value}
+                                    />
+                                );
+                            }}>
+                        </Controller>
+                </StyledFieldset>
+            </StyledLabel>
     )
 }
 
-export 
 
 interface IFormInput {
     title: String
@@ -99,11 +81,6 @@ interface IFormInput {
 export const InputForm = () => {
     const [errors, setErrors] = useState({})
     const methods = useForm()
-
-    function handleFormInput(event: Event) {
-        event.preventDefault();
-        console.log(event.target)
-    }
 
     // const validateData = () => {
     //     let errors = {};

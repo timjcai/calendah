@@ -45,6 +45,15 @@ export const StyledFieldset = styled.fieldset<labelProps>`
     padding: 0.75em 0.5em 0.75em 1em;
 `
 
+export const StyledTimeInput = styled.input`
+    margin: 1em;
+    border-radius: 5px;
+    padding: 0.75em 1em 0.75em 1em;
+    font-size: 14px;
+    background-color: #EFF1F2;
+    
+`;
+
 export interface InputProps {
     label: InputType;
     size?: string;

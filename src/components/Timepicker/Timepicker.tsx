@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import { CalendarViewSettings } from '../../pages/View'
 import { addZero, getLocalTime, convert24to12time, closest15min } from '../../utils';
-import { ComboBoxInput, ComboBoxList, ComboBoxListItem } from './Timepicker.styles';
+import { ComboBoxInput, ComboBoxInputBox, ComboBoxList, ComboBoxListItem, StyledSelect } from './Timepicker.styles';
 import { useFormContext } from 'react-hook-form';
+import { Icon } from '../common/Icon';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 export const avaliableTimes = [
     "12:00 AM", "12:15 AM","12:30 AM","12:45 AM",
@@ -50,7 +52,7 @@ export const Timepicker = ({label}) => {
 
     useEffect(()=> {
         function closeDropDown(e) {
-            if(e.target !== btnRef.current) {
+            if(e.target !== btnRef.current) {   
                 setIsHidden(true);
             }
         }
@@ -62,14 +64,18 @@ export const Timepicker = ({label}) => {
     }, [])
 
     return (
-            <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false" >
-                <ComboBoxInput label={label} ref={btnRef} aria-controls="dropdownOptions" defaultValue={time} onClick={toggleDropDown} />
+        <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false" >
+            <ComboBoxInputBox>
+                <ComboBoxInput type="text" value={time} readOnly={true} {...register(label)} />
+                <button type="button" aria-controls="dropdownOptions" ref={btnRef} onClick={toggleDropDown}><Icon icon={faClock} color={'#73767A'}/></button>
+            </ComboBoxInputBox>
+            <div>
                 <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={isHidden} onClick={selectTime}>
                     {avaliableTimes.map((unittime)=>{
                         return (<ComboBoxListItem key={unittime} role="option" value={unittime}>{unittime}</ComboBoxListItem>);
                     })}
                 </ComboBoxList>
             </div>
+        </div>
     )
 }
-

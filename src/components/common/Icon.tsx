@@ -12,7 +12,7 @@ export type IconProps = {
   }
 
 export const Icon: FC<IconProps> = ({ icon, color }) => {
-  return (<FontAwesomeIcon icon={icon} width={20} color={ color } />);
+  return (<FontAwesomeIcon icon={icon} width={20} color={ color } style={{pointerEvents: 'none'}}/>);
 };
 
 
