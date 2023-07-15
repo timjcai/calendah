@@ -8,7 +8,7 @@ import { StyledLabel, StyledInput, StyledForm, FormCol, InputProps, StyledFields
 import { Timepicker } from '../../Timepicker/Timepicker';
 
 import {useForm, FormProvider, useFormContext , useController, Controller} from 'react-hook-form'
-import { convert12to24time } from '../../../utils';
+import { mergeDateTime, convert12to24time } from '../../../utils';
 
 export const FormInputText = ({label, size = 'small'}) => {
     const icon = iconMapping[label]
@@ -84,22 +84,10 @@ export const InputForm = () => {
     const [errors, setErrors] = useState({})
     const methods = useForm()
 
-    const mergeDateTime = (date, time) => {
-        const setDate = date
-        const setTime = convert12to24time(time)
-        const newdate = setDate.getDate()
-        const month = setDate.getMonth()
-        const year = setDate.getYear()
-        setTime.setFullYear(year)
-        setTime.setMonth(month)
-        setTime.setDate(newdate)
-        return setTime
-    }
-
     const validateData = (formValues) => {
         const {title, startdate, starttime, enddate, endtime, location, meeting, attachments, description, guests} = formValues
-        mergeDateTime(startdate, starttime)
-        mergeDateTime(enddate, endtime)
+        mergeDateTime(startdate, convert12to24time(starttime))
+        mergeDateTime(enddate, convert12to24time(endtime))
         formValues['calendar_id'] = 1
         delete formValues.startdate
         delete formValues.enddate

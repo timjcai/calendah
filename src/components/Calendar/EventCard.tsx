@@ -39,7 +39,7 @@ const setTimePosition = (time: string) => {
 }
 
 const findHeight = (starttime, endtime) => {
-    return setTimePosition(starttime) - setTimePosition(endtime)
+    return setTimePosition(endtime) - setTimePosition(starttime)
 }
 
 export const EventCard = ({props}) => {

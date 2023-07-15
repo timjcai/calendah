@@ -5,9 +5,9 @@ import { addZero } from './DateUtils'
 
 export function convertTime(timezone: timezoneType, date: Date) {
     if (languageDataMapping[timezone]) {
-        console.log(languageDataMapping[timezone])
-        console.log(date.toUTCString())
-        console.log(date.getHours())
+        // console.log(languageDataMapping[timezone])
+        // console.log(date.toUTCString())
+        // console.log(date.getHours())
     } else {
         console.log('error, incorrect timezone provided')
     }
@@ -49,11 +49,22 @@ export function convert24to12time(input: Date|string): string {
     }
  }
 
+//  layout must be '5:15 AM'
 export function convert12to24time(input: string): Date {
     const array = input.split(/(?:\s|:)/);
     const specificTime = new Date();
     (array[2] === 'PM') ? specificTime.setHours(parseInt(array[0])+12) : specificTime.setHours(parseInt(array[0]))
     specificTime.setMinutes(parseInt(array[1]))
+    specificTime.setSeconds(0)
+    return specificTime
+}
+
+// layout must be '5 AM'
+export function convert24stringto24time(input: string): Date {
+    const timeArray = input.split(' ')
+    const specificTime = new Date();
+    (timeArray[1] === 'PM') ? specificTime.setHours(parseInt(timeArray[0])+12) : specificTime.setHours(parseInt(timeArray[0]))
+    specificTime.setMinutes(0)
     specificTime.setSeconds(0)
     return specificTime
 }

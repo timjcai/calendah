@@ -21,7 +21,7 @@ export const TimebarCell = styled.div`
 export const Timecell: FC<TimecellProps> = ({time}) => {
     return (
         <TimebarCell>
-            <span><Paragraph color={'grey'}>{time}</Paragraph></span>
+            <span><Paragraph color={'grey'} $fsize={'10px'}>{time}</Paragraph></span>
         </TimebarCell>
     );
 }

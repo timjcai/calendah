@@ -1,4 +1,5 @@
 import { addDays, toDate } from "date-fns"
+import { convert12to24time } from "./TimeUtils"
 
 // sets the week and returns an array starting from Monday
 export const thisWeek = (input: Date, size: number): Date[] => {
@@ -68,4 +69,16 @@ export const endDatePlusOne = (input: string): string => {
     const newDate = parseInt(test[2])+1
     test[2] = addZero(newDate)
     return test.join('-')
+}
+
+export const mergeDateTime = (date, time) => {
+    const setDate = date
+    const setTime = time
+    const newdate = date.getDate()
+    const month = date.getMonth()
+    const year = date.getFullYear()
+    setTime.setFullYear(year)
+    setTime.setMonth(month)
+    setTime.setDate(newdate)
+    return setTime
 }

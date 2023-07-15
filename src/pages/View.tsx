@@ -47,7 +47,7 @@ export const View = () => {
             throw response;
         })
         .then (data => {
-            console.log(data)
+            // console.log(data)
             setCalendarEvents(data)
         })
         .catch(error => {
