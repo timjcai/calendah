@@ -8,6 +8,7 @@ import { StyledLabel, StyledInput, StyledForm, FormCol, InputProps, StyledFields
 import { Timepicker } from '../../Timepicker/Timepicker';
 
 import {useForm, FormProvider, useFormContext , useController, Controller} from 'react-hook-form'
+import { convert12to24time } from '../../../utils';
 
 export const FormInputText = ({label, size = 'small'}) => {
     const icon = iconMapping[label]
@@ -83,12 +84,24 @@ export const InputForm = () => {
     const [errors, setErrors] = useState({})
     const methods = useForm()
 
-    // const validateData = () => {
-    //     let errors = {};
-    // }
+    const mergeDateTime = (date, time) => {
+        const setDate = date
+        const setTime = convert12to24time(time)
+        const setHours = setTime.getHours()
+        const setMinutes = setTime.getMinutes()
+        setDate.setHours(setHours)
+        setDate.setMinutes(setMinutes)
+        setDate.setSeconds(0)
+        return setDate
+    }
 
     const validateData = (formValues) => {
-        const {title, startDate, startTime, endDate, endTime, location, meeting, attachments, description, guests} = formValues
+        const {title, startdate, starttime, enddate, endtime, location, meeting, attachments, description, guests} = formValues
+        mergeDateTime(startdate, starttime)
+        mergeDateTime(enddate, endtime)
+        formValues['calendar_id'] = 1
+        delete formValues.starttime
+        delete formValues.endtime
         if (!title) {
             console.log('no title provided')
         }
@@ -104,15 +117,12 @@ export const InputForm = () => {
         if (!description) {
             console.log('no description provided')
         }
-        console.log(formValues)
+        return formValues
     }
 
     const handleFormSubmit = (formValues) => {
-        validateData(formValues)
-        // console.log(form)
-        // const formData = new FormData(form)
-        // const formJson = Object.fromEntries(formData.entries());
-        // console.log(formJson);  
+        const form = validateData(formValues)
+        console.log(form)
     }
 
     return (

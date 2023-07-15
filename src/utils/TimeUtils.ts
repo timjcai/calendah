@@ -48,3 +48,12 @@ export function convert24to12time(input: Date|string): string {
          return `${addZero(hours)}:${addZero(minutes)} AM`;
     }
  }
+
+export function convert12to24time(input: string): Date {
+    const array = input.split(/(?:\s|:)/);
+    const specificTime = new Date();
+    (array[2] === 'PM') ? specificTime.setHours(parseInt(array[0])+12) : specificTime.setHours(parseInt(array[0]))
+    specificTime.setMinutes(parseInt(array[1]))
+    specificTime.setSeconds(0)
+    return specificTime
+}
