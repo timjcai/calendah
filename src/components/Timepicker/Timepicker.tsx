@@ -35,13 +35,13 @@ export const avaliableTimes = [
   ];
 
 export const Timepicker = ({label}) => {
-    const [isHidden, setIsHidden] = useState(true)
+    const [isActive, setIsActive] = useState(false)
     const [time, setTime] = useState(convert24to12time(closest15min(new Date())))
     const btnRef = useRef();
     const {register} = useFormContext()
 
     function toggleDropDown() {
-        (isHidden) ? setIsHidden(false) : setIsHidden(true)
+        (isActive) ? setIsActive(false) : setIsActive(true)
     }
 
     function selectTime(e) {
@@ -53,7 +53,7 @@ export const Timepicker = ({label}) => {
     useEffect(()=> {
         function closeDropDown(e) {
             if(e.target !== btnRef.current) {   
-                setIsHidden(true);
+                setIsActive(false);
             }
         }
         document.addEventListener('click', closeDropDown);
@@ -64,15 +64,15 @@ export const Timepicker = ({label}) => {
     }, [])
 
     return (
-        <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded="false" >
+        <div className="combobox" role="combobox" aria-haspopup="listbox" aria-expanded={isActive} >
             <ComboBoxInputBox>
                 <ComboBoxInput type="text" value={time} readOnly={true} {...register(label)} />
                 <button type="button" aria-controls="dropdownOptions" ref={btnRef} onClick={toggleDropDown}><Icon icon={faClock} color={'#73767A'}/></button>
             </ComboBoxInputBox>
             <div>
-                <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={isHidden} onClick={selectTime}>
+                <ComboBoxList id="dropdownOptions" role="listbox" aria-label="Options" hidden={!isActive} onClick={selectTime}>
                     {avaliableTimes.map((unittime)=>{
-                        return (<ComboBoxListItem key={unittime} role="option" value={unittime}>{unittime}</ComboBoxListItem>);
+                        return (<ComboBoxListItem key={unittime} role="option" value={unittime} aria-selected="false">{unittime}</ComboBoxListItem>);
                     })}
                 </ComboBoxList>
             </div>

@@ -45,7 +45,7 @@ export const FormInputDateTime = ({label}) => {
                         }}>
                     </Controller>
                     <Timepicker label={'starttime'}/>
-                        <p>to</p>
+                    <p>to</p>
                 </StyledFieldset>
                 <StyledFieldset>
                     <Controller
@@ -61,6 +61,7 @@ export const FormInputDateTime = ({label}) => {
                                 );
                             }}>
                         </Controller>
+                        <Timepicker label={'endtime'}/>
                 </StyledFieldset>
             </StyledLabel>
     )
