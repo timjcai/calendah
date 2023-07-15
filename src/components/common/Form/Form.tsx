@@ -122,7 +122,20 @@ export const InputForm = () => {
 
     const handleFormSubmit = (formValues) => {
         const form = validateData(formValues)
-        console.log(form)
+        
+        fetch(`http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+        .then(data => {console.log('Response from server:', data)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
     return (
