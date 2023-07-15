@@ -84,11 +84,12 @@ export const View = () => {
                     </div>
                 </NavWrapper>
                 <div className="flex flex-row w-screen h-screen">
-                    {/* <Sidebar /> */}
-                    <Calendar 
-                      defaultValue={todayDate}
-                      onChange={updateInputValue}
-                      />
+                    <Sidebar>
+                      <Calendar 
+                        defaultValue={todayDate}
+                        onChange={updateInputValue}
+                        />
+                    </Sidebar>
                     <BaseCalendar times={CalendarViewSettings['times']} />
                 </div>
               </EventContext.Provider>

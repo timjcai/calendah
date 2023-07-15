@@ -1,8 +1,10 @@
 import { timeMappings12to24 } from "../db/Mapping"
 import { convert24stringto24time } from "./TimeUtils"
 
-export const calcIndividualColWidth = (viewSettings: number): string => {
-    return `${70/viewSettings}vw`
+export const calcIndividualColWidth = (viewSettings: number, windowSize: number): string => {
+    // 320 = 256 (sidebar width) + 64 (timebar width)
+    const leftoverWindow = Math.round(((windowSize-320)/windowSize)*100)
+    return `${leftoverWindow/viewSettings}vw`
 }
 
 // dependent on the column id being presented in this format: "colX--DD-MM-YYYY"

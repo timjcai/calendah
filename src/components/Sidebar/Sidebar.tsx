@@ -7,15 +7,13 @@ import '../../styles/Calendar.css'
 const SidebarWrapper = styled.div`
     display: column;
     border: 1px solid var(--shell-line);
-    width: 300px;
+    width: var(--sidebar-width);
 `;
 
-export const Sidebar = () => {
-    const [date, setDate] = useState(new Date())
-    console.log(date)
+export const Sidebar = ({children}) => {
     return (
         <SidebarWrapper>
-            <Calendar value={date}/>
+            {children}
         </SidebarWrapper>
     );
 }

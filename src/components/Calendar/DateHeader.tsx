@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react'
+import React, { FC, useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Paragraph, Heading2 } from '../common/Text'
 import { CommonStylingProps, DateProps2 } from '../types';
@@ -68,6 +68,22 @@ export const DHCell: FC<DateProps2> = ({date}) => {
     const day = dayMappingFromIndex[date.getDay()]
     const month = monthMappingFromIndex[date.getMonth()]
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowSize(window.innerWidth)
+          // Update the state or perform any other actions when the
+          // browser is resized
+        }
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
+
     let dayHeading = <Heading2>{dateNumber}</Heading2>
     if (dateNumber === todayDate.getDate() && date.getMonth() === todayDate.getMonth() && date.getFullYear() === todayDate.getFullYear()) {
         dayHeading = (
@@ -80,7 +96,7 @@ export const DHCell: FC<DateProps2> = ({date}) => {
     }
 
     return (
-        <StyledCell $width={calcIndividualColWidth(viewSize)}>
+        <StyledCell $width={calcIndividualColWidth(viewSize, windowSize)}>
             <Paragraph>{dayAbbreviations[day]}</Paragraph>
             {dayHeading}
             <Paragraph>{monthAbbreviations[month]}</Paragraph>

@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useContext } from 'react'
+import React, {FC, useCallback, useEffect, useContext, useState } from 'react'
 
 import { TimebarProps, TimecellProps, ViewProps, DateProps } from '../types';
 
@@ -79,9 +79,24 @@ export const BaseCalendar: FC<ViewProps> = ({times})=> {
 const PlannerColumn = (props: {times: string[], id: string, dayContent}) => {
     const viewSize = useContext(ViewSizeContext)
     const events = useContext(EventContext)
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowSize(window.innerWidth)
+          // Update the state or perform any other actions when the
+          // browser is resized
+        }
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
     return (
-        <StyledPlannerColumn $width={calcIndividualColWidth(viewSize)} id={props.id}>
+        <StyledPlannerColumn $width={calcIndividualColWidth(viewSize, windowSize)} id={props.id}>
             {props.times.map((time)=>{
                 return (<PlannerCell key={time} id={`${props.id}|${time}`}/>);
             })}
