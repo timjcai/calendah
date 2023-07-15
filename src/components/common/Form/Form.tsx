@@ -87,12 +87,13 @@ export const InputForm = () => {
     const mergeDateTime = (date, time) => {
         const setDate = date
         const setTime = convert12to24time(time)
-        const setHours = setTime.getHours()
-        const setMinutes = setTime.getMinutes()
-        setDate.setHours(setHours)
-        setDate.setMinutes(setMinutes)
-        setDate.setSeconds(0)
-        return setDate
+        const newdate = setDate.getDate()
+        const month = setDate.getMonth()
+        const year = setDate.getYear()
+        setTime.setFullYear(year)
+        setTime.setMonth(month)
+        setTime.setDate(newdate)
+        return setTime
     }
 
     const validateData = (formValues) => {
@@ -100,8 +101,8 @@ export const InputForm = () => {
         mergeDateTime(startdate, starttime)
         mergeDateTime(enddate, endtime)
         formValues['calendar_id'] = 1
-        delete formValues.starttime
-        delete formValues.endtime
+        delete formValues.startdate
+        delete formValues.enddate
         if (!title) {
             console.log('no title provided')
         }
