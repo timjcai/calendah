@@ -9,28 +9,26 @@ import { EventCard } from './EventCard';
 import { EventContext, ViewSizeContext, WeekContext } from '../../context/Context';
 
 import { generateColumnId, thisWeek, getYYYYMMDD, mergeDateTime } from '../../utils/DateUtils';
-import { calcIndividualColWidth, closest15min, extractDate, extractTime } from '../../utils';
+import { calcIndividualColWidth, closest15min, createDateTimeonPosition, extractDate, extractTime } from '../../utils';
 
 import { StyledCalendar, StyledPlannerColumn, PlannerWrapper, PlannerCell } from './Calendar.styles';
 
+import settings from '../../db/settings.json'
 
 export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)
     const eventData = useContext(EventContext)
+    const [newEventDefault, setNewEventDefault] = useState(settings.newevent_default)
 
 
     function doubleClickHandler(event) {
         if (event.detail == 2) {
-            // console.log('create new event here')
-            const date = extractDate(event.target.parentNode.id)
-            const time = extractTime(event.target.id)
-            const cell = event.target.getBoundingClientRect()
-            const clickPositionY = event.pageY
-            const height = (clickPositionY - cell.top)/48
-            const mouseTime = (Math.round(height*60/15) * 15) % 60
-            time.setMinutes(mouseTime)
-            const targetDateTime = mergeDateTime(date,time)
-
+            const startTime = createDateTimeonPosition(event)
+            const endTime = new Date(createDateTimeonPosition(event).setHours(startTime.getHours() + 1))
+            newEventDefault.starttime = startTime
+            newEventDefault.endtime = endTime
+            setNewEventDefault(newEventDefault)
+            console.log(newEventDefault)
             // const canvasWidthStart = (window.innerWidth)
             // const canvasTotalWidth = document.documentElement.clientWidth
             // console.log(canvasWidthStart)

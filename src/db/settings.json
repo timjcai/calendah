@@ -7,5 +7,15 @@
         "2": "#F2E2BA",
         "3": "#F2BAC9",
         "4": "#BAF2BB"
+    },
+    "newevent_default": {
+        "title": "No title",
+        "starttime": "",
+        "endtime": "",
+        "meeting": "No meeting link",
+        "location": "No location selected",
+        "attachments": "No attachments",
+        "guests": "No guests",
+        "description": "Add description here"
     }
 }

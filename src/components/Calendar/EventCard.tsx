@@ -24,11 +24,11 @@ const CardWrapper = styled.div<CardWrapperProps>`
     height: ${props=>props.$height};
     top: ${props=>props.$top};
     background-color: ${props=>props.$bgcolor};
+    cursor: grab;
 
     p {
         margin: 3px 0px 5px 5px;
     }
-
 `;
 
 const setTimePosition = (time: string) => {
@@ -59,6 +59,12 @@ export const EventCard = ({props}) => {
         }
     }
 
+    const mouseStyle = {
+        draggable: "grab",
+        dragging: "grabbing",
+        resize: "ns-resize"
+    }
+
     return (
         <CardWrapper 
             $height={`${eventCardHeight}px`}
@@ -68,6 +74,7 @@ export const EventCard = ({props}) => {
             onPointerDown={e=>setDraggable(true)}
             onPointerUp={e=>setDraggable(false)}
             onPointerMove={e=>setEventCardPosition(e)}
+            onClick={e=>setIsActive(prevstate => !prevstate)}
             $active={isActive||draggable}
         >
             <p><strong>{title}</strong></p>

@@ -1,4 +1,5 @@
 import { timeMappings12to24 } from "../db/Mapping"
+import { mergeDateTime } from "./DateUtils"
 import { convert24stringto24time } from "./TimeUtils"
 
 export const calcIndividualColWidth = (viewSettings: number, windowSize: number): string => {
@@ -22,4 +23,26 @@ export const extractTime = (cellId: string): Date => {
     const timeArray = cellId.split("|")
     const Time12HR = timeArray[1]
     return convert24stringto24time(timeMappings12to24[Time12HR])
+}
+
+export const createDateTimeonPosition = (event) => {
+    const date = extractDate(event.target.parentNode.id)
+    const time = extractTime(event.target.id)
+    const cell = event.target.getBoundingClientRect()
+    const clickPositionY = event.pageY
+    const height = limit0to1((clickPositionY - cell.top)/48)
+    const mouseTime = (Math.round(height*60/15) * 15)
+    time.setMinutes(mouseTime)
+    const targetDateTime = mergeDateTime(date,time)
+    return targetDateTime
+}
+
+const limit0to1 = (heightPercentage: number): number => {
+    if (heightPercentage < 0 ) {
+        return heightPercentage = 0
+    } else if (heightPercentage > 1) {
+        return heightPercentage = 1
+    } else {
+        return heightPercentage
+    }
 }
