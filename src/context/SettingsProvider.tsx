@@ -13,10 +13,6 @@ export const SettingsProvider = ({children}) => {
     const [startDay, setStartDay] = useState(settings.start_of_the_week)
     const [timezone, setTimezone] = useState(settings.time_zone)
 
-    useEffect(()=>{
-        convertTime(timezone, new Date('2023-07-08T03:51:32.067Z'))
-    },[])
-
     return (
         <TimezoneContext.Provider value = {timezone}>
             <StartDayContext.Provider value = {startDay}>

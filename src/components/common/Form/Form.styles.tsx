@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { InputType } from '../../types';
 
 export const StyledInput = styled.textarea<inputStylingProps>`
-    margin: 1em;
+    margin: ${props=> props.margin};
     width: ${props => props.width};
     height: ${props => (props.size === 'large') ? '15em' : '3em'};
     border-radius: 5px;
@@ -62,6 +62,7 @@ export interface InputProps {
 export interface inputStylingProps {
     size?: string;
     width?: string;
+    margin?: string;
 }
 
 export interface labelProps {

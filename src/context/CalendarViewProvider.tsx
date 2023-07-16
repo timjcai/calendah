@@ -9,6 +9,8 @@ export const TodayContext = createContext(new Date())
 
 export const SelectDateContext = createContext(new Date())
 
+export const EventContext = createContext(null);
+
 export const CalendarViewProvider = ({children}) => {
     const [viewSize, setViewSize] = useState(settings.view_size)
     const [todayDate, setTodayDate] = useState(new Date())
@@ -19,27 +21,6 @@ export const CalendarViewProvider = ({children}) => {
     const [calendarEvents, setCalendarEvents] = useState(null)
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-
-    const value = {
-        viewSize,
-        setViewSize,
-        todayDate,
-        setTodayDate,
-        selectedDate,
-        setSelectedDate,
-        dateRange,
-        setDateRange,
-        startDate,
-        setStartDate,
-        endDate,
-        setEndDate,
-        calendarEvents,
-        setCalendarEvents,
-        error,
-        setError,
-        loading,
-        setLoading
-    }
 
     useEffect(() => {
         setDateRange(thisWeek(selectedDate, viewSize))
@@ -72,8 +53,14 @@ export const CalendarViewProvider = ({children}) => {
       if (error) return "Error!"
 
     return (
-        <WeekContext.Provider value={value}>
-            {children}
+        <WeekContext.Provider value={dateRange}>
+            <TodayContext.Provider value={todayDate}>
+                <SelectDateContext.Provider value={selectedDate}>
+                    <EventContext.Provider value={calendarEvents}>
+                        {children}
+                    </EventContext.Provider>
+                </SelectDateContext.Provider>
+            </TodayContext.Provider>
         </WeekContext.Provider>
     );
 }

@@ -10,14 +10,14 @@ import { Timepicker } from '../../Timepicker/Timepicker';
 import {useForm, FormProvider, useFormContext , useController, Controller} from 'react-hook-form'
 import { mergeDateTime, convert12to24time } from '../../../utils';
 
-export const FormInputText = ({label, size = 'small'}) => {
+export const FormInputText = ({label, size = 'small', margin='1em'}) => {
     const icon = iconMapping[label]
     const {register} = useFormContext()
 
     return (
         <StyledLabel direction={'row'}> 
             <Icon icon={icon} color={'#73767A'} />
-            <StyledInput placeholder={`Add ${label}`} width={'88%'} size={size} {...register(label)}/>
+            <StyledInput placeholder={`Add ${label}`} width={'88%'} size={size} margin={margin} {...register(label)}/>
         </StyledLabel>
     );
 }

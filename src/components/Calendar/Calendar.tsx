@@ -19,16 +19,18 @@ export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)
     const eventData = useContext(EventContext)
     const [newEventDefault, setNewEventDefault] = useState(settings.newevent_default)
-
+    const [isCreatingEvent, setIsCreatingEvent] = useState(false)
 
     function doubleClickHandler(event) {
         if (event.detail == 2) {
+            setIsCreatingEvent(true)
             const startTime = createDateTimeonPosition(event)
             const endTime = new Date(createDateTimeonPosition(event).setHours(startTime.getHours() + 1))
             newEventDefault.starttime = startTime
             newEventDefault.endtime = endTime
             setNewEventDefault(newEventDefault)
             console.log(newEventDefault)
+
             // const canvasWidthStart = (window.innerWidth)
             // const canvasTotalWidth = document.documentElement.clientWidth
             // console.log(canvasWidthStart)
