@@ -9,6 +9,9 @@ export type InputType =
     | "search"
     | "title"
     | "datetime"
+    | "edit"
+    | "exit"
+    | "settings"
 
 export type HotkeyType = 
     | "D"

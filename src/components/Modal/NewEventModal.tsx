@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FormInputText, InputForm } from '../common/Form/Form';
 import {useForm, FormProvider, useFormContext , useController, Controller} from 'react-hook-form'
-import { ExitButton, StyledButton } from '../common/Button';
+import { ExitButton, IconButton, StyledButton } from '../common/Button';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import { Icon } from '../common/Icon';
 import { StyledForm } from '../common/Form/Form.styles';
@@ -79,7 +79,7 @@ const NewEventModal = ({closeModal}) => {
             <FormProvider {...methods}>
                 <Modalnav>
                     <div></div>
-                    <ExitButton onClick={()=>closeModal(false)}><Icon icon={faCircleXmark} color={'black'}/></ExitButton>
+                    <IconButton onClick={()=>closeModal(false)} label={'exit'}/>
                 </Modalnav>
                 <form method="post" onSubmit={methods.handleSubmit(handleFormSubmit)}>
                     <FormInputText label={'title'} margin={'5px'}/>

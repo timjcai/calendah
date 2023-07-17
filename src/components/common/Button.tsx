@@ -1,5 +1,8 @@
-import React, { Component } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import styled from 'styled-components'
+import { iconMapping } from '../../db/Mapping';
+import { InputType } from '../types';
+import { Icon } from './Icon';
 
 export const StyledButton = styled.button`
     border-radius: 8px;
@@ -27,4 +30,23 @@ export const Button = ({children}) => {
         </StyledButton>
     )
 
+}
+
+interface IconButtonProps {
+    label: InputType,
+    onClick: MouseEvent<HTMLButtonElement>
+}
+
+export const StyledIconButton = styled.div`
+
+`;
+
+export const IconButton: FC<IconButtonProps> = ({label, onClick}) => {
+    const icon = iconMapping[label]
+
+    return (
+        <StyledIconButton onClick={onClick}>
+            <Icon icon={icon}></Icon>
+        </StyledIconButton>
+    )
 }
