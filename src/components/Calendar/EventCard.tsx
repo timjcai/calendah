@@ -30,7 +30,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     background-color: ${props=>props.$bgcolor};
     cursor: grab;
     pointer-events: ${props=>props.$pointerEvents ? 'auto' : 'none'};
-
+    
     p {
         margin: 3px 0px 5px 5px;
     }
