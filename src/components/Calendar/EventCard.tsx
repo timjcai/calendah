@@ -4,7 +4,7 @@ import { getLocalHour, getTime, getLocalMinute } from '../../utils';
 import { formatISO } from 'date-fns'
 import settings from '../../db/settings.json'
 
-interface CardWrapperProps {
+export interface CardWrapperProps {
     $height?: string;
     $top?: string;
     $bgcolor?: string;
@@ -12,7 +12,7 @@ interface CardWrapperProps {
     $active?: boolean;
 }
 
-const CardWrapper = styled.div<CardWrapperProps>`
+export const CardWrapper = styled.div<CardWrapperProps>`
     position: absolute;
     border-radius: 4px;
     border: ${props=> props.$active ? '2px solid white': '1px solid grey'};

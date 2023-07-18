@@ -34,7 +34,7 @@ export const Button = ({children}) => {
 
 interface IconButtonProps {
     label: InputType,
-    onClick: MouseEvent<HTMLButtonElement>
+    onClick?: MouseEvent<HTMLButtonElement>
 }
 
 export const StyledIconButton = styled.div`
