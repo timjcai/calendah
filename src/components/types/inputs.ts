@@ -12,6 +12,7 @@ export type InputType =
     | "edit"
     | "exit"
     | "settings"
+    | "delete"
 
 export type HotkeyType = 
     | "D"

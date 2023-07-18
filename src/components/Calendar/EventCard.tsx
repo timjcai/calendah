@@ -81,6 +81,7 @@ export const EventCard = ({props}) => {
             onPointerMove={e=>setEventCardPosition(e)}
             onClick={e=>setIsActive(prevstate => !prevstate)}
             $active={isActive||draggable}
+            $pointerEvents={true}
         >
             <p><strong>{title}</strong></p>
             <p>{getLocalHour(new Date(starttime))}:{getLocalMinute(new Date(starttime))}-{getLocalHour(new Date(endtime))}:{getLocalMinute(new Date(endtime))}</p>

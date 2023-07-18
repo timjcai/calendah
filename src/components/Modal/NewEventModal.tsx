@@ -8,12 +8,21 @@ import { Icon } from '../common/Icon';
 import { StyledForm } from '../common/Form/Form.styles';
 import { convert12to24time, mergeDateTime } from '../../utils';
 
-const ModalBox = styled.div`
+interface ModalBoxProps {
+    $top: number;
+    $left: number;
+}
+
+const ModalBox = styled.div<ModalBoxProps>`
     border: 1px solid black;
     border-radius: 16px;
     height: auto;
     width: 25vw;
     align-items: right;
+    position: absolute;
+    z-index: 10000000;
+    top: ${props => props.$top}px;
+    left: ${props => props.$left}px;
 `;
 
 const Modalnav = styled.div`
@@ -28,7 +37,7 @@ const Modalnav = styled.div`
 `;
 
 
-const NewEventModal = ({closeModal}) => {
+const NewEventModal = ({closeModal, top, left}) => {
     const methods = useForm()
 
     const validateData = (formValues) => {
@@ -75,7 +84,7 @@ const NewEventModal = ({closeModal}) => {
     }
 
     return (
-        <ModalBox>
+        <ModalBox $top={top} $left={left}>
             <FormProvider {...methods}>
                 <Modalnav>
                     <div></div>

@@ -68,11 +68,16 @@ export const Test = () => {
       }
   }
 
+  const setPositions = (e) => {
+      setMousePosX(e.clientX)
+      setMousePosY(e.clientY)
+  }
+
   return (
-    <div className="w-screen h-screen flex justify-center items-center flex-col">
+    <div className="w-screen h-screen flex justify-center items-center flex-col" onClick={setPositions}>
       <h1>Test page</h1>
       <button onClick={e=>setIsActive(prevState =>!prevState)}>open modal</button>
-      {isActive && <NewEventModal closeModal={setIsActive}/>}
+      {isActive && <NewEventModal closeModal={setIsActive} top={mousePosY} left={mousePosX}/>}
       <IconButton label={'settings'} />
       <IconButton label={'exit'} />
       <IconButton label={'edit'} />
