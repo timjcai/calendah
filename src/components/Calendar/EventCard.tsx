@@ -7,9 +7,12 @@ import settings from '../../db/settings.json'
 export interface CardWrapperProps {
     $height?: string;
     $top?: string;
+    $left?: string;
     $bgcolor?: string;
     $zindex?: number;
     $active?: boolean;
+    $width?: string;
+    $pointerEvents?: boolean;
 }
 
 export const CardWrapper = styled.div<CardWrapperProps>`
@@ -19,12 +22,14 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     font-size: 12px;
     margin-bottom: 1em;
     z-index: ${props=>props.$zindex};
-    width: inherit;
     overflow: hidden;
+    width: ${props=>props.$width ? `${props.$width}` : `inherit`};
     height: ${props=>props.$height};
     top: ${props=>props.$top};
+    left: ${props=>props.$left};
     background-color: ${props=>props.$bgcolor};
     cursor: grab;
+    pointer-events: ${props=>props.$pointerEvents ? 'auto' : 'none'};
 
     p {
         margin: 3px 0px 5px 5px;

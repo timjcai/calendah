@@ -15,10 +15,10 @@ export const Test = () => {
   const [mousePosX, setMousePosX] = useState(0)
   const [mousePosY, setMousePosY] = useState(0)
 
-  const singleClickHandler = (e) => {
+  const startGrabbing = (e) => {
       setGrabbing(true)
-      console.log(`grabbing`)
-      console.log(newEventData)
+      // console.log(`grabbing`)
+      // console.log(newEventData)
   }
 
   const stopGrabbing = (e) => {
@@ -41,29 +41,34 @@ export const Test = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <div className="w-1/2 h-1/2 bg-neutral-400" onPointerDown={singleClickHandler} onPointerUp={stopGrabbing} onPointerMove={moveEventCard} onPointerLeave={stopGrabbing}>
-          <h1>Test page</h1>
-          <button onClick={e=>setIsActive(prevState =>!prevState)}>open modal</button>
-          {isActive && <NewEventModal closeModal={setIsActive}/>}
-          <IconButton label={'settings'} />
-          <IconButton label={'exit'} />
-          <IconButton label={'edit'} />
+    <div className="w-screen h-screen flex justify-center items-center flex-col">
+      <h1>Test page</h1>
+      <button onClick={e=>setIsActive(prevState =>!prevState)}>open modal</button>
+      {isActive && <NewEventModal closeModal={setIsActive}/>}
+      <IconButton label={'settings'} />
+      <IconButton label={'exit'} />
+      <IconButton label={'edit'} />
+      <div className="w-1/2 h-1/2 bg-neutral-400" onPointerDown={startGrabbing} onPointerUp={stopGrabbing} onPointerMove={moveEventCard} onPointerLeave={stopGrabbing}>
           <p>{`${grabbing}`}</p>
-          <h1>{`${mousePosX}:${mousePosY}`}</h1>
+          <h1>{`${Math.round(mousePosX* 100)/100} : ${Math.round(mousePosY* 100)/100}`}</h1>
       </div>
+      {grabbing && <HoverEventCard eventData={newEventData} top={mousePosY} left={mousePosX} pointerEvents={false}/>}
     </div>
 
   )
 }
 
 
-export const HoverEventCard = ({props}) => {
-    const {id, starttime, endtime, title, location, description, calendar_id} = props
+export const HoverEventCard = ({eventData, top, left, pointerEvents}) => {
+    const {id, starttime, endtime, title, location, description, calendar_id} = eventData
     return (
         <CardWrapper
             $bgcolor={settings.calendar_color[calendar_id]} 
             $zindex={id}
+            $width={'100px'}
+            $top={`${top}px`}
+            $left={`${left}px`}
+            $pointerEvents={pointerEvents}
         >
             <p><strong>{title}</strong></p>
             <br />
