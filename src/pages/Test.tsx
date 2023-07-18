@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CardWrapper, EventCard } from '../components/Calendar/EventCard';
+import { CardWrapper, EventCard, HoverEventCard } from '../components/Calendar/EventCard';
 import { dayMappingFromIndex, monthMappingFromIndex } from '../db/Mapping';
 import { formatISO, parseISO }  from 'date-fns';
 import { getLocalHour, getLocalMinute, rubyDateConverter } from '../utils';
@@ -43,7 +43,6 @@ export const Test = () => {
       setMousePosY(e.clientY)
       setHoverEventCardWidth(canvas.width)
       setHoverEventCardLeft(canvas.x)
-      console.log(`Column: ${e.target.id} - Range: ${colRange}`)
       // console.log(`grabbing`)
       // console.log(newEventData)
   }
@@ -67,10 +66,6 @@ export const Test = () => {
       } else {
         return
       }
-  }
-
-  const GutterRailsforX = () => {
-
   }
 
   return (
@@ -99,20 +94,3 @@ export const Test = () => {
 }
 
 
-export const HoverEventCard = ({eventData, top, left, pointerEvents, width = 'inherit'}) => {
-    const {id, starttime, endtime, title, location, description, calendar_id} = eventData
-    return (
-        <CardWrapper
-            $bgcolor={settings.calendar_color[calendar_id]} 
-            $zindex={id}
-            $width={width}
-            $top={`${top}px`}
-            $left={`${left}px`}
-            $pointerEvents={pointerEvents}
-        >
-            <p><strong>{title}</strong></p>
-            <br />
-            <p>{location}</p>
-        </CardWrapper>
-    )
-}

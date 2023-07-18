@@ -89,5 +89,23 @@ export const EventCard = ({props}) => {
         </CardWrapper>
     )
 }
+
+export const HoverEventCard = ({eventData, top, left, pointerEvents, width = 'inherit'}) => {
+    const {id, starttime, endtime, title, location, description, calendar_id} = eventData
+    return (
+        <CardWrapper
+            $bgcolor={settings.calendar_color[calendar_id]} 
+            $zindex={id}
+            $width={width}
+            $top={`${top}px`}
+            $left={`${left}px`}
+            $pointerEvents={pointerEvents}
+        >
+            <p><strong>{title}</strong></p>
+            <br />
+            <p>{location}</p>
+        </CardWrapper>
+    )
+}
 // top of Calendar = 152px;
 // bottom of Calendar = 1248px;

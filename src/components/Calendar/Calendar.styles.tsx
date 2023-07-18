@@ -30,3 +30,11 @@ export const StyledCalendar = styled.div`
     flex-direction: column;
     margin-right: 1em;
 `;
+
+export const CalendarColumnWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    z-index: 1;
+`;

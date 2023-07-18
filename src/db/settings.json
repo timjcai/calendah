@@ -10,8 +10,8 @@
     },
     "newevent_default": {
         "title": "No title",
-        "starttime": "",
-        "endtime": "",
+        "starttime": "2022-10-31T09:00:00.594Z",
+        "endtime": "2022-10-31T09:00:00.594Z",
         "meeting": "No meeting link",
         "location": "No location selected",
         "attachments": "No attachments",
