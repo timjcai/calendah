@@ -29,16 +29,19 @@ export const View = () => {
 
     
   const updateInputValue = (date: Date | null | undefined ) => {
+      console.log('updating date range)')
       setSelectedDate(date)
   }
 
   useEffect(() => {
+    console.log('re-render')
     setDateRange(thisWeek(selectedDate, viewSize))
     setStartDate(generateStartandEndDate(dateRange)[0])
     setEndDate(generateStartandEndDate(dateRange)[1])
-  }, [selectedDate])
+  }, [selectedDate, calendarEvents])
 
   useEffect(()=> {
+    console.log('re-render2')
     fetch(`http://localhost:3000/api/v1/calendars/1/events/${startDate}/${endDate}`)
         .then (response => {
             if (response.ok) {

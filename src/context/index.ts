@@ -1,3 +1,4 @@
-import * from './CalendarViewProvider';
-import * from './EventProvider';
-import * from './SettingsProvider';
+export * from './CalendarViewProvider';
+export * from './NewEventProvider';
+export * from './SettingsProvider';
+export * from './MousePosProvider';

@@ -15,6 +15,7 @@ import { StyledCalendar, StyledPlannerColumn, PlannerWrapper, PlannerCell, Calen
 
 import settings from '../../db/settings.json'
 import { EventPostRequest } from '../../hooks/useEventPostRequest';
+import { MousePosProvider } from '../../context/MousePosProvider';
 
 export const BaseCalendar: FC<ViewProps> = ({times})=> {
     const thisWeekdata = useContext(WeekContext)
@@ -49,12 +50,20 @@ export const BaseCalendar: FC<ViewProps> = ({times})=> {
     }, [handleKeyPress]);
 
     const startGrabbingCard = (e) => {
-        setGrabbing(true)
-        const canvas = e.target.getBoundingClientRect()
-        setMousePosX(e.clientX)
-        setMousePosY(e.clientY)
-        setHoverEventCardWidth((canvas.width-5))
-        setHoverEventCardLeft(canvas.x)
+        const selectedItem = e.target
+        if (selectedItem.className.includes('eventcard')) {
+            console.log(selectedItem.className)
+            console.log(e.target.id)
+        // } else if (isActive) {
+            
+        } else {
+            setGrabbing(true)
+            const canvas = e.target.getBoundingClientRect()
+            setMousePosX(e.clientX)
+            setMousePosY(e.clientY)
+            setHoverEventCardWidth((canvas.width-5))
+            setHoverEventCardLeft(canvas.x)
+        }
     }
   
     const stopGrabbingCard = (e) => {
@@ -85,27 +94,32 @@ export const BaseCalendar: FC<ViewProps> = ({times})=> {
         }
     }
 
+    const MousePos = {X: mousePosX, Y: mousePosY};
+
     return (
-        <StyledCalendar>
-            <DateHeader thisWeek={thisWeekdata} />
-            <PlannerWrapper onClick={doubleClickHandler}>
-                <Timebar times ={times} />
-                <CalendarColumnWrapper onPointerDown={startGrabbingCard} onPointerUp={stopGrabbingCard} onPointerMove={moveHoverEventCard} onPointerLeave={stopGrabbingCard}>
-                {thisWeekdata.map((date)=>{
-                    const dayContent = eventData[getYYYYMMDD(date)]
-                    return (
-                        <PlannerColumn
-                            key={generateColumnId(date)} 
-                            times={times} 
-                            id={generateColumnId(date)}
-                            dayContent={dayContent}
-                        />
-                    );
-                })}
-                </CalendarColumnWrapper>
-                {grabbing && <HoverEventCard eventData={newEventDefault} top={mousePosY} left={hoverEventCardLeft} pointerEvents={false} width={`${hoverEventCardWidth}px`}/>}
-            </PlannerWrapper>
-        </StyledCalendar>
+        <MousePosProvider value={MousePos}>
+            <StyledCalendar>
+                <DateHeader thisWeek={thisWeekdata} />
+                <PlannerWrapper onClick={doubleClickHandler}>
+                    <Timebar times ={times} />
+                    <CalendarColumnWrapper onPointerDown={startGrabbingCard} onPointerUp={stopGrabbingCard} onPointerMove={moveHoverEventCard} onPointerLeave={stopGrabbingCard}>
+                    {thisWeekdata.map((date)=>{
+                        const dayContent = eventData[getYYYYMMDD(date)]
+                        return (
+                            <PlannerColumn
+                                key={generateColumnId(date)} 
+                                times={times} 
+                                id={generateColumnId(date)}
+                                dayContent={dayContent}
+                            />
+                        );
+                    })}
+                    </CalendarColumnWrapper>
+                    {grabbing && <HoverEventCard eventData={newEventDefault} top={mousePosY} left={hoverEventCardLeft} pointerEvents={false} width={`${hoverEventCardWidth}px`}/>}
+                </PlannerWrapper>
+            </StyledCalendar>
+        </MousePosProvider>
+
     )
 }
 
@@ -135,7 +149,7 @@ const PlannerColumn = (props: {times: string[], id: string, dayContent}) => {
             })}
             {props.dayContent && props.dayContent.map((event)=> {
                 return (
-                    <EventCard props={event}/>
+                    <EventCard className="eventcard" props={event}/>
                 )
                 })
             }

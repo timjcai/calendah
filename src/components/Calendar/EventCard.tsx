@@ -1,40 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { getLocalHour, getTime, getLocalMinute } from '../../utils';
 import { formatISO } from 'date-fns'
 import settings from '../../db/settings.json'
+import { CardWrapper } from './EventCard.styles';
+import NewEventModal from '../Modal/NewEventModal';
+import { MousePosXContext, MousePosYContext } from '../../context/MousePosProvider';
 
-export interface CardWrapperProps {
-    $height?: string;
-    $top?: string;
-    $left?: string;
-    $bgcolor?: string;
-    $zindex?: number;
-    $active?: boolean;
-    $width?: string;
-    $pointerEvents?: boolean;
-}
-
-export const CardWrapper = styled.div<CardWrapperProps>`
-    position: absolute;
-    border-radius: 4px;
-    border: ${props=> props.$active ? '2px solid white': '1px solid grey'};
-    font-size: 12px;
-    margin-bottom: 1em;
-    z-index: ${props=>props.$zindex};
-    overflow: hidden;
-    width: ${props=>props.$width ? `${props.$width}` : `inherit`};
-    height: ${props=>props.$height};
-    top: ${props=>props.$top};
-    left: ${props=>props.$left};
-    background-color: ${props=>props.$bgcolor};
-    cursor: grab;
-    pointer-events: ${props=>props.$pointerEvents ? 'auto' : 'none'};
-    
-    p {
-        margin: 3px 0px 5px 5px;
-    }
-`;
 
 const setTimePosition = (time: string) => {
     const cardHeight = getTime(new Date(time))
@@ -47,22 +19,18 @@ const findHeight = (starttime, endtime) => {
     return setTimePosition(endtime) - setTimePosition(starttime)
 }
 
-export const EventCard = ({props}) => {
-    const {id, starttime, endtime, title, location, description, calendar_id} = props
+export const EventCard = ({className, props}) => {
+    const {id: event_id, starttime, endtime, title, location, description, calendar_id} = props
+    const MousePosX = useContext(MousePosXContext)
+    const MousePosY = useContext(MousePosYContext)
+    
 
-    const [isActive, setIsActive] = useState(false)
-    const [draggable, setDraggable] = useState(false);
+    // const [isActive, setIsActive] = useState(false)
+    // const [draggable, setDraggable] = useState(false);
+    const [openModal, setOpenModal] = useState(false)
     const [eventCardHeight, setEventCardHeight] = useState(findHeight(starttime, endtime))
     const [topPosition, setTopPosition] = useState(setTimePosition(starttime))
 
-    const setEventCardPosition = (e) => {
-        if (draggable === true) {
-            const mouseTracker=e.target.getBoundingClientRect()
-            console.log(e)
-        } else {
-            return 
-        }
-    }
 
     const mouseStyle = {
         draggable: "grab",
@@ -71,22 +39,27 @@ export const EventCard = ({props}) => {
     }
 
     return (
-        <CardWrapper 
+        <CardWrapper
             $height={`${eventCardHeight}px`}
             $top={ `${topPosition}px`} 
             $bgcolor={settings.calendar_color[calendar_id]} 
-            $zindex={id}
-            onPointerDown={e=>setDraggable(true)}
-            onPointerUp={e=>setDraggable(false)}
-            onPointerMove={e=>setEventCardPosition(e)}
-            onClick={e=>setIsActive(prevstate => !prevstate)}
-            $active={isActive||draggable}
+            $zindex={event_id}
+            // onPointerDown={e=>setDraggable(true)}
+            // onPointerUp={e=>setDraggable(false)}
+            // onPointerMove={e=>setEventCardPosition(e)}
+            // onClick={e=>setIsActive(prevstate => !prevstate)}
+            // $active={isActive||draggable}
             $pointerEvents={true}
+            className={className}
+            id={event_id}
+            role="button"
+            onClick={e=>setOpenModal(prevState =>!prevState)}
         >
             <p><strong>{title}</strong></p>
             <p>{getLocalHour(new Date(starttime))}:{getLocalMinute(new Date(starttime))}-{getLocalHour(new Date(endtime))}:{getLocalMinute(new Date(endtime))}</p>
             <br />
             <p>{location}</p>
+            {openModal && <NewEventModal closeModal={setOpenModal} top={MousePosX} left={MousePosX}/>}
         </CardWrapper>
     )
 }
@@ -101,6 +74,7 @@ export const HoverEventCard = ({eventData, top, left, pointerEvents, width = 'in
             $top={`${top}px`}
             $left={`${left}px`}
             $pointerEvents={pointerEvents}
+            role="button"
         >
             <p><strong>{title}</strong></p>
             <br />
