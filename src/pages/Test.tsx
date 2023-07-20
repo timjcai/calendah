@@ -8,10 +8,14 @@ import { dayMappingFromIndex, monthMappingFromIndex } from "../db/Mapping";
 import { formatISO, parseISO } from "date-fns";
 import { getLocalHour, getLocalMinute, rubyDateConverter } from "../utils";
 import NewEventModal from "../components/Modal/NewEventModal";
-import { IconButton } from "../components/common/Button";
+import { IconButton, StyledButton } from "../components/common/Button";
 
 import settings from "../db/settings.json";
 import { StyledPlannerColumn } from "../components/Calendar/Calendar.styles";
+import { BaseModal, ModalNavbar } from "../components/Modal/BaseModal";
+import { ModalBox } from "../components/Modal/Modal.styles";
+import { FormInputText } from "../components/common/Form/Form";
+import { FormProvider, useForm } from "react-hook-form";
 
 export const Test = () => {
     const [isActive, setIsActive] = useState(false);
@@ -23,6 +27,7 @@ export const Test = () => {
     const [xGuardRails, setXGuardRails] = useState(null);
     const [hoverEventCardWidth, setHoverEventCardWidth] = useState(colWidth);
     const [hoverEventCardLeft, setHoverEventCardLeft] = useState(0);
+    const methods = useForm();
 
     useEffect(() => {
         // Function to be executed on window resize
@@ -83,46 +88,60 @@ export const Test = () => {
             onClick={setPositions}
         >
             <h1>Test page</h1>
-            <button onClick={(e) => setIsActive((prevState) => !prevState)}>
-                open modal
-            </button>
-            {isActive && (
-                <NewEventModal
-                    closeModal={setIsActive}
-                    top={mousePosY}
-                    left={mousePosX}
-                />
-            )}
-            <IconButton label={"settings"} />
-            <IconButton label={"exit"} />
-            <IconButton label={"edit"} />
-            <div
-                className="w-1/2 h-1/2 bg-neutral-400 flex flex-row"
-                onPointerDown={startGrabbing}
-                onPointerUp={stopGrabbing}
-                onPointerMove={moveEventCard}
-                onPointerLeave={stopGrabbing}
-            >
-                <StyledPlannerColumn $width={colWidth} id={"1"}>
-                    <p>{`${grabbing}`}</p>
-                    <h1>{`${Math.round(mousePosX * 100) / 100} : ${
-                        Math.round(mousePosY * 100) / 100
-                    }`}</h1>
-                </StyledPlannerColumn>
-                <StyledPlannerColumn $width={colWidth} id={"2"} />
-                <StyledPlannerColumn $width={colWidth} id={"3"} />
-                <StyledPlannerColumn $width={colWidth} id={"4"} />
-                <StyledPlannerColumn $width={colWidth} id={"5"} />
-            </div>
-            {grabbing && (
-                <HoverEventCard
-                    eventData={newEventData}
-                    top={mousePosY}
-                    left={hoverEventCardLeft}
-                    pointerEvents={false}
-                    width={hoverEventCardWidth}
-                />
-            )}
+            <ModalBox>
+                <FormProvider {...methods}>
+                    <ModalNavbar></ModalNavbar>
+                    <form method="post">
+                        <FormInputText label={"title"} margin={"5px"} />
+                        <FormInputText label={"guests"} margin={"5px"} />
+                        <FormInputText label={"location"} margin={"5px"} />
+                        <FormInputText label={"attachments"} margin={"5px"} />
+                        <StyledButton type="submit">Save</StyledButton>
+                    </form>
+                </FormProvider>
+            </ModalBox>
+            {/* <div className="commentedout">
+                <button onClick={(e) => setIsActive((prevState) => !prevState)}>
+                    open modal
+                </button>
+                {isActive && (
+                    <NewEventModal
+                        closeModal={setIsActive}
+                        top={mousePosY}
+                        left={mousePosX}
+                    />
+                )}
+                <IconButton label={"settings"} />
+                <IconButton label={"exit"} />
+                <IconButton label={"edit"} />
+                <div
+                    className="w-1/2 h-1/2 bg-neutral-400 flex flex-row"
+                    onPointerDown={startGrabbing}
+                    onPointerUp={stopGrabbing}
+                    onPointerMove={moveEventCard}
+                    onPointerLeave={stopGrabbing}
+                >
+                    <StyledPlannerColumn $width={colWidth} id={"1"}>
+                        <p>{`${grabbing}`}</p>
+                        <h1>{`${Math.round(mousePosX * 100) / 100} : ${
+                            Math.round(mousePosY * 100) / 100
+                        }`}</h1>
+                    </StyledPlannerColumn>
+                    <StyledPlannerColumn $width={colWidth} id={"2"} />
+                    <StyledPlannerColumn $width={colWidth} id={"3"} />
+                    <StyledPlannerColumn $width={colWidth} id={"4"} />
+                    <StyledPlannerColumn $width={colWidth} id={"5"} />
+                </div>
+                {grabbing && (
+                    <HoverEventCard
+                        eventData={newEventData}
+                        top={mousePosY}
+                        left={hoverEventCardLeft}
+                        pointerEvents={false}
+                        width={hoverEventCardWidth}
+                    />
+                )}
+            </div> */}
         </div>
     );
 };

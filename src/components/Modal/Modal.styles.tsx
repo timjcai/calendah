@@ -21,12 +21,14 @@ export const ModalBox = styled.div<ModalBoxProps>`
 export const Modalnav = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     padding: 0em 1.5em 0em 1.5em;
     background-color: #eff1f2;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     margin-bottom: 16px;
+    min-height: 40px;
 `;
 
 export const CalendarColorSquare = styled.div<CommonStylingProps>`
@@ -36,4 +38,11 @@ export const CalendarColorSquare = styled.div<CommonStylingProps>`
     margin-left: 3px;
     margin-top: 3px;
     background-color: ${(props) => props.$bgcolor};
+`;
+
+export const NavContentWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    gap: 8px;
 `;
