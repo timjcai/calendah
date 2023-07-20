@@ -1,105 +1,103 @@
-import React from 'react'
-import styled from 'styled-components'
-import { FormInputText, InputForm } from '../common/Form/Form';
-import {useForm, FormProvider, useFormContext , useController, Controller} from 'react-hook-form'
-import { ExitButton, IconButton, StyledButton } from '../common/Button';
-import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-import { Icon } from '../common/Icon';
-import { StyledForm } from '../common/Form/Form.styles';
-import { convert12to24time, mergeDateTime } from '../../utils';
+import React from "react";
+import styled from "styled-components";
+import { FormInputText, InputForm } from "../common/Form/Form";
+import {
+    useForm,
+    FormProvider,
+    useFormContext,
+    useController,
+    Controller,
+} from "react-hook-form";
+import { ExitButton, IconButton, StyledButton } from "../common/Button";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import { Icon } from "../common/Icon";
+import { StyledForm } from "../common/Form/Form.styles";
+import { convert12to24time, mergeDateTime } from "../../utils";
 
-interface ModalBoxProps {
-    $top: number;
-    $left: number;
-}
-
-const ModalBox = styled.div<ModalBoxProps>`
-    border: 1px solid black;
-    border-radius: 16px;
-    height: auto;
-    width: 25vw;
-    align-items: right;
-    position: absolute;
-    z-index: 10000000;
-    top: ${props => props.$top}px;
-    left: ${props => props.$left}px;
-`;
-
-const Modalnav = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 0em 1.5em 0em 1.5em;
-    background-color: #EFF1F2;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    margin-bottom: 16px;
-`;
-
-
-const NewEventModal = ({closeModal, top, left}) => {
-    const methods = useForm()
+const NewEventModal = ({ closeModal, top, left }) => {
+    const methods = useForm();
 
     const validateData = (formValues) => {
-        const {title, startdate, starttime, enddate, endtime, location, meeting, attachments, description, guests} = formValues
+        const {
+            title,
+            startdate,
+            starttime,
+            enddate,
+            endtime,
+            location,
+            meeting,
+            attachments,
+            description,
+            guests,
+        } = formValues;
         // mergeDateTime(startdate, convert12to24time(starttime))
         // mergeDateTime(enddate, convert12to24time(endtime))
-        formValues['calendar_id'] = 1
+        formValues["calendar_id"] = 1;
         // delete formValues.startdate
         // delete formValues.enddate
         if (!title) {
-            console.log('no title provided')
+            console.log("no title provided");
         }
         if (!location) {
-            console.log('no location provided')
+            console.log("no location provided");
         }
         if (!meeting) {
-            console.log('no meeting provided')
+            console.log("no meeting provided");
         }
         if (!attachments) {
-            console.log('no attachments provided')
+            console.log("no attachments provided");
         }
         if (!description) {
-            console.log('no description provided')
+            console.log("no description provided");
         }
-        return formValues
-    }
-    
+        return formValues;
+    };
+
     const handleFormSubmit = (formValues) => {
-        const form = validateData(formValues)
-        
-        fetch(`http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        })
-        .then(response => response.json())
-        .then(data => {console.log('Response from server:', data)
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+        const form = validateData(formValues);
+
+        fetch(
+            `http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(form),
+            }
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Response from server:", data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    };
 
     return (
         <ModalBox $top={top} $left={left}>
             <FormProvider {...methods}>
                 <Modalnav>
                     <div></div>
-                    <IconButton onClick={()=>closeModal(false)} label={'exit'}/>
+                    <IconButton
+                        onClick={() => closeModal(false)}
+                        label={"exit"}
+                    />
                 </Modalnav>
-                <form method="post" onSubmit={methods.handleSubmit(handleFormSubmit)}>
-                    <FormInputText label={'title'} margin={'5px'}/>
-                    <FormInputText label={'guests'} margin={'5px'} />
-                    <FormInputText label={'location'} margin={'5px'} />
-                    <FormInputText label={'attachments'} margin={'5px'} />
-                    <StyledButton type='submit'>Save</StyledButton>
+                <form
+                    method="post"
+                    onSubmit={methods.handleSubmit(handleFormSubmit)}
+                >
+                    <FormInputText label={"title"} margin={"5px"} />
+                    <FormInputText label={"guests"} margin={"5px"} />
+                    <FormInputText label={"location"} margin={"5px"} />
+                    <FormInputText label={"attachments"} margin={"5px"} />
+                    <StyledButton type="submit">Save</StyledButton>
                 </form>
             </FormProvider>
         </ModalBox>
-    )
-}
+    );
+};
 
-export default NewEventModal
+export default NewEventModal;

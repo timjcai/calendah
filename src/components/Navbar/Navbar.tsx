@@ -1,11 +1,10 @@
-import React, {useState, useContext} from 'react'
-import { Link } from 'react-router-dom';
-import styled from 'styled-components'
-import { Button, StyledButton } from '../common/Button';
-import { StyledInput } from '../common/Form/Form';
-import { thisWeek } from '../../utils/DateUtils';
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { Button, StyledButton } from "../common/Button";
+import { thisWeek } from "../../utils/DateUtils";
 import DatePicker from "react-widgets/DatePicker";
-import { ViewSizeContext } from '../../context/SettingsProvider';
+import { ViewSizeContext } from "../../context/SettingsProvider";
 
 export const NavWrapper = styled.div`
     display: flex;
@@ -20,45 +19,44 @@ export const NavWrapper = styled.div`
 export const NavMapping = {
     new: {
         label: "Create new",
-        linkpath: "/new"
+        linkpath: "/new",
     },
     settings: {
         label: "Settings",
-        linkpath: "/settings"
+        linkpath: "/settings",
     },
     calendar: {
         label: "Return to View",
-        linkpath: "/"
+        linkpath: "/",
     },
     test: {
         label: "Test",
-        linkpath: "/test"
+        linkpath: "/test",
     },
     submit: {
         label: "Submit",
-        linkpath: "/"
-    }
-}
+        linkpath: "/",
+    },
+};
 
-export const NavButton = ({navigation}) => {
-    const {label, linkpath} = navigation
+export const NavButton = ({ navigation }) => {
+    const { label, linkpath } = navigation;
 
     return (
         <StyledButton>
             <Link to={linkpath}>{label}</Link>
         </StyledButton>
     );
-}
+};
 
 export const DateSearchBar = () => {
-    const viewSize = useContext(ViewSizeContext)
-    const [dateSearchQuery, setDateSearchQuery] = useState('')
-    
-    const updateInputValue = (e) => {
+    const viewSize = useContext(ViewSizeContext);
+    const [dateSearchQuery, setDateSearchQuery] = useState("");
 
-        setDateSearchQuery(e)
-        console.log(thisWeek(new Date(dateSearchQuery), viewSize))
-    }
+    const updateInputValue = (e) => {
+        setDateSearchQuery(e);
+        console.log(thisWeek(new Date(dateSearchQuery), viewSize));
+    };
 
     return (
         <div>
@@ -68,19 +66,19 @@ export const DateSearchBar = () => {
                 onChange={updateInputValue}
             />
         </div>
-    )
-}
+    );
+};
 
-export const Navbar = () => { 
+export const Navbar = () => {
     return (
         <NavWrapper>
-            <NavButton navigation = {NavMapping['new']}/>
+            <NavButton navigation={NavMapping["new"]} />
             <DateSearchBar />
             <div>
-                <NavButton navigation = {NavMapping['calendar']}/>
-                <NavButton navigation = {NavMapping['settings']}/>
-                <NavButton navigation = {NavMapping['test']}/>
+                <NavButton navigation={NavMapping["calendar"]} />
+                <NavButton navigation={NavMapping["settings"]} />
+                <NavButton navigation={NavMapping["test"]} />
             </div>
         </NavWrapper>
-    )
-}
+    );
+};

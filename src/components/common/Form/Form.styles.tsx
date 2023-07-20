@@ -1,14 +1,14 @@
-import styled from 'styled-components'
-import { InputType } from '../../types';
+import styled from "styled-components";
+import { InputType } from "../../types";
 
 export const StyledInput = styled.textarea<inputStylingProps>`
-    margin: ${props=> props.margin};
-    width: ${props => props.width};
-    height: ${props => (props.size === 'large') ? '15em' : '3em'};
+    margin: ${(props) => props.margin};
+    width: ${(props) => props.width};
+    height: ${(props) => (props.size === "large" ? "15em" : "3em")};
     border-radius: 5px;
     padding: 0.75em 1em 0.75em 1em;
     font-size: 14px;
-    background-color: #EFF1F2;
+    background-color: #eff1f2;
 `;
 
 export const StyledForm = styled.form`
@@ -24,34 +24,33 @@ export const StyledForm = styled.form`
 export const FormCol = styled.div<labelProps>`
     display: flex;
     flex-direction: column;
-    width: ${props => props.width};
+    width: ${(props) => props.width};
 `;
 
 export const StyledLabel = styled.label<labelProps>`
     display: flex;
-    flex-direction: ${props => props.direction};
+    flex-direction: ${(props) => props.direction};
     place-items: baseline;
     font-size: 20px;
 `;
 
 export const StyledFieldset = styled.fieldset<labelProps>`
     display: flex;
-    flex-direction: ${props => props.direction};
-    width: ${props => props.width};
+    flex-direction: ${(props) => props.direction};
+    width: ${(props) => props.width};
     justify-content: space-between;
     place-items: baseline;
     font-size: 20px;
     border-radius: 5px;
     padding: 0.75em 0.5em 0.75em 1em;
-`
+`;
 
 export const StyledTimeInput = styled.input`
     margin: 1em;
     border-radius: 5px;
     padding: 0.75em 1em 0.75em 1em;
     font-size: 14px;
-    background-color: #EFF1F2;
-    
+    background-color: #eff1f2;
 `;
 
 export interface InputProps {

@@ -1,7 +1,7 @@
-import React, {FC} from 'react'
-import styled from 'styled-components'
-import { TimecellProps, TimebarProps } from '../types/calendar';
-import { Paragraph } from '../common/Text/Text';
+import React, { FC } from "react";
+import styled from "styled-components";
+import { TimecellProps, TimebarProps } from "../types/calendar";
+import { Paragraph } from "../common/Text/Text";
 
 export const TimebarWrapper = styled.div`
     display: flex;
@@ -18,21 +18,25 @@ export const TimebarCell = styled.div`
     top: -12px;
 `;
 
-export const Timecell: FC<TimecellProps> = ({time}) => {
+export const Timecell: FC<TimecellProps> = ({ time }) => {
     return (
         <TimebarCell>
-            <span><Paragraph color={'grey'} $fsize={'10px'}>{time}</Paragraph></span>
+            <span>
+                <Paragraph color={"grey"} $fsize={"10px"}>
+                    {time}
+                </Paragraph>
+            </span>
         </TimebarCell>
     );
-}
+};
 
-export const Timebar: FC<TimebarProps> = ({times}) => {
-
+export const Timebar: FC<TimebarProps> = ({ times }) => {
     return (
         <TimebarWrapper>
-            {times && times.map((unit)=> {
-                return(<Timecell key={unit} time={unit} />)
-            })}
+            {times &&
+                times.map((unit) => {
+                    return <Timecell key={unit} time={unit} />;
+                })}
         </TimebarWrapper>
     );
-}
+};

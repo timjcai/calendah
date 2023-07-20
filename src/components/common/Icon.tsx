@@ -3,16 +3,21 @@ import React, { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
-
 export type IconProps = {
-    icon: IconDefinition,
-    color?: string
-  }
-
-export const Icon: FC<IconProps> = ({ icon, color }) => {
-  return (<FontAwesomeIcon icon={icon} width={20} color={ color } style={{pointerEvents: 'none'}}/>);
+    icon: IconDefinition;
+    color?: string;
 };
 
+export const Icon: FC<IconProps> = ({ icon, color }) => {
+    return (
+        <FontAwesomeIcon
+            icon={icon}
+            width={20}
+            color={color}
+            style={{ pointerEvents: "none" }}
+        />
+    );
+};
 
 // type StackIconProps = {
 //   icon: DevIconType

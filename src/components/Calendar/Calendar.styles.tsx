@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { CommonStylingProps } from '../types'; 
+import styled from "styled-components";
+import { CommonStylingProps } from "../types";
 
 export const PlannerWrapper = styled.div`
     display: flex;
@@ -13,7 +13,7 @@ export const PlannerWrapper = styled.div`
 export const StyledPlannerColumn = styled.div<CommonStylingProps>`
     display: flex;
     flex-direction: column;
-    width: ${props => props.$width};
+    width: ${(props) => props.$width};
     height: auto;
     border-right: var(--shell-line) 1px solid;
 `;

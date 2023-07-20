@@ -1,11 +1,10 @@
 :root {
-    --shell-line: rgb(218,220,224,0.9);
-    --timebar-width: 64px;
-    --sidebar-width: 256px;
-    --blue: #357DED;
-    --red: #B24C63;
-    --green: #45B69C;
-    --yellow: #FFC43D;
-    --peach: #FFB997;
+  --shell-line: rgb(218, 220, 224, 0.9);
+  --timebar-width: 64px;
+  --sidebar-width: 256px;
+  --blue: #357ded;
+  --red: #b24c63;
+  --green: #45b69c;
+  --yellow: #ffc43d;
+  --peach: #ffb997;
 }
-

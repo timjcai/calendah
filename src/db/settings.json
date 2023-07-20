@@ -1,21 +1,21 @@
 {
-    "time_zone": "en-AU",
-    "start_of_the_week": "Monday",
-    "view_size": 7,
-    "calendar_color": {
-        "1": "#BAD7F2",
-        "2": "#F2E2BA",
-        "3": "#F2BAC9",
-        "4": "#BAF2BB"
-    },
-    "newevent_default": {
-        "title": "No title",
-        "starttime": "2022-10-31T09:00:00.594Z",
-        "endtime": "2022-10-31T09:00:00.594Z",
-        "meeting": "No meeting link",
-        "location": "No location selected",
-        "attachments": "No attachments",
-        "guests": "No guests",
-        "description": "Add description here"
-    }
+  "time_zone": "en-AU",
+  "start_of_the_week": "Monday",
+  "view_size": 7,
+  "calendar_color": {
+    "1": "#BAD7F2",
+    "2": "#F2E2BA",
+    "3": "#F2BAC9",
+    "4": "#BAF2BB"
+  },
+  "newevent_default": {
+    "title": "No title",
+    "starttime": "2022-10-31T09:00:00.594Z",
+    "endtime": "2022-10-31T09:00:00.594Z",
+    "meeting": "No meeting link",
+    "location": "No location selected",
+    "attachments": "No attachments",
+    "guests": "No guests",
+    "description": "Add description here"
+  }
 }

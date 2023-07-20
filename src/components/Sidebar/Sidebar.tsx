@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import React, { useState } from 'react'
-import Calendar from 'react-calendar'
-import { format } from 'date-fns';
-import '../../styles/Calendar.css'
+import styled from "styled-components";
+import React, { useState } from "react";
+import Calendar from "react-calendar";
+import { format } from "date-fns";
+import "../../styles/Calendar.css";
 
 const SidebarWrapper = styled.div`
     display: column;
@@ -10,10 +10,6 @@ const SidebarWrapper = styled.div`
     width: var(--sidebar-width);
 `;
 
-export const Sidebar = ({children}) => {
-    return (
-        <SidebarWrapper>
-            {children}
-        </SidebarWrapper>
-    );
-}
+export const Sidebar = ({ children }) => {
+    return <SidebarWrapper>{children}</SidebarWrapper>;
+};
