@@ -9,15 +9,8 @@ import { IconButton } from "../common/Button";
 import settings from "../../db/settings.json";
 import { Paragraph } from "../common/Text";
 
-export const BaseModal = ({ children, top, left }) => {
-    return (
-        <ModalBox $top={top} $left={left}>
-            {children}
-        </ModalBox>
-    );
-};
 // CHANGES #1: NEED TO EDIT - add functionality for dynamic changes based on calendar view
-export const ModalNavbar = () => {
+export const ModalNavbar = ({ closeModal }) => {
     return (
         <Modalnav>
             <NavContentWrapper>

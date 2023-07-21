@@ -49,3 +49,7 @@ const limit0to1 = (heightPercentage: number): number => {
     return heightPercentage;
   }
 };
+
+export const getEventId = (eventCardId: string): number => {
+  return parseInt(eventCardId.split('-')[1])
+}

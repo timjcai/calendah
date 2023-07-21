@@ -12,7 +12,7 @@ import { IconButton, StyledButton } from "../components/common/Button";
 
 import settings from "../db/settings.json";
 import { StyledPlannerColumn } from "../components/Calendar/Calendar.styles";
-import { BaseModal, ModalNavbar } from "../components/Modal/BaseModal";
+import { ModalNavbar } from "../components/Modal/BaseModalComponents";
 import { ModalBox } from "../components/Modal/Modal.styles";
 import { FormInputText } from "../components/common/Form/Form";
 import { FormProvider, useForm } from "react-hook-form";

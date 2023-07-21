@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { InputType } from "../../types";
 
-export const StyledInput = styled.textarea<inputStylingProps>`
+export const StyledInput = styled.input<inputStylingProps>`
     margin: ${(props) => props.margin};
     width: ${(props) => props.width};
     height: ${(props) => (props.size === "large" ? "15em" : "3em")};

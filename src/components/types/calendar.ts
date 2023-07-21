@@ -77,3 +77,8 @@ export type datenumberType =
   | 29
   | 30
   | 31;
+
+export type IActiveCard = 
+  | null
+  | 'placeholder'
+  | number

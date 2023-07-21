@@ -64,7 +64,7 @@ export const EventCard = ({ className, props }) => {
             // $active={isActive||draggable}
             $pointerEvents={true}
             className={className}
-            id={event_id}
+            id={`eventcard-${event_id}`}
             role="button"
             // onClick={e=>setOpenModal(prevState =>!prevState)}
         >

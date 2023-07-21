@@ -1,6 +1,12 @@
 import React, { FC, useCallback, useEffect, useContext, useState } from "react";
 
-import { TimebarProps, TimecellProps, ViewProps, DateProps } from "../types";
+import {
+    TimebarProps,
+    TimecellProps,
+    ViewProps,
+    DateProps,
+    IActiveCard,
+} from "../types";
 
 import { Timebar } from "./Timebar";
 import { DateHeader } from "./DateHeader";
@@ -24,6 +30,7 @@ import {
     createDateTimeonPosition,
     extractDate,
     extractTime,
+    getEventId,
 } from "../../utils";
 
 import {
@@ -37,6 +44,7 @@ import {
 import settings from "../../db/settings.json";
 import { EventPostRequest } from "../../hooks/useEventPostRequest";
 import { MousePosProvider } from "../../context/MousePosProvider";
+import NewEventModal from "../Modal/NewEventModal";
 
 export const BaseCalendar: FC<ViewProps> = ({ times }) => {
     const thisWeekdata = useContext(WeekContext);
@@ -44,9 +52,10 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
     const [newEventDefault, setNewEventDefault] = useState(
         settings.newevent_default
     );
-    const [isCreatingEvent, setIsCreatingEvent] = useState(false);
+    const [activeCard, setActiveCard] = useState<IActiveCard>(null);
 
     const [grabbing, setGrabbing] = useState(false);
+
     const [mousePosX, setMousePosX] = useState(0);
     const [mousePosY, setMousePosY] = useState(0);
     const [hoverEventCardWidth, setHoverEventCardWidth] = useState(100);
@@ -65,6 +74,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
     useEffect(() => {
         // attach the event listener
         document.addEventListener("keydown", handleKeyPress);
+        console.log(thisWeekdata);
 
         // remove the event listener
         return () => {
@@ -74,17 +84,27 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
 
     const startGrabbingCard = (e) => {
         const selectedItem = e.target;
-        if (selectedItem.className.includes("eventcard")) {
-            console.log(selectedItem.className);
-            console.log(e.target.id);
-            // } else if (isActive) {
+        if (activeCard === null) {
+            if (selectedItem.id.includes("eventcard")) {
+                // opens editor
+                console.log(selectedItem.className);
+                console.log(getEventId(e.target.id));
+                setActiveCard(getEventId(e.target.id));
+                // } else if (isActive) {
+            } else {
+                // create new event
+                setActiveCard("placeholder");
+                setGrabbing(true);
+                const canvas = e.target.getBoundingClientRect();
+                setMousePosX(e.clientX);
+                setMousePosY(e.clientY);
+                setHoverEventCardWidth(canvas.width - 5);
+                setHoverEventCardLeft(canvas.x);
+            }
         } else {
-            setGrabbing(true);
-            const canvas = e.target.getBoundingClientRect();
-            setMousePosX(e.clientX);
-            setMousePosY(e.clientY);
-            setHoverEventCardWidth(canvas.width - 5);
-            setHoverEventCardLeft(canvas.x);
+            // exit editor or exit new event
+            console.log("exit editor or new event modal");
+            return setActiveCard(null);
         }
     };
 
@@ -102,7 +122,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
             newEventDefault.calendar_id = 1; // hardcoding calendar - need to handle this later - currently only 1 calendar can be created
             setNewEventDefault(newEventDefault);
             console.log(newEventDefault);
-            EventPostRequest(newEventDefault);
+            // EventPostRequest(newEventDefault);
         } else {
             return;
         }
@@ -146,7 +166,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
                             );
                         })}
                     </CalendarColumnWrapper>
-                    {grabbing && (
+                    {activeCard === "placeholder" && (
                         <HoverEventCard
                             eventData={newEventDefault}
                             top={mousePosY}
@@ -154,6 +174,9 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
                             pointerEvents={false}
                             width={`${hoverEventCardWidth}px`}
                         />
+                    )}
+                    {activeCard !== null && activeCard !== "placeholder" && (
+                        <NewEventModal />
                     )}
                 </PlannerWrapper>
             </StyledCalendar>
@@ -163,7 +186,6 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
 
 const PlannerColumn = (props: { times: string[]; id: string; dayContent }) => {
     const viewSize = useContext(ViewSizeContext);
-    const events = useContext(EventContext);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -172,7 +194,6 @@ const PlannerColumn = (props: { times: string[]; id: string; dayContent }) => {
             // Update the state or perform any other actions when the
             // browser is resized
         }
-
         window.addEventListener("resize", handleResize);
 
         return () => {

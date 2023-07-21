@@ -13,9 +13,25 @@ import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { Icon } from "../common/Icon";
 import { StyledForm } from "../common/Form/Form.styles";
 import { convert12to24time, mergeDateTime } from "../../utils";
+import { ModalNavbar } from "./BaseModalComponents";
+import { ModalBox } from "./Modal.styles";
 
-const NewEventModal = ({ closeModal, top, left }) => {
+const NewEventModal = ({ closeModal, top, left, eventData = null }) => {
     const methods = useForm();
+    if (eventData !== null) {
+        const {
+            id,
+            starttime,
+            endtime,
+            title,
+            location,
+            description,
+            calendar_id,
+            guests,
+            attachments,
+            meeting,
+        } = eventData;
+    }
 
     const validateData = (formValues) => {
         const {
@@ -30,11 +46,11 @@ const NewEventModal = ({ closeModal, top, left }) => {
             description,
             guests,
         } = formValues;
-        // mergeDateTime(startdate, convert12to24time(starttime))
-        // mergeDateTime(enddate, convert12to24time(endtime))
+        // mergeDateTime(startdate, convert12to24time(starttime));
+        // mergeDateTime(enddate, convert12to24time(endtime));
         formValues["calendar_id"] = 1;
-        // delete formValues.startdate
-        // delete formValues.enddate
+        // delete formValues.startdate;
+        // delete formValues.enddate;
         if (!title) {
             console.log("no title provided");
         }
@@ -55,36 +71,31 @@ const NewEventModal = ({ closeModal, top, left }) => {
 
     const handleFormSubmit = (formValues) => {
         const form = validateData(formValues);
+        console.log(form);
 
-        fetch(
-            `http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(form),
-            }
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Response from server:", data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+        // fetch(
+        //     `http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`,
+        //     {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify(form),
+        //     }
+        // )
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log("Response from server:", data);
+        //     })
+        //     .catch((error) => {
+        //         console.error("Error:", error);
+        //     });
     };
 
     return (
         <ModalBox $top={top} $left={left}>
             <FormProvider {...methods}>
-                <Modalnav>
-                    <div></div>
-                    <IconButton
-                        onClick={() => closeModal(false)}
-                        label={"exit"}
-                    />
-                </Modalnav>
+                <ModalNavbar closeModal={closeModal} />
                 <form
                     method="post"
                     onSubmit={methods.handleSubmit(handleFormSubmit)}

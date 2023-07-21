@@ -64,23 +64,18 @@ export const View = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const updateInputValue = (date: Date | null | undefined) => {
-        console.log("updating date range)");
+    const updateInputValue = (date: Date) => {
+        console.log("updating date range");
         setSelectedDate(date);
-    };
-
-    useEffect(() => {
-        console.log("re-render");
         setDateRange(thisWeek(selectedDate, viewSize));
         setStartDate(generateStartandEndDate(dateRange)[0]);
         setEndDate(generateStartandEndDate(dateRange)[1]);
-    }, [selectedDate, calendarEvents]);
+    };
 
     useEffect(() => {
-        console.log("re-render2");
-        fetch(
-            `http://localhost:3000/api/v1/calendars/1/events/${startDate}/${endDate}`
-        )
+        const url = `http://localhost:3000/api/v1/calendars/1/events/${startDate}/${endDate}`;
+        console.log(url);
+        fetch(url)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -88,7 +83,7 @@ export const View = () => {
                 throw response;
             })
             .then((data) => {
-                // console.log(data)
+                console.log(data);
                 setCalendarEvents(data);
             })
             .catch((error) => {
@@ -98,7 +93,7 @@ export const View = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, [selectedDate]);
+    }, [dateRange]);
 
     if (loading) return "Loading...";
     if (error) return "Error!";
