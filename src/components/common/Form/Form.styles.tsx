@@ -9,6 +9,11 @@ export const StyledInput = styled.input<inputStylingProps>`
     padding: 0.75em 1em 0.75em 1em;
     font-size: 14px;
     background-color: #eff1f2;
+    pointer-events: ${(props) => props.pointerEvents};
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 export const StyledForm = styled.form`
@@ -62,6 +67,7 @@ export interface inputStylingProps {
     size?: string;
     width?: string;
     margin?: string;
+    pointerEvents?: string;
 }
 
 export interface labelProps {

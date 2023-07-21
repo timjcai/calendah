@@ -29,6 +29,8 @@ export const FormInputText = ({
     size = "small",
     margin = "1em",
     defaultValue = `No ${label}`,
+    readOnly,
+    pointerEvents = "auto",
 }) => {
     const icon = iconMapping[label];
     const { register } = useFormContext();
@@ -43,6 +45,8 @@ export const FormInputText = ({
                 margin={margin}
                 defaultValue={defaultValue}
                 {...register(label)}
+                readOnly={readOnly}
+                pointerEvents={pointerEvents}
             />
         </StyledLabel>
     );

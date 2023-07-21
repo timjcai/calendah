@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
     CalendarColorSquare,
     ModalBox,
@@ -8,12 +8,20 @@ import {
 import { IconButton } from "../common/Button";
 import settings from "../../db/settings.json";
 import { Paragraph } from "../common/Text";
+import { DeleteRequest } from "../../hooks/useEventPostRequest";
+import { deleteEventId } from "../../utils";
+import { EventContext } from "../../context/Context";
 
 // CHANGES #1: NEED TO EDIT - add functionality for dynamic changes based on calendar view
-export const ModalNavbar = ({ setActiveCard, calendar_id }) => {
-    const color = settings.calendar_color[calendar_id].color;
-    const name = settings.calendar_color[calendar_id].name;
+export const ModalNavbar = ({ setActiveCard, eventData }) => {
+    const color = settings.calendar_color[eventData.calendar_id].color;
+    const name = settings.calendar_color[eventData.calendar_id].name;
+    const allEventData = useContext(EventContext);
 
+    const handleDelete = (e) => {
+        DeleteRequest(eventData);
+        // deleteEventId(eventData.id, allEventData);
+    };
     return (
         <Modalnav>
             <NavContentWrapper>
@@ -25,10 +33,7 @@ export const ModalNavbar = ({ setActiveCard, calendar_id }) => {
                     onClick={(e) => console.log("editing")}
                     label={"edit"}
                 />
-                <IconButton
-                    onClick={(e) => console.log("deleting")}
-                    label={"delete"}
-                />
+                <IconButton onClick={(e) => handleDelete(e)} label={"delete"} />
                 <IconButton
                     onClick={(e) => setActiveCard(null)}
                     label={"exit"}

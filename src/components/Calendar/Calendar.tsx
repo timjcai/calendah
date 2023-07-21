@@ -49,7 +49,7 @@ import { MousePosProvider } from "../../context/MousePosProvider";
 import { EditModal } from "../Modal/EditModal";
 import { ViewModal } from "../Modal/ViewModal";
 
-export const BaseCalendar: FC<ViewProps> = ({ times }) => {
+export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
     const thisWeekdata = useContext(WeekContext);
     const eventData = useContext(EventContext);
     const [newEventDefault, setNewEventDefault] = useState(

@@ -80,3 +80,16 @@ export const searchEventId = (id: number, eventData: APIDataObject): EventProps 
   })
   return searchEvent
 }
+
+export const deleteEventId = (id: number, eventData: APIDataObject): APIDataObject => {
+  const allKeys = Object.keys(eventData)
+  let deleteEvent;
+  allKeys.forEach((date)=>{
+    eventData[date].forEach((event,index)=>{
+      if (event.id === id) {
+        eventData[date].splice(index,1)
+      }
+    })
+  })
+  return eventData
+}

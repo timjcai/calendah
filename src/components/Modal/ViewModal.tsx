@@ -7,7 +7,6 @@ import { StyledButton } from "../common/Button";
 
 export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {
     const methods = useForm();
-
     const {
         title,
         starttime,
@@ -37,7 +36,7 @@ export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {
             <FormProvider {...methods}>
                 <ModalNavbar
                     setActiveCard={setActiveCard}
-                    calendar_id={calendar_id}
+                    eventData={eventCardData}
                 />
                 <ModalStyledForm>
                     {title !== null && (
@@ -45,6 +44,8 @@ export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {
                             label={"title"}
                             margin={"5px"}
                             defaultValue={title}
+                            readOnly={true}
+                            pointerEvents={"none"}
                         />
                     )}
                     {/* custom display for start and endtime */}
@@ -67,6 +68,8 @@ export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {
                             label={"guests"}
                             margin={"5px"}
                             defaultValue={guests}
+                            readOnly={true}
+                            pointerEvents={"none"}
                         />
                     )}
                     {location !== null && (
@@ -74,6 +77,8 @@ export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {
                             label={"location"}
                             margin={"5px"}
                             defaultValue={location}
+                            readOnly={true}
+                            pointerEvents={"none"}
                         />
                     )}
                     {description !== null && (
@@ -81,6 +86,8 @@ export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {
                             label={"description"}
                             margin={"5px"}
                             defaultValue={description}
+                            readOnly={true}
+                            pointerEvents={"none"}
                         />
                     )}
                 </ModalStyledForm>
