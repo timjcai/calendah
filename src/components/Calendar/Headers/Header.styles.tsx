@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CommonStylingProps } from "../../types";
 
-export const StyledDateHeader = styled.div`
+export const StyledHeader = styled.div`
     display: flex;
     flex-direction: row;
 `;

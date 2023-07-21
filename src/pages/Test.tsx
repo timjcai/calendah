@@ -89,7 +89,6 @@ export const Test = () => {
             onClick={setPositions}
         >
             <h1>Test page</h1>
-            <CalendarHeader />
             {/* <div className="commentedout">
                 <button onClick={(e) => setIsActive((prevState) => !prevState)}>
                     open modal

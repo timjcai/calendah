@@ -48,6 +48,7 @@ import { EventPostRequest } from "../../hooks/useEventPostRequest";
 import { MousePosProvider } from "../../context/MousePosProvider";
 import { EditModal } from "../Modal/EditModal";
 import { ViewModal } from "../Modal/ViewModal";
+import { CalendarHeader } from "./Headers";
 
 export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
     const thisWeekdata = useContext(WeekContext);
@@ -155,6 +156,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
         <MousePosProvider value={MousePos}>
             <StyledCalendar>
                 <div>
+                    <CalendarHeader />
                     <DateHeader thisWeek={thisWeekdata} />
                 </div>
                 <PlannerWrapper onClick={doubleClickHandler}>

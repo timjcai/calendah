@@ -16,7 +16,7 @@ import {
 import { getYYYYMMDD } from "../../../utils/DateUtils";
 import { calcIndividualColWidth } from "../../../utils";
 import { BubbleWrapper } from "./DateHeader.styles";
-import { PaddedDiv, StyledCell, StyledDateHeader } from "./Header.styles";
+import { PaddedDiv, StyledCell, StyledHeader } from "./Header.styles";
 
 export type dateHeadingProps = {
     color: string;
@@ -34,12 +34,12 @@ export const SelectedBubble = ({ children, bgcolor, color = "white" }) => {
 
 export const DateHeader = (props: { thisWeek: Date[] }) => {
     return (
-        <StyledDateHeader>
+        <StyledHeader>
             <PaddedDiv></PaddedDiv>
             {props.thisWeek.map((dayPair) => {
                 return <DHCell key={getYYYYMMDD(dayPair)} date={dayPair} />;
             })}
-        </StyledDateHeader>
+        </StyledHeader>
     );
 };
 
