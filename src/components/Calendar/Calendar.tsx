@@ -9,7 +9,7 @@ import {
 } from "../types";
 
 import { Timebar } from "./Timebar";
-import { DateHeader } from "./DateHeader";
+import { DateHeader } from "./Headers/DateHeader";
 import { EventCard, HoverEventCard } from "./EventCard";
 
 import {
@@ -154,7 +154,9 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
     return (
         <MousePosProvider value={MousePos}>
             <StyledCalendar>
-                <DateHeader thisWeek={thisWeekdata} />
+                <div>
+                    <DateHeader thisWeek={thisWeekdata} />
+                </div>
                 <PlannerWrapper onClick={doubleClickHandler}>
                     <Timebar times={times} />
                     <CalendarColumnWrapper

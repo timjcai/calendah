@@ -1,48 +1,28 @@
 import React, { FC, useContext, useState, useEffect } from "react";
 import styled from "styled-components";
-import { Paragraph, Heading2 } from "../common/Text";
-import { CommonStylingProps, DateProps2 } from "../types";
+import { Paragraph, Heading2 } from "../../common/Text";
+import { CommonStylingProps, DateProps2 } from "../../types";
 import {
     dayAbbreviations,
     monthAbbreviations,
     dayMappingFromIndex,
     monthMappingFromIndex,
-} from "../../db/Mapping";
+} from "../../../db/Mapping";
 import {
     SelectDateContext,
     TodayContext,
     ViewSizeContext,
-} from "../../context/Context";
-import { getYYYYMMDD } from "../../utils/DateUtils";
-import { calcIndividualColWidth } from "../../utils";
-
-export const StyledDateHeader = styled.div`
-    display: flex;
-    flex-direction: row;
-`;
-
-export const StyledCell = styled.div<CommonStylingProps>`
-    width: ${(props) => props.$width};
-    text-align: center;
-`;
-
-export const PaddedDiv = styled.div`
-    width: var(--timebar-width);
-`;
+} from "../../../context/Context";
+import { getYYYYMMDD } from "../../../utils/DateUtils";
+import { calcIndividualColWidth } from "../../../utils";
+import { BubbleWrapper } from "./DateHeader.styles";
+import { PaddedDiv, StyledCell, StyledDateHeader } from "./Header.styles";
 
 export type dateHeadingProps = {
     color: string;
     borderRadius: string;
     padding: string;
 };
-
-const BubbleWrapper = styled.div<CommonStylingProps>`
-    background-color: ${(props) => props.$bgcolor};
-    color: ${(props) => props.$color};
-    border-radius: 8px;
-    width: 3em;
-    margin: auto;
-`;
 
 export const SelectedBubble = ({ children, bgcolor, color = "white" }) => {
     return (

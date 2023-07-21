@@ -16,6 +16,7 @@ import { ModalNavbar } from "../components/Modal/BaseModalComponents";
 import { ModalBox } from "../components/Modal/Modal.styles";
 import { FormInputText } from "../components/common/Form/Form";
 import { FormProvider, useForm } from "react-hook-form";
+import { CalendarHeader } from "../components/Calendar/Headers";
 
 export const Test = () => {
     const [isActive, setIsActive] = useState(false);
@@ -88,18 +89,7 @@ export const Test = () => {
             onClick={setPositions}
         >
             <h1>Test page</h1>
-            <ModalBox>
-                <FormProvider {...methods}>
-                    <ModalNavbar></ModalNavbar>
-                    <form method="post">
-                        <FormInputText label={"title"} margin={"5px"} />
-                        <FormInputText label={"guests"} margin={"5px"} />
-                        <FormInputText label={"location"} margin={"5px"} />
-                        <FormInputText label={"attachments"} margin={"5px"} />
-                        <StyledButton type="submit">Save</StyledButton>
-                    </form>
-                </FormProvider>
-            </ModalBox>
+            <CalendarHeader />
             {/* <div className="commentedout">
                 <button onClick={(e) => setIsActive((prevState) => !prevState)}>
                     open modal
