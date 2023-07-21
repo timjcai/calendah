@@ -32,6 +32,7 @@ import {
     extractDate,
     extractTime,
     getEventId,
+    searchEventId,
 } from "../../utils";
 
 import {
@@ -55,6 +56,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
         settings.newevent_default
     );
     const [activeCard, setActiveCard] = useState<IActiveCard>(null);
+    const [activeCardDetails, setActiveCardDetails] = useState({});
 
     const [grabbing, setGrabbing] = useState(false);
 
@@ -77,7 +79,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
     useEffect(() => {
         // attach the event listener
         document.addEventListener("keydown", handleKeyPress);
-        console.log(thisWeekdata);
+        console.log(eventData);
 
         // remove the event listener
         return () => {
@@ -90,16 +92,14 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
         if (activeCard === null) {
             if (selectedItem.id.includes("eventcard")) {
                 // opens editor
-                console.log(selectedItem.className);
-                console.log(getEventId(e.target.id));
-                setActiveCard(getEventId(e.target.id));
+                const cardId = getEventId(e.target.id);
+                setActiveCard(cardId);
                 const baseData = selectedItem.getBoundingClientRect();
-                console.log(baseData.y);
-                console.log(baseData);
                 setModalPos({
                     top: baseData.y,
                     left: ModalLeftOrRight(baseData),
                 });
+                setActiveCardDetails(searchEventId(cardId, eventData));
             } else {
                 // create new event
                 setActiveCard("placeholder");
@@ -188,7 +188,8 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
                         <ViewModal
                             top={modalPos.top}
                             left={modalPos.left}
-                            closeModal={null}
+                            setActiveCard={setActiveCard}
+                            eventCardData={activeCardDetails}
                         />
                     )}
                 </PlannerWrapper>

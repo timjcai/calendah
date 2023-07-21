@@ -1,3 +1,4 @@
+import { APIDataObject, EventProps } from "../components/types/apidata";
 import { timeMappings12to24 } from "../db/Mapping";
 import { mergeDateTime } from "./DateUtils";
 import { convert24stringto24time } from "./TimeUtils";
@@ -65,4 +66,17 @@ export const ModalLeftOrRight = (eventCardData: DOMRect): number => {
   } else {
     return eventCardData.right + gap
   }
+}
+
+export const searchEventId = (id: number, eventData: APIDataObject): EventProps => {
+  const allKeys = Object.keys(eventData)
+  let searchEvent;
+  allKeys.forEach((date)=>{
+    eventData[date].forEach((event)=>{
+      if (event.id === id) {
+        searchEvent = event
+      }
+    })
+  })
+  return searchEvent
 }

@@ -5,18 +5,84 @@ import { ModalNavbar } from "./BaseModalComponents";
 import { FormInputText } from "../common/Form/Form";
 import { StyledButton } from "../common/Button";
 
-export const ViewModal = ({ top, left, closeModal }) => {
+export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {
     const methods = useForm();
-    console.log([top, left]);
+
+    const {
+        title,
+        starttime,
+        endtime,
+        location,
+        meeting,
+        attachments,
+        description,
+        guests,
+        calendar_id,
+    } = eventCardData;
+    console.log(eventCardData);
+
+    const INPUTS = [
+        "title",
+        "starttime",
+        "endtime",
+        "location",
+        "meeting",
+        "attachments",
+        "description",
+        "guests",
+    ];
+
     return (
         <ModalBox $top={top} $left={left}>
             <FormProvider {...methods}>
-                <ModalNavbar closeModal={closeModal} />
+                <ModalNavbar
+                    setActiveCard={setActiveCard}
+                    calendar_id={calendar_id}
+                />
                 <ModalStyledForm>
-                    <FormInputText label={"title"} margin={"5px"} />
-                    <FormInputText label={"guests"} margin={"5px"} />
-                    <FormInputText label={"location"} margin={"5px"} />
-                    <FormInputText label={"attachments"} margin={"5px"} />
+                    {title !== null && (
+                        <FormInputText
+                            label={"title"}
+                            margin={"5px"}
+                            defaultValue={title}
+                        />
+                    )}
+                    {/* custom display for start and endtime */}
+                    {/* {starttime !== null && (
+                        <FormInputText
+                            label={"starttime"}
+                            margin={"5px"}
+                            defaultValue={starttime}
+                        />
+                    )}
+                    {endtime !== null && (
+                        <FormInputText
+                            label={"endtime"}
+                            margin={"5px"}
+                            defaultValue={endtime}
+                        />
+                    )} */}
+                    {guests !== null && (
+                        <FormInputText
+                            label={"guests"}
+                            margin={"5px"}
+                            defaultValue={guests}
+                        />
+                    )}
+                    {location !== null && (
+                        <FormInputText
+                            label={"location"}
+                            margin={"5px"}
+                            defaultValue={location}
+                        />
+                    )}
+                    {description !== null && (
+                        <FormInputText
+                            label={"description"}
+                            margin={"5px"}
+                            defaultValue={description}
+                        />
+                    )}
                 </ModalStyledForm>
             </FormProvider>
         </ModalBox>

@@ -24,7 +24,12 @@ import {
 } from "react-hook-form";
 import { mergeDateTime, convert12to24time } from "../../../utils";
 
-export const FormInputText = ({ label, size = "small", margin = "1em" }) => {
+export const FormInputText = ({
+    label,
+    size = "small",
+    margin = "1em",
+    defaultValue = `No ${label}`,
+}) => {
     const icon = iconMapping[label];
     const { register } = useFormContext();
 
@@ -36,6 +41,7 @@ export const FormInputText = ({ label, size = "small", margin = "1em" }) => {
                 width={"88%"}
                 size={size}
                 margin={margin}
+                defaultValue={defaultValue}
                 {...register(label)}
             />
         </StyledLabel>
