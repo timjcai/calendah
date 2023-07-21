@@ -10,10 +10,12 @@ export const ModalBox = styled.div<ModalBoxProps>`
     border: 1px solid black;
     border-radius: 16px;
     height: auto;
-    width: 25vw;
+    max-width: 448px;
+    width: 448px;
     align-items: right;
     position: absolute;
     z-index: 10000000;
+    background: #ffffff;
     top: ${(props) => props.$top}px;
     left: ${(props) => props.$left}px;
 `;
@@ -27,7 +29,6 @@ export const Modalnav = styled.div`
     background-color: #eff1f2;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
-    margin-bottom: 16px;
     min-height: 40px;
 `;
 
@@ -45,4 +46,10 @@ export const NavContentWrapper = styled.div`
     flex-direction: row;
     width: fit-content;
     gap: 8px;
+`;
+
+export const ModalStyledForm = styled.form`
+    padding: 16px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 `;

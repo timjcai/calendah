@@ -25,6 +25,7 @@ import {
     mergeDateTime,
 } from "../../utils/DateUtils";
 import {
+    ModalLeftOrRight,
     calcIndividualColWidth,
     closest15min,
     createDateTimeonPosition,
@@ -44,7 +45,8 @@ import {
 import settings from "../../db/settings.json";
 import { EventPostRequest } from "../../hooks/useEventPostRequest";
 import { MousePosProvider } from "../../context/MousePosProvider";
-import NewEventModal from "../Modal/NewEventModal";
+import { EditModal } from "../Modal/EditModal";
+import { ViewModal } from "../Modal/ViewModal";
 
 export const BaseCalendar: FC<ViewProps> = ({ times }) => {
     const thisWeekdata = useContext(WeekContext);
@@ -60,6 +62,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
     const [mousePosY, setMousePosY] = useState(0);
     const [hoverEventCardWidth, setHoverEventCardWidth] = useState(100);
     const [hoverEventCardLeft, setHoverEventCardLeft] = useState(0);
+    const [modalPos, setModalPos] = useState({ top: 0, left: 0 });
 
     function doubleClickHandler(event) {
         if (event.detail == 2) {
@@ -90,7 +93,13 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
                 console.log(selectedItem.className);
                 console.log(getEventId(e.target.id));
                 setActiveCard(getEventId(e.target.id));
-                // } else if (isActive) {
+                const baseData = selectedItem.getBoundingClientRect();
+                console.log(baseData.y);
+                console.log(baseData);
+                setModalPos({
+                    top: baseData.y,
+                    left: ModalLeftOrRight(baseData),
+                });
             } else {
                 // create new event
                 setActiveCard("placeholder");
@@ -176,7 +185,11 @@ export const BaseCalendar: FC<ViewProps> = ({ times }) => {
                         />
                     )}
                     {activeCard !== null && activeCard !== "placeholder" && (
-                        <NewEventModal />
+                        <ViewModal
+                            top={modalPos.top}
+                            left={modalPos.left}
+                            closeModal={null}
+                        />
                     )}
                 </PlannerWrapper>
             </StyledCalendar>

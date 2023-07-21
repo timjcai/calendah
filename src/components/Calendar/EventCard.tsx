@@ -4,7 +4,7 @@ import { getLocalHour, getTime, getLocalMinute } from "../../utils";
 import { formatISO } from "date-fns";
 import settings from "../../db/settings.json";
 import { CardWrapper } from "./EventCard.styles";
-import NewEventModal from "../Modal/NewEventModal";
+import NewEventModal from "../Modal/EditModal";
 import {
     MousePosXContext,
     MousePosYContext,

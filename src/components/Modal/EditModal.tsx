@@ -16,7 +16,7 @@ import { convert12to24time, mergeDateTime } from "../../utils";
 import { ModalNavbar } from "./BaseModalComponents";
 import { ModalBox } from "./Modal.styles";
 
-const NewEventModal = ({ closeModal, top, left, eventData = null }) => {
+export const EditModal = ({ closeModal, top, left, eventData = null }) => {
     const methods = useForm();
     if (eventData !== null) {
         const {
@@ -110,5 +110,3 @@ const NewEventModal = ({ closeModal, top, left, eventData = null }) => {
         </ModalBox>
     );
 };
-
-export default NewEventModal;

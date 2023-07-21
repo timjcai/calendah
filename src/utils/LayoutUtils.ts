@@ -53,3 +53,16 @@ const limit0to1 = (heightPercentage: number): number => {
 export const getEventId = (eventCardId: string): number => {
   return parseInt(eventCardId.split('-')[1])
 }
+
+export const ModalLeftOrRight = (eventCardData: DOMRect): number => {
+  const max = window.innerWidth
+  const min = 0
+  const gap = 5
+  if (eventCardData.right + 448 > max) {
+    return eventCardData.left - (448 + gap)
+  } else if (eventCardData.left - 448 < min) {
+    return eventCardData.right + gap
+  } else {
+    return eventCardData.right + gap
+  }
+}
