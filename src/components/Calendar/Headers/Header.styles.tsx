@@ -4,6 +4,8 @@ import { CommonStylingProps } from "../../types";
 export const StyledHeader = styled.div`
     display: flex;
     flex-direction: row;
+    overflow: hidden;
+    margin-top: 10px;
 `;
 
 export const StyledCell = styled.div<CommonStylingProps>`
