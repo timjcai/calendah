@@ -6,7 +6,6 @@ import { StyledButton } from "../Button";
 import DatePicker from "react-widgets/DatePicker";
 import {
     StyledLabel,
-    StyledInput,
     StyledForm,
     FormCol,
     InputProps,
@@ -22,6 +21,7 @@ import {
     Controller,
 } from "react-hook-form";
 import { mergeDateTime, convert12to24time } from "../../../utils";
+import { StyledInput } from "../Input";
 
 export const FormInputText = ({
     label,

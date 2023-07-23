@@ -1,21 +1,6 @@
 import styled from "styled-components";
 import { InputType } from "../../types";
 
-export const StyledInput = styled.input<inputStylingProps>`
-    margin: ${(props) => props.margin};
-    width: ${(props) => props.width};
-    height: ${(props) => (props.size === "large" ? "15em" : "3em")};
-    border-radius: 5px;
-    padding: 0.75em 1em 0.75em 1em;
-    font-size: 14px;
-    background-color: #eff1f2;
-    pointer-events: ${(props) => props.pointerEvents};
-
-    &:focus {
-        outline: none;
-    }
-`;
-
 export const StyledForm = styled.form`
     padding: 1em;
     border-radius: 16px;
@@ -61,13 +46,6 @@ export const StyledTimeInput = styled.input`
 export interface InputProps {
     label: InputType;
     size?: string;
-}
-
-export interface inputStylingProps {
-    size?: string;
-    width?: string;
-    margin?: string;
-    pointerEvents?: string;
 }
 
 export interface labelProps {
