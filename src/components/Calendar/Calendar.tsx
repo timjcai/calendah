@@ -70,6 +70,8 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
     function doubleClickHandler(event) {
         if (event.detail == 2) {
             console.log("double click event");
+            console.log("exit editor or new event modal");
+            return setActiveCard(null);
         }
     }
 
@@ -145,7 +147,6 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                 return setActiveCard(null);
             }
         }
-        console.log(activeCardDetails);
     };
 
     const stopGrabbingCard = (e) => {
@@ -177,6 +178,15 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                 top: mousePosY,
                 left: ModalLeftOrRight(canvas),
             });
+            const startTime = createDateTimeonPosition(e);
+            const endTime = new Date(
+                createDateTimeonPosition(e).setHours(startTime.getHours() + 1)
+            );
+            newEventDefault.starttime = startTime;
+            newEventDefault.endtime = endTime;
+            newEventDefault.calendar_id = 1; // hardcoding calendar - need to handle this later - currently only 1 calendar can be created
+            setNewEventDefault(newEventDefault);
+            console.log(newEventDefault);
         } else {
             return;
         }

@@ -102,7 +102,7 @@ export const HoverEventCard = ({
     } = eventData;
     return (
         <CardWrapper
-            $bgcolor={settings.calendar_color_settings[calendar_id]}
+            $bgcolor={"#ffffff"}
             $zindex={id}
             $width={width}
             $top={`${top}px`}

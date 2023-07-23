@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { FormInputText, InputForm } from "../common/Form/Form";
 import {
@@ -31,8 +31,6 @@ export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
         attachments,
         meeting,
     } = eventCardData;
-
-    console.log(eventCardData);
 
     const validateData = (formValues) => {
         const {
@@ -133,8 +131,10 @@ export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
 export const TimeInput = ({ eventData }) => {
     const { register } = useFormContext();
     const { starttime, endtime } = eventData;
-    console.log(starttime);
-    console.log(endtime);
+
+    useEffect(() => {
+        console.log("rerender");
+    }, [eventData]);
 
     return (
         <TimeInputWrapper>
