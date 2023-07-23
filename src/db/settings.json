@@ -27,8 +27,8 @@
   "newevent_default": {
     "id": 1,
     "title": "No title",
-    "starttime": "2022-10-31T09:00:00.594Z",
-    "endtime": "2022-10-31T09:00:00.594Z",
+    "starttime": "",
+    "endtime": "",
     "meeting": "No meeting link",
     "location": "No location selected",
     "attachments": "No attachments",

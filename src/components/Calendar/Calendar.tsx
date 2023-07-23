@@ -118,8 +118,32 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
             }
         } else {
             // exit editor or exit new event
-            console.log("exit editor or new event modal");
-            return setActiveCard(null);
+            if (activeCard === "placeholder") {
+                const canvas = e.target.getBoundingClientRect();
+                setMousePosX(e.clientX);
+                setMousePosY(e.clientY);
+                setHoverEventCardWidth(canvas.width - 5);
+                setHoverEventCardLeft(canvas.x);
+                setModalPos({
+                    top: mousePosY,
+                    left: ModalLeftOrRight(canvas),
+                });
+                const startTime = createDateTimeonPosition(e);
+                const endTime = new Date(
+                    createDateTimeonPosition(e).setHours(
+                        startTime.getHours() + 1
+                    )
+                );
+                newEventDefault.starttime = startTime;
+                newEventDefault.endtime = endTime;
+                newEventDefault.calendar_id = 1; // hardcoding calendar - need to handle this later - currently only 1 calendar can be created
+                setNewEventDefault(newEventDefault);
+                console.log(newEventDefault);
+                setGrabbing(false);
+            } else {
+                console.log("exit editor or new event modal");
+                return setActiveCard(null);
+            }
         }
         console.log(activeCardDetails);
     };
@@ -149,6 +173,10 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
             setMousePosY(e.clientY);
             setHoverEventCardWidth(canvas.width - 5);
             setHoverEventCardLeft(canvas.x);
+            setModalPos({
+                top: mousePosY,
+                left: ModalLeftOrRight(canvas),
+            });
         } else {
             return;
         }
@@ -167,7 +195,6 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                     <Timebar times={times} />
                     <CalendarColumnWrapper
                         onPointerDown={startGrabbingCard}
-                        onPointerUp={stopGrabbingCard}
                         onPointerMove={moveHoverEventCard}
                         onPointerLeave={stopGrabbingCard}
                     >
@@ -200,7 +227,15 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                             eventCardData={activeCardDetails}
                         />
                     )}
-                    {activeCard === "placeholder" && (
+                    {activeCard === "placeholder" && grabbing && (
+                        <EditModal
+                            top={mousePosY}
+                            left={modalPos.left}
+                            setActiveCard={setActiveCard}
+                            eventCardData={newEventDefault}
+                        />
+                    )}
+                    {activeCard === "placeholder" && !grabbing && (
                         <EditModal
                             top={mousePosY}
                             left={modalPos.left}

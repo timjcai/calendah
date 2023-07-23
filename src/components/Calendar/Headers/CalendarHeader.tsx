@@ -20,7 +20,6 @@ export const CalendarHeader = () => {
                 throw response;
             })
             .then((data) => {
-                console.log(data);
                 setAllCalendars(data);
             })
             .catch((error) => {

@@ -18,27 +18,26 @@ import { ModalBox } from "./Modal.styles";
 
 export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
     const methods = useForm();
-    if (eventCardData !== {}) {
-        const {
-            id,
-            starttime,
-            endtime,
-            title,
-            location,
-            description,
-            calendar_id,
-            guests,
-            attachments,
-            meeting,
-        } = eventCardData;
-    }
+
+    const {
+        id,
+        starttime,
+        endtime,
+        title,
+        location,
+        description,
+        calendar_id,
+        guests,
+        attachments,
+        meeting,
+    } = eventCardData;
+
+    console.log(eventCardData);
 
     const validateData = (formValues) => {
         const {
             title,
-            startdate,
             starttime,
-            enddate,
             endtime,
             location,
             meeting,
@@ -46,11 +45,7 @@ export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
             description,
             guests,
         } = formValues;
-        mergeDateTime(startdate, convert12to24time(starttime));
-        mergeDateTime(enddate, convert12to24time(endtime));
         formValues["calendar_id"] = 1;
-        delete formValues.startdate;
-        delete formValues.enddate;
         if (!title) {
             console.log("no title provided");
         }
@@ -102,30 +97,74 @@ export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
                     <FormInputText
                         label={"title"}
                         margin={"5px"}
+                        defaultValue={title}
                         readOnly={false}
                         pointerEvents={"auto"}
                     />
                     <FormInputText
                         label={"guests"}
                         margin={"5px"}
+                        defaultValue={guests}
                         readOnly={false}
                         pointerEvents={"auto"}
                     />
                     <FormInputText
                         label={"location"}
                         margin={"5px"}
+                        defaultValue={location}
                         readOnly={false}
                         pointerEvents={"auto"}
                     />
                     <FormInputText
                         label={"attachments"}
                         margin={"5px"}
+                        defaultValue={attachments}
                         readOnly={false}
                         pointerEvents={"auto"}
                     />
+                    <TimeInput eventData={eventCardData} />
                     <StyledButton type="submit">Save</StyledButton>
                 </form>
             </FormProvider>
         </ModalBox>
     );
 };
+
+export const TimeInput = ({ eventData }) => {
+    const { register } = useFormContext();
+    const { starttime, endtime } = eventData;
+    console.log(starttime);
+    console.log(endtime);
+
+    return (
+        <TimeInputWrapper>
+            <input
+                id="starttime"
+                defaultValue={starttime}
+                {...register("starttime", {
+                    valueAsDate: true,
+                    required: {
+                        value: true,
+                        message: "Start time is required",
+                    },
+                })}
+            />
+            <input
+                id="endtime"
+                defaultValue={endtime}
+                {...register("endtime", {
+                    valueAsDate: true,
+                    required: {
+                        value: true,
+                        message: "End time is required",
+                    },
+                })}
+            />
+        </TimeInputWrapper>
+    );
+};
+
+const TimeInputWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+`;

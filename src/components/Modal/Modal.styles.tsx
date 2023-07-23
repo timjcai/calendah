@@ -14,8 +14,9 @@ export const ModalBox = styled.div<ModalBoxProps>`
     width: 448px;
     align-items: right;
     position: absolute;
-    z-index: 10000000;
+    z-index: 1;
     background: #ffffff;
+
     top: ${(props) => props.$top}px;
     left: ${(props) => props.$left}px;
 `;
