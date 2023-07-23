@@ -15,3 +15,9 @@ export type InputType =
   | "delete";
 
 export type HotkeyType = "D";
+
+export type ActionType = 
+| "edit"
+| "exit"
+| "settings"
+| "delete";

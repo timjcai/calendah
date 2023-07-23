@@ -1,7 +1,20 @@
-import React from "react";
+import React, { Profiler } from "react";
 import styled from "styled-components";
 import { Sidebar } from "../components/Sidebar/Sidebar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
+import {
+    CalendarColors,
+    DefaultEvent,
+    Integrations,
+    KeyboardShortcuts,
+    LanguageandRegion,
+    Notification,
+    Profile,
+    Security,
+    Timezone,
+    ViewingOpt,
+} from "../components/Settings";
+import { SettingsLink } from "../components/Settings/SettingsLink";
 
 const Sidebarstyles = {
     borderradius: "16px 0px 0px 16px",
@@ -15,22 +28,59 @@ export const Settings = () => {
                 <Sidebar styles={Sidebarstyles}>
                     <h1>Tim Cai</h1>
                     <p>tim.j.cai@gmail.com</p>
-                    <p>Profile</p>
-                    <p>Passwords & Security</p>
+                    <br />
+                    <SettingsLink label={"Profile"} />
+                    <SettingsLink label={"Passwords & Security"} />
                     <br />
                     <h2>Settings</h2>
-                    <p>Language and Region</p>
-                    <p>Timezone</p>
-                    <p>Viewing Options</p>
-                    <p>Default Event</p>
-                    <p>Calendar Colors</p>
-                    <p>Notifications</p>
-                    <p>Keyboard Shortcuts</p>
-                    <p>Integrations</p>
+                    <SettingsLink label={"Language & Region"} />
+                    <SettingsLink label={"Timezone"} />
+                    <SettingsLink label={"Viewing Options"} />
+                    <SettingsLink label={"Default Event"} />
+                    <SettingsLink label={"Calendar Colors"} />
+                    <SettingsLink label={"Notifications"} />
+                    <SettingsLink label={"Keyboard Shortcuts"} />
+                    <SettingsLink label={"Integrations"} />
                     <br />
                 </Sidebar>
                 <main>
                     <h1>Settings page</h1>
+                    <Routes>
+                        <Route path="/profile" element={<Profile />} />
+                        <Route
+                            path="/passwords-security"
+                            element={<Security />}
+                        />
+                        <Route
+                            path="/language-region"
+                            element={<LanguageandRegion />}
+                        />
+                        <Route path="/timezone" element={<Timezone />} />
+                        <Route
+                            path="/viewing-options"
+                            element={<ViewingOpt />}
+                        />
+                        <Route
+                            path="/default-event"
+                            element={<DefaultEvent />}
+                        />
+                        <Route
+                            path="/calendar-colors"
+                            element={<CalendarColors />}
+                        />
+                        <Route
+                            path="/notifications"
+                            element={<Notification />}
+                        />
+                        <Route
+                            path="/keyboard-shortcuts"
+                            element={<KeyboardShortcuts />}
+                        />
+                        <Route
+                            path="/integrations"
+                            element={<Integrations />}
+                        />
+                    </Routes>
                 </main>
             </CenteredWrapper>
         </BackgroundWrapper>

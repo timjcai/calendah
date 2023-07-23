@@ -50,7 +50,7 @@ export default function App() {
         <div className="flex flex-col">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/settings/*" element={<Settings />} />
                     <Route path="/new" element={<New />} />
                     <Route path="/" element={<View />} />
                     <Route path="/test" element={<Test />} />

@@ -1,0 +1,11 @@
+export type SettingsType = 
+    | "Profile"
+    | "Passwords & Security"
+    | "Language & Region"
+    | "Timezone"
+    | "Viewing Options"
+    | "Default Event"
+    | "Calendar Colors"
+    | "Notifications"
+    | "Keyboard Shortcuts"
+    | "Integrations"
