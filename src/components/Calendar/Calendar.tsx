@@ -93,6 +93,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
         if (activeCard === null) {
             if (selectedItem.id.includes("eventcard")) {
                 // opens editor
+                setGrabbing(true);
                 const cardId = getEventId(e.target.id);
                 setActiveCard(cardId);
                 const baseData = selectedItem.getBoundingClientRect();
@@ -110,22 +111,25 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                 setMousePosY(e.clientY);
                 setHoverEventCardWidth(canvas.width - 5);
                 setHoverEventCardLeft(canvas.x);
+                setModalPos({
+                    top: mousePosY,
+                    left: ModalLeftOrRight(canvas),
+                });
             }
         } else {
             // exit editor or exit new event
             console.log("exit editor or new event modal");
             return setActiveCard(null);
         }
+        console.log(activeCardDetails);
     };
 
     const stopGrabbingCard = (e) => {
         if (grabbing) {
             setGrabbing(false);
-            const startTime = createDateTimeonPosition(event);
+            const startTime = createDateTimeonPosition(e);
             const endTime = new Date(
-                createDateTimeonPosition(event).setHours(
-                    startTime.getHours() + 1
-                )
+                createDateTimeonPosition(e).setHours(startTime.getHours() + 1)
             );
             newEventDefault.starttime = startTime;
             newEventDefault.endtime = endTime;
@@ -194,6 +198,14 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                             left={modalPos.left}
                             setActiveCard={setActiveCard}
                             eventCardData={activeCardDetails}
+                        />
+                    )}
+                    {activeCard === "placeholder" && (
+                        <EditModal
+                            top={mousePosY}
+                            left={modalPos.left}
+                            setActiveCard={setActiveCard}
+                            eventCardData={newEventDefault}
                         />
                     )}
                 </PlannerWrapper>

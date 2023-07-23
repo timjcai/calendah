@@ -2,7 +2,11 @@
   "time_zone": "en-AU",
   "start_of_the_week": "Monday",
   "view_size": 7,
-  "calendar_color": {
+  "calendar_color_settings": {
+    "0": {
+      "name": "New Event",
+      "color": "#FFFFFF"
+    },
     "1": {
       "name": "Work",
       "color": "#BAD7F2"
@@ -21,6 +25,7 @@
     }
   },
   "newevent_default": {
+    "id": 1,
     "title": "No title",
     "starttime": "2022-10-31T09:00:00.594Z",
     "endtime": "2022-10-31T09:00:00.594Z",

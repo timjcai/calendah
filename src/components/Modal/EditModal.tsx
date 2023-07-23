@@ -16,9 +16,9 @@ import { convert12to24time, mergeDateTime } from "../../utils";
 import { ModalNavbar } from "./BaseModalComponents";
 import { ModalBox } from "./Modal.styles";
 
-export const EditModal = ({ closeModal, top, left, eventData = null }) => {
+export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
     const methods = useForm();
-    if (eventData !== null) {
+    if (eventCardData !== {}) {
         const {
             id,
             starttime,
@@ -30,7 +30,7 @@ export const EditModal = ({ closeModal, top, left, eventData = null }) => {
             guests,
             attachments,
             meeting,
-        } = eventData;
+        } = eventCardData;
     }
 
     const validateData = (formValues) => {
@@ -46,11 +46,11 @@ export const EditModal = ({ closeModal, top, left, eventData = null }) => {
             description,
             guests,
         } = formValues;
-        // mergeDateTime(startdate, convert12to24time(starttime));
-        // mergeDateTime(enddate, convert12to24time(endtime));
+        mergeDateTime(startdate, convert12to24time(starttime));
+        mergeDateTime(enddate, convert12to24time(endtime));
         formValues["calendar_id"] = 1;
-        // delete formValues.startdate;
-        // delete formValues.enddate;
+        delete formValues.startdate;
+        delete formValues.enddate;
         if (!title) {
             console.log("no title provided");
         }
@@ -73,37 +73,56 @@ export const EditModal = ({ closeModal, top, left, eventData = null }) => {
         const form = validateData(formValues);
         console.log(form);
 
-        // fetch(
-        //     `http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`,
-        //     {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify(form),
-        //     }
-        // )
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         console.log("Response from server:", data);
-        //     })
-        //     .catch((error) => {
-        //         console.error("Error:", error);
-        //     });
+        fetch(
+            `http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(form),
+            }
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Response from server:", data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
     };
 
     return (
         <ModalBox $top={top} $left={left}>
             <FormProvider {...methods}>
-                <ModalNavbar closeModal={closeModal} />
                 <form
                     method="post"
                     onSubmit={methods.handleSubmit(handleFormSubmit)}
                 >
-                    <FormInputText label={"title"} margin={"5px"} />
-                    <FormInputText label={"guests"} margin={"5px"} />
-                    <FormInputText label={"location"} margin={"5px"} />
-                    <FormInputText label={"attachments"} margin={"5px"} />
+                    <FormInputText
+                        label={"title"}
+                        margin={"5px"}
+                        readOnly={false}
+                        pointerEvents={"auto"}
+                    />
+                    <FormInputText
+                        label={"guests"}
+                        margin={"5px"}
+                        readOnly={false}
+                        pointerEvents={"auto"}
+                    />
+                    <FormInputText
+                        label={"location"}
+                        margin={"5px"}
+                        readOnly={false}
+                        pointerEvents={"auto"}
+                    />
+                    <FormInputText
+                        label={"attachments"}
+                        margin={"5px"}
+                        readOnly={false}
+                        pointerEvents={"auto"}
+                    />
                     <StyledButton type="submit">Save</StyledButton>
                 </form>
             </FormProvider>

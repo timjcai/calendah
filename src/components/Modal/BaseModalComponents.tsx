@@ -14,14 +14,15 @@ import { EventContext } from "../../context/Context";
 
 // CHANGES #1: NEED TO EDIT - add functionality for dynamic changes based on calendar view
 export const ModalNavbar = ({ setActiveCard, eventData }) => {
-    const color = settings.calendar_color[eventData.calendar_id].color;
-    const name = settings.calendar_color[eventData.calendar_id].name;
+    const color = settings.calendar_color_settings[eventData.calendar_id].color;
+    const name = settings.calendar_color_settings[eventData.calendar_id].name;
     const allEventData = useContext(EventContext);
 
     const handleDelete = (e) => {
         DeleteRequest(eventData);
         // deleteEventId(eventData.id, allEventData);
     };
+
     return (
         <Modalnav>
             <NavContentWrapper>

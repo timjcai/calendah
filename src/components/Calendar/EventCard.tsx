@@ -55,7 +55,7 @@ export const EventCard = ({ className, props }) => {
         <CardWrapper
             $height={`${eventCardHeight}px`}
             $top={`${topPosition}px`}
-            $bgcolor={settings.calendar_color[calendar_id].color}
+            $bgcolor={settings.calendar_color_settings[calendar_id].color}
             $zindex={event_id}
             // onPointerDown={e=>setDraggable(true)}
             // onPointerUp={e=>setDraggable(false)}
@@ -102,7 +102,7 @@ export const HoverEventCard = ({
     } = eventData;
     return (
         <CardWrapper
-            $bgcolor={settings.calendar_color[calendar_id]}
+            $bgcolor={settings.calendar_color_settings[calendar_id]}
             $zindex={id}
             $width={width}
             $top={`${top}px`}

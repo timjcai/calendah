@@ -43,7 +43,7 @@ export const CalendarTag = ({ calendarData }) => {
     const [active, setActive] = useState(false);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
 
-    const color = settings.calendar_color[calendarData.id].color;
+    const color = settings.calendar_color_settings[calendarData.id].color;
     const label = calendarData.tag;
 
     useEffect(() => {
