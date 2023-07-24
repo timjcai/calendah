@@ -43,8 +43,7 @@ export const Settings = () => {
                     <SettingsLink label={"Integrations"} />
                     <br />
                 </Sidebar>
-                <main>
-                    <h1>Settings page</h1>
+                <ContentSection>
                     <Routes>
                         <Route path="/profile" element={<Profile />} />
                         <Route
@@ -81,7 +80,7 @@ export const Settings = () => {
                             element={<Integrations />}
                         />
                     </Routes>
-                </main>
+                </ContentSection>
             </CenteredWrapper>
         </BackgroundWrapper>
     );
@@ -106,4 +105,17 @@ export const CenteredWrapper = styled.div`
     backdrop-filter: blur(14.9px);
     -webkit-backdrop-filter: blur(14.9px);
     border: 1px solid rgba(255, 255, 255, 0.4);
+    width: calc(100vw - 300px);
+    height: calc(100vh - 300px);
+`;
+
+export const ContentSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+    position: relative;
+    height: 100%;
+    padding: 36px 60px;
 `;

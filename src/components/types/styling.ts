@@ -7,4 +7,7 @@ export interface CommonStylingProps {
   $display?: string;
   $fdirection?: string;
   $fsize?: string;
+  $fweight?: string;
+  $border?: string;
+  $borderBottom?: string;
 }
