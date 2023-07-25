@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Calendar from "react-calendar";
 import { format } from "date-fns";
 import "../../styles/Calendar.css";
@@ -11,6 +11,9 @@ const SidebarWrapper = styled.div<ISidebarWrapper>`
     border-radius: ${(props) => props.borderradius};
     padding: ${(props) => props.padding};
     margin: ${(props) => props.margin};
+    overflow: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
 `;
 
 export const Sidebar = ({ children, styles = {} }) => {

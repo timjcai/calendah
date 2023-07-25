@@ -15,3 +15,31 @@ export const SettingsHeading = ({ children }) => {
         </Heading1>
     );
 };
+
+export const SettingsHeading2 = ({ children }) => {
+    return (
+        <Heading1
+            $color={"rgb(55, 53, 47)"}
+            $fweight={"500"}
+            $fsize={"16px"}
+            $padding={"0px 0px 6px 0px"}
+            $margin={"0px 0px 6px 0px"}
+        >
+            {children}
+        </Heading1>
+    );
+};
+
+export const SettingsHeading3 = ({ children }) => {
+    return (
+        <Heading1
+            $color={"rgb(55, 53, 47)"}
+            $fweight={"500"}
+            $fsize={"16px"}
+            $padding={"0px 0px 0px 0px"}
+            $margin={"0px 0px 0px 0px"}
+        >
+            {children}
+        </Heading1>
+    );
+};

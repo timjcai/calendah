@@ -15,6 +15,14 @@ import {
     ViewingOpt,
 } from "../components/Settings";
 import { SettingsLink } from "../components/Settings/SettingsLink";
+import {
+    BackgroundWrapper,
+    CenteredWrapper,
+    ContentSection,
+    SettingsHeading2,
+    SettingsHeading3,
+    SettingsSubParagraph,
+} from "../components/Settings/common";
 
 const Sidebarstyles = {
     borderradius: "16px 0px 0px 16px",
@@ -26,13 +34,15 @@ export const Settings = () => {
         <BackgroundWrapper>
             <CenteredWrapper>
                 <Sidebar styles={Sidebarstyles}>
-                    <h1>Tim Cai</h1>
-                    <p>tim.j.cai@gmail.com</p>
+                    <SettingsHeading3>Tim Cai</SettingsHeading3>
+                    <SettingsSubParagraph>
+                        tim.j.cai@gmail.com
+                    </SettingsSubParagraph>
                     <br />
                     <SettingsLink label={"Profile"} />
                     <SettingsLink label={"Passwords & Security"} />
                     <br />
-                    <h2>Settings</h2>
+                    <SettingsHeading2>Settings</SettingsHeading2>
                     <SettingsLink label={"Language & Region"} />
                     <SettingsLink label={"Timezone"} />
                     <SettingsLink label={"Viewing Options"} />
@@ -85,37 +95,3 @@ export const Settings = () => {
         </BackgroundWrapper>
     );
 };
-
-export const BackgroundWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: grey;
-`;
-
-export const CenteredWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    height: auto;
-    background: rgba(255, 255, 255, 0.49);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(14.9px);
-    -webkit-backdrop-filter: blur(14.9px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    width: calc(100vw - 300px);
-    height: calc(100vh - 300px);
-`;
-
-export const ContentSection = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    flex-grow: 1;
-    position: relative;
-    height: 100%;
-    padding: 36px 60px;
-`;

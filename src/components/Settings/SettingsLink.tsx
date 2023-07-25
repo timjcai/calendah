@@ -32,4 +32,5 @@ const StyledLink = styled(Link)`
     color: rgb(55, 53, 47);
     min-height: 28px;
     gap: 16px;
+    align-items: center;
 `;
