@@ -2,7 +2,7 @@ import React from "react";
 import { ModalBox, ModalStyledForm } from "./Modal.styles";
 import { FormProvider, useForm } from "react-hook-form";
 import { ModalNavbar } from "./BaseModalComponents";
-import { FormInputText } from "../common/Form/Form";
+import { FormInputText } from "../Form";
 import { StyledButton } from "../common/Button";
 
 export const ViewModal = ({ top, left, setActiveCard, eventCardData }) => {

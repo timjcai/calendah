@@ -1,7 +1,7 @@
 import React, { FC, useId, useRef, useState } from "react";
-import { Icon } from "../Icon";
-import { iconMapping } from "../../../Mapping";
-import { StyledButton } from "../Button";
+import { Icon } from "../common/Icon";
+import { iconMapping } from "../../Mapping";
+import { StyledButton } from "../common/Button";
 
 import DatePicker from "react-widgets/DatePicker";
 import {
@@ -12,7 +12,7 @@ import {
     StyledFieldset,
     StyledTimeInput,
 } from "./Form.styles";
-import { Timepicker } from "../../Timepicker/Timepicker";
+import { Timepicker } from "../Timepicker/Timepicker";
 
 import {
     useForm,
@@ -20,36 +20,9 @@ import {
     useFormContext,
     Controller,
 } from "react-hook-form";
-import { mergeDateTime, convert12to24time } from "../../../utils";
-import { StyledInput } from "../Input";
-
-export const FormInputText = ({
-    label,
-    size = "small",
-    margin = "1em",
-    defaultValue = `No ${label}`,
-    readOnly = false,
-    pointerEvents = "auto",
-}) => {
-    const icon = iconMapping[label];
-    const { register } = useFormContext();
-
-    return (
-        <StyledLabel direction={"row"}>
-            <Icon icon={icon} color={"#73767A"} />
-            <StyledInput
-                placeholder={`Add ${label}`}
-                width={"88%"}
-                size={size}
-                margin={margin}
-                defaultValue={defaultValue}
-                {...register(label)}
-                readOnly={readOnly}
-                pointerEvents={pointerEvents}
-            />
-        </StyledLabel>
-    );
-};
+import { mergeDateTime, convert12to24time } from "../../utils";
+import { StyledInput } from "../common/Input";
+import { FormInputText } from "./FormInput";
 
 export const FormInputDateTime = ({ label }) => {
     const icon = iconMapping[label];

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { InputType } from "../../types";
+import { InputType } from "../types";
 
 export const StyledForm = styled.form`
     padding: 1em;
@@ -17,11 +17,15 @@ export const FormCol = styled.div<labelProps>`
     width: ${(props) => props.width};
 `;
 
-export const StyledLabel = styled.label<labelProps>`
+export const StyledLabel = styled.div<labelProps>`
     display: flex;
     flex-direction: ${(props) => props.direction};
-    place-items: baseline;
     font-size: 20px;
+    background-color: #eff1f2;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const StyledFieldset = styled.fieldset<labelProps>`

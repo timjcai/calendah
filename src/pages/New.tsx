@@ -1,5 +1,5 @@
 import React from "react";
-import { InputForm } from "../components/common/Form";
+import { InputForm } from "../components/Form";
 import { NavWrapper, NavMapping, NavButton } from "../components/Navbar/Navbar";
 
 export const New = () => {

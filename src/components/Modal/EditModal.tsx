@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { FormInputText, InputForm } from "../common/Form/Form";
+import { FormInputText } from "../Form";
 import {
     useForm,
     FormProvider,
@@ -11,7 +11,7 @@ import {
 import { ExitButton, IconButton, StyledButton } from "../common/Button";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { Icon } from "../common/Icon";
-import { StyledForm } from "../common/Form/Form.styles";
+import { StyledForm } from "../Form/Form.styles";
 import { convert12to24time, mergeDateTime } from "../../utils";
 import { ModalNavbar } from "./BaseModalComponents";
 import { ModalBox } from "./Modal.styles";
