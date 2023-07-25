@@ -35,9 +35,9 @@ Database Setup: Set up a local database using our calendahapi (https://github.co
 
 Environment Variables: Create a .env file in the root directory and add environment-specific variables like database connection details and API keys.
 
-Start the Application: Run npm start to start the development server.
+Start the Application: Run ```npm run dev``` to start the development server.
 
-Access the Application: Open your web browser and visit http://localhost:3000 to access the Google Calendar Clone.
+Access the Application: Open your web browser and visit http://localhost:5173 to access the Google Calendar Clone.
 
 ## Feedback and Support
 We value your feedback and are here to assist with any issues you encounter. Please feel free to submit an issue on our GitHub repository for bug reports or feature requests.
