@@ -4,13 +4,13 @@ import {
     EventCard,
     HoverEventCard,
 } from "../components/Calendar/EventCard";
-import { dayMappingFromIndex, monthMappingFromIndex } from "../db/Mapping";
 import { formatISO, parseISO } from "date-fns";
 import {
     DateObjectto12Hour,
     DateObjectto24Hour,
     addZero,
     allHours,
+    extractTime,
     getLocalHour,
     getLocalMinute,
     getTime,
@@ -30,7 +30,10 @@ import { allTimes } from "../Mapping";
 
 export const Test = () => {
     const selectedTimes = allHours();
-
+    const cellId = "col4--27-6-2023|3 AM";
+    const cellId2 = "col4--27-6-2023|3:00 AM";
+    const cellId3 = "col4--27-6-2023|3:00";
+    console.log(extractTime(cellId));
     return (
         <div className="w-screen h-screen flex justify-center items-center flex-col">
             <h1>Test page</h1>

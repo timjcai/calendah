@@ -1,6 +1,5 @@
 import { APIDataObject, EventProps } from "../components/types/apidata";
-import { timeMappings12to24 } from "../db/Mapping";
-import { mergeDateTime, convert24stringto24time } from "./TimeUtils";
+import { mergeDateTime, convert24stringto24time, convert12to24time } from "./TimeUtils";
 
 export const calcIndividualColWidth = (
   viewSettings: number,
@@ -24,8 +23,21 @@ export const extractDate = (columnId: string) => {
 // dependent on the cell id being presented in this format: "colX--DD-MM-YYYY| 5 AM"
 export const extractTime = (cellId: string): Date => {
   const timeArray = cellId.split("|");
-  const Time12HR = timeArray[1];
-  return convert24stringto24time(timeMappings12to24[Time12HR]);
+  const Time = timeArray[1];
+  let result;
+  if (cellId.includes(':')){
+    if (cellId.includes('M')) {
+      result = convert12to24time(Time)
+    } else {
+      result = convert24stringto24time(Time)
+    }
+  } else {
+    const hour = `${Time.split(' ')[0]}:00`
+    const ampm = Time.split(' ')[1]
+    const reconstructedTime = [hour,ampm].join(' ')
+    result = convert12to24time(reconstructedTime)
+  }
+  return result
 };
 
 export const createDateTimeonPosition = (event) => {

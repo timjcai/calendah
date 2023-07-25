@@ -1,24 +1,12 @@
 import React, { FC, useCallback, useEffect, useContext, useState } from "react";
 
-import {
-    TimebarProps,
-    TimecellProps,
-    ViewProps,
-    DateProps,
-    IActiveCard,
-} from "../types";
+import { ViewProps, IActiveCard } from "../types";
 
 import { Timebar } from "./Timebar";
 import { DateHeader } from "./Headers/DateHeader";
-import { EventCard, HoverEventCard } from "./EventCard";
+import { HoverEventCard } from "./EventCard";
 
-import {
-    EventContext,
-    ViewSizeContext,
-    WeekContext,
-} from "../../context/Context";
-
-import { DisplayTimeContext } from "../../context/SettingsProvider";
+import { EventContext, WeekContext } from "../../context/Context";
 
 import {
     generateColumnId,
@@ -31,11 +19,10 @@ import {
     calcIndividualColWidth,
     closest15min,
     createDateTimeonPosition,
-    extractDate,
-    extractTime,
     getEventId,
     searchEventId,
     generateTimeArray,
+    allHours,
 } from "../../utils";
 
 import {
@@ -52,17 +39,13 @@ import { MousePosProvider } from "../../context/MousePosProvider";
 import { EditModal } from "../Modal/EditModal";
 import { ViewModal } from "../Modal/ViewModal";
 import { CalendarHeader } from "./Headers";
+import { PlannerColumn } from "./PlannerColumn";
 
 export const BaseCalendar: FC<ViewProps> = () => {
     const thisWeekdata = useContext(WeekContext);
     const eventData = useContext(EventContext);
-    const timeDisplaySettings = useContext(DisplayTimeContext);
     const [newEventDefault, setNewEventDefault] = useState(
         settings.newevent_default
-    );
-
-    const [allHours, setAllHours] = useState(
-        generateTimeArray(timeDisplaySettings)
     );
     const [activeCard, setActiveCard] = useState<IActiveCard>(null);
     const [activeCardDetails, setActiveCardDetails] = useState({});
@@ -209,7 +192,7 @@ export const BaseCalendar: FC<ViewProps> = () => {
                     <DateHeader thisWeek={thisWeekdata} />
                 </div>
                 <PlannerWrapper onClick={doubleClickHandler}>
-                    <Timebar times={allHours} />
+                    <Timebar />
                     <CalendarColumnWrapper
                         onPointerDown={startGrabbingCard}
                         onPointerMove={moveHoverEventCard}
@@ -220,7 +203,6 @@ export const BaseCalendar: FC<ViewProps> = () => {
                             return (
                                 <PlannerColumn
                                     key={generateColumnId(date)}
-                                    times={allHours}
                                     id={generateColumnId(date)}
                                     dayContent={dayContent}
                                 />
@@ -263,38 +245,5 @@ export const BaseCalendar: FC<ViewProps> = () => {
                 </PlannerWrapper>
             </StyledCalendar>
         </MousePosProvider>
-    );
-};
-
-const PlannerColumn = (props: { times: string[]; id: string; dayContent }) => {
-    const viewSize = useContext(ViewSizeContext);
-    const [windowSize, setWindowSize] = useState(window.innerWidth);
-
-    useEffect(() => {
-        function handleResize() {
-            setWindowSize(window.innerWidth);
-            // Update the state or perform any other actions when the
-            // browser is resized
-        }
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-
-    return (
-        <StyledPlannerColumn
-            $width={calcIndividualColWidth(viewSize, windowSize)}
-            id={props.id}
-        >
-            {props.times.map((time) => {
-                return <PlannerCell key={time} id={`${props.id}|${time}`} />;
-            })}
-            {props.dayContent &&
-                props.dayContent.map((event) => {
-                    return <EventCard className="eventcard" props={event} />;
-                })}
-        </StyledPlannerColumn>
     );
 };

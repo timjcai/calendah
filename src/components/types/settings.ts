@@ -9,3 +9,5 @@ export type SettingsType =
     | "Notifications"
     | "Keyboard Shortcuts"
     | "Integrations"
+
+export type DisplayTimeSettings = '12 hour' | '24 hour' | '12:00 hour'

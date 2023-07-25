@@ -1,6 +1,6 @@
 import settings from "../db/settings.json";
 import { allTimes, languageDataMapping } from "../Mapping";
-import { timezoneType } from "../components/types";
+import { DisplayTimeSettings, timezoneType } from "../components/types";
 
 export function convertTime(timezone: timezoneType, date: Date) {
   if (languageDataMapping[timezone]) {
@@ -140,6 +140,7 @@ export const DateObjectto1200Hour = (input: Date): string => {
 
 export const DateObjectto12Hour = (input: Date): string => {
   const hours = input.getHours()
+  const minutes = addZero(input.getMinutes())
   if (hours > 11) {
     if (hours === 12) {
       return `12 PM`
@@ -180,5 +181,3 @@ export const generateTimeArray = (input: DisplayTimeSettings): string[] => {
   }
   return newArray
 }
-
-type DisplayTimeSettings = '12 hour' | '24 hour' | '12:00 hour'

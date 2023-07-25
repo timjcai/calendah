@@ -1,9 +1,6 @@
 export type TimecellProps = {
   time: string;
-};
-
-export type TimebarProps = {
-  times: string[];
+  id: string;
 };
 
 export type ViewProps = {

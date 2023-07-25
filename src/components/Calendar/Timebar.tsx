@@ -1,7 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import styled from "styled-components";
-import { TimecellProps, TimebarProps } from "../types/calendar";
+import { TimecellProps } from "../types/calendar";
 import { Paragraph } from "../common/Text/Text";
+import { DisplayTimeContext } from "../../context/SettingsProvider";
+import { generateTimeArray } from "../../utils";
 
 export const TimebarWrapper = styled.div`
     display: flex;
@@ -15,12 +17,12 @@ export const TimebarCell = styled.div`
     padding-right: 8px;
     text-align: right;
     width: var(--timebar-width);
-    top: -12px;
+    top: -8px;
 `;
 
-export const Timecell: FC<TimecellProps> = ({ time }) => {
+export const Timecell: FC<TimecellProps> = ({ id, time }) => {
     return (
-        <TimebarCell>
+        <TimebarCell id={id}>
             <span>
                 <Paragraph color={"grey"} $fsize={"10px"}>
                     {time}
@@ -30,13 +32,15 @@ export const Timecell: FC<TimecellProps> = ({ time }) => {
     );
 };
 
-export const Timebar: FC<TimebarProps> = ({ times }) => {
+export const Timebar: FC = () => {
+    const displayTimes = useContext(DisplayTimeContext);
+    const displayHours = generateTimeArray(displayTimes);
+
     return (
         <TimebarWrapper>
-            {times &&
-                times.map((unit) => {
-                    return <Timecell key={unit} time={unit} />;
-                })}
+            {displayHours.map((unit: string) => {
+                return <Timecell id={unit} time={unit} />;
+            })}
         </TimebarWrapper>
     );
 };
