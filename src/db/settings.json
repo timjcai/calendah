@@ -2,6 +2,7 @@
   "time_zone": "en-AU",
   "start_of_the_week": "Monday",
   "view_size": 7,
+  "display_time": "12:00 hour",
   "calendar_color_settings": {
     "0": {
       "name": "New Event",

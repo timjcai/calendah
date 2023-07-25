@@ -18,6 +18,8 @@ import {
     WeekContext,
 } from "../../context/Context";
 
+import { DisplayTimeContext } from "../../context/SettingsProvider";
+
 import {
     generateColumnId,
     thisWeek,
@@ -33,6 +35,7 @@ import {
     extractTime,
     getEventId,
     searchEventId,
+    generateTimeArray,
 } from "../../utils";
 
 import {
@@ -50,11 +53,16 @@ import { EditModal } from "../Modal/EditModal";
 import { ViewModal } from "../Modal/ViewModal";
 import { CalendarHeader } from "./Headers";
 
-export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
+export const BaseCalendar: FC<ViewProps> = () => {
     const thisWeekdata = useContext(WeekContext);
     const eventData = useContext(EventContext);
+    const timeDisplaySettings = useContext(DisplayTimeContext);
     const [newEventDefault, setNewEventDefault] = useState(
         settings.newevent_default
+    );
+
+    const [allHours, setAllHours] = useState(
+        generateTimeArray(timeDisplaySettings)
     );
     const [activeCard, setActiveCard] = useState<IActiveCard>(null);
     const [activeCardDetails, setActiveCardDetails] = useState({});
@@ -74,7 +82,6 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
             return setActiveCard(null);
         }
     }
-
     const handleKeyPress = useCallback((event) => {
         console.log(`Key pressed: ${event.key}`);
     }, []);
@@ -202,7 +209,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                     <DateHeader thisWeek={thisWeekdata} />
                 </div>
                 <PlannerWrapper onClick={doubleClickHandler}>
-                    <Timebar times={times} />
+                    <Timebar times={allHours} />
                     <CalendarColumnWrapper
                         onPointerDown={startGrabbingCard}
                         onPointerMove={moveHoverEventCard}
@@ -213,7 +220,7 @@ export const BaseCalendar: FC<ViewProps> = ({ times, actions }) => {
                             return (
                                 <PlannerColumn
                                     key={generateColumnId(date)}
-                                    times={times}
+                                    times={allHours}
                                     id={generateColumnId(date)}
                                     dayContent={dayContent}
                                 />

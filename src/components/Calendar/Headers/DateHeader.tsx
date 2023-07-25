@@ -7,7 +7,7 @@ import {
     monthAbbreviations,
     dayMappingFromIndex,
     monthMappingFromIndex,
-} from "../../../db/Mapping";
+} from "../../../Mapping";
 import {
     SelectDateContext,
     TodayContext,

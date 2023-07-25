@@ -1,5 +1,5 @@
 import { addDays, toDate } from "date-fns";
-import { convert12to24time } from "./TimeUtils";
+import { addZero, convert12to24time, endDatePlusOne } from "./TimeUtils";
 
 // sets the week and returns an array starting from Monday
 export const thisWeek = (input: Date, size: number): Date[] => {
@@ -45,40 +45,3 @@ export const rubyDateConverter = (rubyDateString: string): Date => {
   return new Date(rubyDateString);
 };
 
-export const addZero = (input: number): string => {
-  if (input < 10) {
-    return `0${input}`;
-  } else {
-    return `${input}`;
-  }
-};
-
-interface getTimeProps {
-  hours: number;
-  minutes: number;
-}
-
-export const getTime = (input: Date): getTimeProps => {
-  const hours = input.getHours();
-  const mins = input.getMinutes();
-  return { hours: hours, minutes: mins };
-};
-
-export const endDatePlusOne = (input: string): string => {
-  const test = input.split("-");
-  const newDate = parseInt(test[2]) + 1;
-  test[2] = addZero(newDate);
-  return test.join("-");
-};
-
-export const mergeDateTime = (date, time) => {
-  const setDate = date;
-  const setTime = time;
-  const newdate = date.getDate();
-  const month = date.getMonth();
-  const year = date.getFullYear();
-  setTime.setFullYear(year);
-  setTime.setMonth(month);
-  setTime.setDate(newdate);
-  return setTime;
-};

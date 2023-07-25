@@ -1,6 +1,6 @@
 import React, { FC, MouseEvent } from "react";
 import styled from "styled-components";
-import { iconMapping } from "../../db/Mapping";
+import { iconMapping } from "../../Mapping";
 import { InputType } from "../types";
 import { Icon } from "./Icon";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Icon } from "../common/Icon";
-import { settingsIconMapping } from "../../db/Mapping";
+import { settingsIconMapping } from "../../Mapping";
 import { Paragraph } from "../common/Text";
 
 export const SettingsLink = ({ label }) => {

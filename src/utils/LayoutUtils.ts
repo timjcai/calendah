@@ -1,7 +1,6 @@
 import { APIDataObject, EventProps } from "../components/types/apidata";
 import { timeMappings12to24 } from "../db/Mapping";
-import { mergeDateTime } from "./DateUtils";
-import { convert24stringto24time } from "./TimeUtils";
+import { mergeDateTime, convert24stringto24time } from "./TimeUtils";
 
 export const calcIndividualColWidth = (
   viewSettings: number,

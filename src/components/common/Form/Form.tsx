@@ -1,6 +1,6 @@
 import React, { FC, useId, useRef, useState } from "react";
 import { Icon } from "../Icon";
-import { iconMapping } from "../../../db/Mapping";
+import { iconMapping } from "../../../Mapping";
 import { StyledButton } from "../Button";
 
 import DatePicker from "react-widgets/DatePicker";
@@ -28,7 +28,7 @@ export const FormInputText = ({
     size = "small",
     margin = "1em",
     defaultValue = `No ${label}`,
-    readOnly,
+    readOnly = false,
     pointerEvents = "auto",
 }) => {
     const icon = iconMapping[label];
@@ -154,24 +154,25 @@ export const InputForm = () => {
 
     const handleFormSubmit = (formValues) => {
         const form = validateData(formValues);
+        console.log(form);
 
-        fetch(
-            `http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(form),
-            }
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Response from server:", data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+        // fetch(
+        //     `http://localhost:3000/api/v1/calendars/${form.calendar_id}/events`,
+        //     {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify(form),
+        //     }
+        // )
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log("Response from server:", data);
+        //     })
+        //     .catch((error) => {
+        //         console.error("Error:", error);
+        //     });
     };
 
     return (
