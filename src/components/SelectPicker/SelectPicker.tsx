@@ -5,16 +5,20 @@ import { CommonStylingProps } from "../types";
 export const SelectPicker = ({ label, placeholder, list }) => {
     const [selectItem, setSelectItem] = useState(placeholder);
     const [isHidden, setIsHidden] = useState(true);
+    const selectorRef = useRef();
 
     const handlePopup = () => {
         setIsHidden((prevState) => !prevState);
     };
 
     const handleSelect = (e) => {
-        setSelectItem(e.target.innerHTML);
+        const value = e.target.innerHTML;
+        console.log(value);
+        setSelectItem(value);
         setIsHidden(true);
     };
 
+    // unable to implement a closepopup box - not sure how to implement this after 2-3 hours of work
     const closePopup = (e) => {
         if (!isHidden) {
             setIsHidden(true);
@@ -22,21 +26,34 @@ export const SelectPicker = ({ label, placeholder, list }) => {
     };
 
     return (
-        <div onClick={handlePopup} onBlur={closePopup}>
+        <Selector
+            id="hello"
+            className="combobox"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded={!isHidden}
+        >
             <SelectorLabel $bgcolor={"var(--background-grey)"}>
                 {label}
             </SelectorLabel>
-            <SelectWrapper>
+            <SelectWrapper
+                aria-controls="dropdownOptions"
+                onClick={handlePopup}
+            >
                 <SelectInput value={selectItem} />
             </SelectWrapper>
             <PopupSelector
+                aria-label="Options"
+                selected={selectItem}
                 list={list}
                 isHidden={isHidden}
                 handleSelect={handleSelect}
-            ></PopupSelector>
-        </div>
+            />
+        </Selector>
     );
 };
+
+export const Selector = styled.div``;
 
 export const SelectInput = styled.input`
     padding: 0;
@@ -50,6 +67,9 @@ export const SelectInput = styled.input`
     width: 100px;
     overflow: hidden;
     margin-left: 6px;
+    &: hover {
+        cursor: pointer;
+    }
 `;
 
 export const SelectWrapper = styled.div`
@@ -57,6 +77,9 @@ export const SelectWrapper = styled.div`
     border: 1px solid grey;
     border-radius: 4px;
     width: fit-content;
+    &: hover {
+        cursor: pointer;
+    }
 `;
 
 export const SelectorLabel = styled.label<CommonStylingProps>`
@@ -83,17 +106,21 @@ export const SelectorLabel = styled.label<CommonStylingProps>`
     background-color: ${(props) => props.$bgcolor};
 `;
 
-export const PopupSelector = ({ list, isHidden, handleSelect }) => {
+export const PopupSelector = ({ list, isHidden, handleSelect, selected }) => {
+    const isTrue = (item) => {
+        return item === selected;
+    };
     return (
-        <PopupWrapper>
-            <PopupMenu hidden={isHidden}>
+        <PopupWrapper show={isHidden}>
+            <PopupMenu>
                 {list &&
                     list.map((items) => {
                         return (
                             <PopupMenuItem
                                 role="option"
-                                onClick={(e) => handleSelect(e)}
+                                onClick={handleSelect}
                                 value={items}
+                                aria-selected={isTrue(items)}
                             >
                                 {items}
                             </PopupMenuItem>
@@ -111,23 +138,22 @@ export const PopupWrapper = styled.div<PWProps>`
     transition:
         opacity 251ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         transform 167ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    top: ${(props) => props.top}
-    left: ${(props) => props.left}
     transform-origin: 60px 0px;
     position: absolute;
     z-index: 2;
     width: 100px;
+    display: ${(props) => (props.show ? "none" : "block")};
 `;
 
 type PWProps = {
     top?: string;
     left?: string;
+    show?: boolean;
 };
 
 export const PopupMenu = styled.ul`
     list-style: none;
     margin: 0px;
-    padding: 8px 0px;
     position: relative;
     outline: 0px;
     background-image: linear-gradient(
@@ -141,8 +167,6 @@ export const PopupMenu = styled.ul`
     border-radius: 4px;
     background-color: #2f2f2f;
     color: white;
-    padding-left: 16px;
-    padding-right: 16px;
     width: 128px;
 `;
 
@@ -158,5 +182,16 @@ export const PopupMenuItem = styled.li`
     align-items: center;
     position: relative;
     text-decoration: none;
-    margin: 4px 0px 4px 0px;
+    padding: 4px 16px 4px 16px;
+    border: 1px solid black;
+    width: 100%;
+    &: hover {
+        background-color: #6b7a90;
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    &[aria-selected="true"] {
+        background-color: #6b728e;
+    }
 `;
