@@ -5,9 +5,12 @@ import { CommonStylingProps } from "../types";
 export const SelectPicker = ({ label, placeholder, list }) => {
     const [selectItem, setSelectItem] = useState(placeholder);
     const [isHidden, setIsHidden] = useState(true);
+    const [currentToggle, setCurrentToggle] = useState(label);
     const selectorRef = useRef();
 
-    const handlePopup = () => {
+    // what does stopPropagation do?
+    const handlePopup = (e) => {
+        e.stopPropagation();
         setIsHidden((prevState) => !prevState);
     };
 
@@ -19,15 +22,24 @@ export const SelectPicker = ({ label, placeholder, list }) => {
     };
 
     // unable to implement a closepopup box - not sure how to implement this after 2-3 hours of work
-    const closePopup = (e) => {
-        if (!isHidden) {
-            setIsHidden(true);
-        }
-    };
+
+    useEffect(() => {
+        const closePopup = (e: Event) => {
+            if (e.target !== selectorRef.current) {
+                setIsHidden(true);
+            }
+        };
+
+        document.addEventListener("click", closePopup);
+
+        return () => {
+            document.removeEventListener("click", closePopup);
+        };
+    });
 
     return (
         <Selector
-            id="hello"
+            id={label}
             className="combobox"
             role="combobox"
             aria-haspopup="listbox"
@@ -36,18 +48,16 @@ export const SelectPicker = ({ label, placeholder, list }) => {
             <SelectorLabel $bgcolor={"var(--background-grey)"}>
                 {label}
             </SelectorLabel>
-            <SelectWrapper
-                aria-controls="dropdownOptions"
-                onClick={handlePopup}
-            >
-                <SelectInput value={selectItem} />
-            </SelectWrapper>
+            <SelectButton aria-controls="dropdownOptions" onClick={handlePopup}>
+                <span> {selectItem}</span>
+            </SelectButton>
             <PopupSelector
                 aria-label="Options"
                 selected={selectItem}
                 list={list}
                 isHidden={isHidden}
                 handleSelect={handleSelect}
+                ref={selectorRef}
             />
         </Selector>
     );
@@ -55,32 +65,47 @@ export const SelectPicker = ({ label, placeholder, list }) => {
 
 export const Selector = styled.div``;
 
-export const SelectInput = styled.input`
-    padding: 0;
-    background: none;
-    border: none;
-    border-radius: 0;
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 100px;
-    overflow: hidden;
-    margin-left: 6px;
-    &: hover {
-        cursor: pointer;
-    }
-`;
+// export const SelectInput = styled.input`
+//     padding: 0;
+//     background: none;
+//     border: none;
+//     border-radius: 0;
+//     outline: none;
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//     appearance: none;
+//     width: 100px;
+//     overflow: hidden;
+//     margin-left: 6px;
+//     &: hover {
+//         cursor: pointer;
+//     }
+// `;
 
-export const SelectWrapper = styled.div`
+export const SelectButton = styled.button`
     padding: 12px 10px;
     border: 1px solid grey;
     border-radius: 4px;
     width: fit-content;
+    text-align: left;
+    width: 128px;
     &: hover {
         cursor: pointer;
     }
+    span {
+        margin-left: 6px;
+    }
 `;
+
+// export const SelectWrapper = styled.div`
+//     padding: 12px 10px;
+//     border: 1px solid grey;
+//     border-radius: 4px;
+//     width: fit-content;
+//     &: hover {
+//         cursor: pointer;
+//     }
+// `;
 
 export const SelectorLabel = styled.label<CommonStylingProps>`
     font-weight: 400;
@@ -111,7 +136,7 @@ export const PopupSelector = ({ list, isHidden, handleSelect, selected }) => {
         return item === selected;
     };
     return (
-        <PopupWrapper show={isHidden}>
+        <PopupWrapper show={isHidden} onClick={(e) => e.stopPropagation}>
             <PopupMenu>
                 {list &&
                     list.map((items) => {
