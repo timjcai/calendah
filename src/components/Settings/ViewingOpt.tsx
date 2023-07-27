@@ -20,7 +20,17 @@ export const ViewingOpt = () => {
     const [viewSizeSettings, setViewSizeSettings] = useState(
         settings.view_size
     );
-    const fakeData = ["12 hour", "24 hour", "12:00 hour"];
+    const displayTimeOptions = ["12 hour", "24 hour", "12:00 hour"];
+    const viewSizeOptions = [1, 2, 3, 4, 5, 7];
+    const startOftheWeekOptions = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    ];
 
     return (
         <div>
@@ -37,23 +47,10 @@ export const ViewingOpt = () => {
                 <SelectPicker
                     label={"Display Time"}
                     placeholder={displayTimeSettings}
-                    list={fakeData}
+                    list={displayTimeOptions}
                 />
             </SettingsBlockRow>
-            <SettingsParagraph></SettingsParagraph>
             <SettingsHeading>Date Settings</SettingsHeading>
-            <SettingsBlockRow>
-                <RowSpacer>
-                    <SettingsParagraph>Start of the Week</SettingsParagraph>
-                    <SettingsSubParagraph>
-                        [Not Functional] Select which day you would like to
-                        start the week by default
-                    </SettingsSubParagraph>
-                </RowSpacer>
-                <div>
-                    <SettingsParagraph> {startOfTheWeek}</SettingsParagraph>
-                </div>
-            </SettingsBlockRow>
             <SettingsBlockRow>
                 <RowSpacer>
                     <SettingsParagraph>View Size</SettingsParagraph>
@@ -62,8 +59,30 @@ export const ViewingOpt = () => {
                         in your Calendar
                     </SettingsSubParagraph>
                 </RowSpacer>
+                <SelectPicker
+                    label={"View Size"}
+                    placeholder={viewSizeSettings}
+                    list={viewSizeOptions}
+                />
                 <div>
-                    <SettingsParagraph> {viewSizeSettings}</SettingsParagraph>
+                    <SettingsParagraph> </SettingsParagraph>
+                </div>
+            </SettingsBlockRow>
+            <SettingsBlockRow>
+                <RowSpacer>
+                    <SettingsParagraph>Start of the Week</SettingsParagraph>
+                    <SettingsSubParagraph>
+                        [Not Functional] Select which day you would like to
+                        start the week by default
+                    </SettingsSubParagraph>
+                </RowSpacer>
+                <SelectPicker
+                    label={"Start of the Week"}
+                    placeholder={startOfTheWeek}
+                    list={startOftheWeekOptions}
+                />
+                <div>
+                    <SettingsParagraph> </SettingsParagraph>
                 </div>
             </SettingsBlockRow>
         </div>

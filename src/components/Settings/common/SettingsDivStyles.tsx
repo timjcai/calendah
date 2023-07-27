@@ -33,7 +33,7 @@ export const ContentSection = styled.div`
     flex-grow: 1;
     position: relative;
     height: 100%;
-
+    background: var(--background-grey);
     padding: 36px 60px;
     overflow: hidden;
 `;

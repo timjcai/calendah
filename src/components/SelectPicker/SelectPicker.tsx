@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { CommonStylingProps } from "../types";
 
 export const SelectPicker = ({ label, placeholder, list }) => {
     const [selectItem, setSelectItem] = useState(placeholder);
@@ -14,17 +15,25 @@ export const SelectPicker = ({ label, placeholder, list }) => {
         setIsHidden(true);
     };
 
+    const closePopup = (e) => {
+        if (!isHidden) {
+            setIsHidden(true);
+        }
+    };
+
     return (
-        <div>
-            <SelectorLabel>{label}</SelectorLabel>
+        <div onClick={handlePopup} onBlur={closePopup}>
+            <SelectorLabel $bgcolor={"var(--background-grey)"}>
+                {label}
+            </SelectorLabel>
             <SelectWrapper>
-                <SelectInput value={selectItem} onClick={handlePopup} />
-                <PopupSelector
-                    list={list}
-                    isHidden={isHidden}
-                    handleSelect={handleSelect}
-                ></PopupSelector>
+                <SelectInput value={selectItem} />
             </SelectWrapper>
+            <PopupSelector
+                list={list}
+                isHidden={isHidden}
+                handleSelect={handleSelect}
+            ></PopupSelector>
         </div>
     );
 };
@@ -38,20 +47,24 @@ export const SelectInput = styled.input`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    width: 100px;
+    overflow: hidden;
+    margin-left: 6px;
 `;
 
 export const SelectWrapper = styled.div`
-    padding: 16.5px 14px;
+    padding: 12px 10px;
     border: 1px solid grey;
     border-radius: 4px;
+    width: fit-content;
 `;
 
-export const SelectorLabel = styled.label`
+export const SelectorLabel = styled.label<CommonStylingProps>`
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.4375em;
     letter-spacing: 0.00938em;
-    padding: 0px;
+    padding: 0px 6px;
     display: block;
     transform-origin: left top;
     white-space: nowrap;
@@ -59,7 +72,7 @@ export const SelectorLabel = styled.label`
     text-overflow: ellipsis;
     max-width: calc(133% - 32px);
     position: absolute;
-    transform: translate(14px, -9px) scale(0.75);
+    transform: translate(12px, -9px) scale(0.75);
     transition:
         color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
         transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
@@ -67,6 +80,7 @@ export const SelectorLabel = styled.label`
     z-index: 1;
     pointer-events: auto;
     user-select: none;
+    background-color: ${(props) => props.$bgcolor};
 `;
 
 export const PopupSelector = ({ list, isHidden, handleSelect }) => {
@@ -100,6 +114,9 @@ export const PopupWrapper = styled.div<PWProps>`
     top: ${(props) => props.top}
     left: ${(props) => props.left}
     transform-origin: 60px 0px;
+    position: absolute;
+    z-index: 2;
+    width: 100px;
 `;
 
 type PWProps = {
@@ -126,6 +143,7 @@ export const PopupMenu = styled.ul`
     color: white;
     padding-left: 16px;
     padding-right: 16px;
+    width: 128px;
 `;
 
 export const PopupMenuItem = styled.li`
@@ -140,4 +158,5 @@ export const PopupMenuItem = styled.li`
     align-items: center;
     position: relative;
     text-decoration: none;
+    margin: 4px 0px 4px 0px;
 `;
