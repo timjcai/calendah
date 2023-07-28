@@ -15,8 +15,7 @@ export const SelectPicker = ({ label, placeholder, list }) => {
     };
 
     const handleSelect = (e) => {
-        const value = e.target.innerHTML;
-        console.log(value);
+        const value = e.target.getAttribute("value");
         setSelectItem(value);
         setIsHidden(true);
     };
@@ -24,11 +23,11 @@ export const SelectPicker = ({ label, placeholder, list }) => {
     // unable to implement a closepopup box - not sure how to implement this after 2-3 hours of work
 
     useEffect(() => {
-        const closePopup = (e: Event) => {
+        function closePopup(e: Event) {
             if (e.target !== selectorRef.current) {
                 setIsHidden(true);
             }
-        };
+        }
 
         document.addEventListener("click", closePopup);
 
@@ -48,16 +47,22 @@ export const SelectPicker = ({ label, placeholder, list }) => {
             <SelectorLabel $bgcolor={"var(--background-grey)"}>
                 {label}
             </SelectorLabel>
-            <SelectButton aria-controls="dropdownOptions" onClick={handlePopup}>
+            <SelectButton
+                type="button"
+                aria-controls="dropdownOptions"
+                ref={selectorRef}
+                onClick={handlePopup}
+            >
                 <span> {selectItem}</span>
             </SelectButton>
             <PopupSelector
+                id="dropdownOptions"
+                role="listbox"
                 aria-label="Options"
                 selected={selectItem}
                 list={list}
                 isHidden={isHidden}
                 handleSelect={handleSelect}
-                ref={selectorRef}
             />
         </Selector>
     );
