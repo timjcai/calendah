@@ -31,6 +31,7 @@ export const ViewingOpt = () => {
         "Saturday",
         "Sunday",
     ];
+    const color = "var(--background-grey)";
 
     return (
         <div>
@@ -46,6 +47,7 @@ export const ViewingOpt = () => {
                 </RowSpacer>
                 <SelectPicker
                     label={"Display Time"}
+                    color={color}
                     placeholder={displayTimeSettings}
                     list={displayTimeOptions}
                 />
@@ -61,6 +63,7 @@ export const ViewingOpt = () => {
                 </RowSpacer>
                 <SelectPicker
                     label={"View Size"}
+                    color={color}
                     placeholder={viewSizeSettings}
                     list={viewSizeOptions}
                 />
@@ -78,6 +81,7 @@ export const ViewingOpt = () => {
                 </RowSpacer>
                 <SelectPicker
                     label={"Start of the Week"}
+                    color={color}
                     placeholder={startOfTheWeek}
                     list={startOftheWeekOptions}
                 />

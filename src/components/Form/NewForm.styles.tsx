@@ -14,23 +14,25 @@ export type FormInputProps = {
     payload: EventProps;
     onChange: (() => void) | ((e: any) => void);
     data?: string[];
+    color: string;
 };
 
 export const IconBubble = styled.span`
     align-items: center;
-    background-color: #1d1d1d;
+    background-color: #3a3a3a;
     color: white;
-    border-radius: 100%;
-    padding: 4px 2.5px 4px 2.5px;
+    border-radius: 50%;
+    padding: 2px 4px 2px 4px;
 `;
 
 export const StyledInputLabel = styled.label`
-    display: block;
-    padding: 5px 0px 5px 0px;
+    display: flex;
+    padding: 8px 0px 8px 8px;
     background-color: #212121;
     border: 1px solid black;
     border-radius: 6px;
     width: 50vw;
+    margin-bottom: 5px;
 `;
 
 export const StyledInput = styled.input<StyledInputProps>`
@@ -41,4 +43,11 @@ export const StyledInput = styled.input<StyledInputProps>`
     width: 94%;
     margin-left: 5px;
     text-overflow: ellipsis;
+`;
+
+export const FormActionButton = styled.button`
+    background-color: var(--blue);
+    padding: 5px 10px;
+    color: white;
+    border-radius: 6px;
 `;

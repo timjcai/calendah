@@ -15,19 +15,26 @@ import { Icon } from "../common/Icon";
 import { iconMapping } from "../../Mapping";
 import { SelectPicker } from "../SelectPicker/SelectPicker";
 import { validateData } from "../../utils/FormUtils";
-import { SelectInput, TextInput, TitleInput } from "./NewFormInputs";
+import {
+    DateTimeInput,
+    SelectInput,
+    TextInput,
+    TitleInput,
+} from "./NewFormInputs";
 import {
     allTimesEvery15min,
     generateTimeArray,
     parseTimeStringtoDateObject,
 } from "../../utils";
 import { DisplayTimeContext } from "../../context/SettingsProvider";
+import { FormActionButton } from "./NewForm.styles";
 
 export const NewForm = () => {
     const displayTimes = useContext(DisplayTimeContext);
     const formDefault = settings.newevent_default;
     const [payload, setPayload] = useState(formDefault);
     const [currentActive, setCurrentActive] = useState(null);
+    const [formColor, setFormColor] = useState("#212121");
 
     const customInputHandler = (e) => {
         const currentInput = e.target.id;
@@ -58,6 +65,12 @@ export const NewForm = () => {
                     payload={payload}
                     onChange={customInputHandler}
                 ></TitleInput>
+                <DateTimeInput
+                    color={"#212121"}
+                    payload={payload}
+                    onChange={dateTimeInputHandler}
+                    data={generateTimeArray(displayTimes, allTimesEvery15min())}
+                />
                 <TextInput
                     label={"description"}
                     payload={payload}
@@ -78,37 +91,39 @@ export const NewForm = () => {
                     payload={payload}
                     onChange={customInputHandler}
                 />
-                <SelectInput
-                    label={"calendar_id"}
-                    payload={payload}
-                    onChange={customInputHandler}
-                    data={calendarIds}
-                />
+
                 <TextInput
                     label={"guests"}
                     payload={payload}
                     onChange={customInputHandler}
                 />
+
                 <SelectInput
                     label={"starttime"}
+                    color={"#212121"}
                     payload={payload}
                     onChange={dateTimeInputHandler}
                     data={generateTimeArray(displayTimes, allTimesEvery15min())}
                 />
                 <SelectInput
                     label={"endtime"}
+                    color={"#212121"}
                     payload={payload}
                     onChange={dateTimeInputHandler}
                     data={generateTimeArray(displayTimes, allTimesEvery15min())}
                 />
+                <SelectInput
+                    label={"calendar_id"}
+                    color={"#212121"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                    data={calendarIds}
+                />
+                <FormActionButton type="submit">Submit</FormActionButton>
             </div>
-            <button type="submit">Submit</button>
 
             <br />
             <br />
-            <div>
-                <p>Current Active: {currentActive} </p>
-            </div>
             {/* <p>{payload.title}</p>
             <p>{payload.starttime}</p>
             <p>{payload.endtime}</p>

@@ -13,7 +13,9 @@ export const SelectPicker = ({
     label,
     placeholder,
     list,
+    color,
     onChange = () => {},
+    width = "128px",
 }) => {
     const [selectItem, setSelectItem] = useState(placeholder);
     const [isHidden, setIsHidden] = useState(true);
@@ -56,14 +58,13 @@ export const SelectPicker = ({
             aria-haspopup="listbox"
             aria-expanded={!isHidden}
         >
-            <SelectorLabel $bgcolor={"var(--background-grey)"}>
-                {label}
-            </SelectorLabel>
+            <SelectorLabel $bgcolor={color}>{label}</SelectorLabel>
             <SelectButton
                 type="button"
                 aria-controls="dropdownOptions"
                 ref={selectorRef}
                 onClick={handlePopup}
+                $width={width}
             >
                 <span id={label}>{selectItem}</span>
             </SelectButton>
@@ -101,13 +102,15 @@ export const Selector = styled.div``;
 //     }
 // `;
 
-export const SelectButton = styled.button`
-    padding: 12px 10px;
+export const SelectButton = styled.button<CommonStylingProps>`
+    padding: ${(props) => (props.$width === "128px" ? "12px 10px" : "6px 0px")};
     border: 1px solid grey;
     border-radius: 4px;
     width: fit-content;
     text-align: left;
-    width: 128px;
+    width: ${(props) => props.$width};
+    min-width: 47px;
+    color: white;
     &: hover {
         cursor: pointer;
     }
@@ -148,6 +151,8 @@ export const SelectorLabel = styled.label<CommonStylingProps>`
     pointer-events: auto;
     user-select: none;
     background-color: ${(props) => props.$bgcolor};
+    color: white;
+    border-radius: 12px;
 `;
 
 export const PopupSelector = ({

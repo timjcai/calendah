@@ -16,6 +16,9 @@ export const ModalBox = styled.div<ModalBoxProps>`
     position: absolute;
     z-index: 1;
     background: #ffffff;
+    box-shadow:
+        0 1px 4px 0 rgba(0, 0, 0, 0.08),
+        0 15px 50px 0 rgba(0, 0, 0, 0.6);
 
     top: ${(props) => props.$top}px;
     left: ${(props) => props.$left}px;
