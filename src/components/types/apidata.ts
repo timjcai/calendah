@@ -3,15 +3,15 @@ export interface APIDataObject {
 }
 
 export interface EventProps {
-    id: number;
+    id?: number;
     calendar_id: number;
     title: string;
     description: string;
     location: string;
     guests: string;
-    tag: string;
-    created_at: Date;
-    updated_at: Date;
+    tag?: string;
+    created_at?: Date;
+    updated_at?: Date;
     starttime: Date;
     endtime: Date;
 }

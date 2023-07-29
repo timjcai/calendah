@@ -1,6 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { CommonStylingProps } from "../types";
+import { CommonStylingProps, EventProps } from "../types";
+
+interface ISelectPicker {
+    label: string;
+    placeholder: string | EventProps;
+    list: string[];
+    onChange: () => void;
+}
 
 export const SelectPicker = ({
     label,

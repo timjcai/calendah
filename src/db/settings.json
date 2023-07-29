@@ -26,7 +26,6 @@
     }
   },
   "newevent_default": {
-    "id": 1,
     "title": "No title",
     "starttime": "",
     "endtime": "",

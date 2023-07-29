@@ -3,15 +3,16 @@ import { APIDataObject, EventProps, formInput } from "../types";
 
 export type StyledInputProps = {
     id: formInput;
-    defaultValue: EventProps;
+    defaultValue: EventProps | null;
     onChange?: Function;
     $fsize?: string;
+    placeholder: EventProps[];
 };
 
 export type FormInputProps = {
     label: formInput;
-    payload: APIDataObject;
-    onChange: Function;
+    payload: EventProps;
+    onChange: (() => void) | ((e: any) => void);
     data?: string[];
 };
 

@@ -18,7 +18,8 @@ export const TextInput: FC<FormInputProps> = ({ label, payload, onChange }) => {
             </IconBubble>
             <StyledInput
                 id={label}
-                defaultValue={payload[label]}
+                placeholder={payload[label]}
+                defaultValue={null}
                 onChange={onChange}
                 $fsize={"16px"}
             />
@@ -35,7 +36,8 @@ export const TitleInput: FC<FormInputProps> = ({
         <StyledInputLabel>
             <StyledInput
                 id={label}
-                defaultValue={payload[label]}
+                placeholder={payload[label]}
+                defaultValue={null}
                 onChange={onChange}
                 $fsize={"32px"}
             />

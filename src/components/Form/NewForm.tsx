@@ -84,6 +84,11 @@ export const NewForm = () => {
                     onChange={customInputHandler}
                     data={calendarIds}
                 />
+                <TextInput
+                    label={"guests"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                />
                 <SelectInput
                     label={"starttime"}
                     payload={payload}
