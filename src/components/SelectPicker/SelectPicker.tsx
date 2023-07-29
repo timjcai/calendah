@@ -2,10 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { CommonStylingProps } from "../types";
 
-export const SelectPicker = ({ label, placeholder, list }) => {
+export const SelectPicker = ({
+    label,
+    placeholder,
+    list,
+    onChange = () => {},
+}) => {
     const [selectItem, setSelectItem] = useState(placeholder);
     const [isHidden, setIsHidden] = useState(true);
-    const [currentToggle, setCurrentToggle] = useState(label);
     const selectorRef = useRef();
 
     // what does stopPropagation do?
@@ -17,6 +21,8 @@ export const SelectPicker = ({ label, placeholder, list }) => {
     const handleSelect = (e) => {
         const value = e.target.getAttribute("value");
         setSelectItem(value);
+        console.log("in the select");
+        onChange(e);
         setIsHidden(true);
     };
 
@@ -53,7 +59,7 @@ export const SelectPicker = ({ label, placeholder, list }) => {
                 ref={selectorRef}
                 onClick={handlePopup}
             >
-                <span> {selectItem}</span>
+                <span id={label}>{selectItem}</span>
             </SelectButton>
             <PopupSelector
                 id="dropdownOptions"
@@ -63,6 +69,7 @@ export const SelectPicker = ({ label, placeholder, list }) => {
                 list={list}
                 isHidden={isHidden}
                 handleSelect={handleSelect}
+                onChange={onChange}
             />
         </Selector>
     );
@@ -141,12 +148,14 @@ export const PopupSelector = ({ list, isHidden, handleSelect, selected }) => {
         return item === selected;
     };
     return (
-        <PopupWrapper show={isHidden} onClick={(e) => e.stopPropagation}>
+        <PopupWrapper isHidden={isHidden} onClick={(e) => e.stopPropagation}>
             <PopupMenu>
                 {list &&
                     list.map((items) => {
                         return (
                             <PopupMenuItem
+                                id="calendar_id"
+                                key={items}
                                 role="option"
                                 onClick={handleSelect}
                                 value={items}
@@ -172,13 +181,13 @@ export const PopupWrapper = styled.div<PWProps>`
     position: absolute;
     z-index: 2;
     width: 100px;
-    display: ${(props) => (props.show ? "none" : "block")};
+    display: ${(props) => (props.isHidden ? "none" : "block")};
 `;
 
 type PWProps = {
     top?: string;
     left?: string;
-    show?: boolean;
+    isHidden?: boolean;
 };
 
 export const PopupMenu = styled.ul`

@@ -34,6 +34,7 @@
     "location": "No location selected",
     "attachments": "No attachments",
     "guests": "No guests",
-    "description": "Add description here"
+    "description": "Add description here",
+    "calendar_id": 1
   }
 }

@@ -16,3 +16,15 @@ export interface EventProps {
     endtime: Date;
 }
 
+export type formInput = 
+    | "id"
+    | "calendar_id"
+    | "title"
+    | "description"
+    | "location"
+    | "guests"
+    | "tag"
+    | "created_at"
+    | "updated_at"
+    | "starttime"
+    | "endtime"
