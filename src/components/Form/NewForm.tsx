@@ -16,7 +16,11 @@ import { iconMapping } from "../../Mapping";
 import { SelectPicker } from "../SelectPicker/SelectPicker";
 import { validateData } from "../../utils/FormUtils";
 import { SelectInput, TextInput, TitleInput } from "./NewFormInputs";
-import { allTimesEvery15min, generateTimeArray } from "../../utils";
+import {
+    allTimesEvery15min,
+    generateTimeArray,
+    parseTimeStringtoDateObject,
+} from "../../utils";
 import { DisplayTimeContext } from "../../context/SettingsProvider";
 
 export const NewForm = () => {
@@ -33,9 +37,11 @@ export const NewForm = () => {
 
     const dateTimeInputHandler = (e) => {
         const currentInput = e.target.id;
-        const value = e.target.value;
-        console.log(currentInput);
-        console.log(value);
+        const value = parseTimeStringtoDateObject(
+            displayTimes,
+            e.target.innerHTML
+        );
+        setPayload((prevState) => ({ ...prevState, [currentInput]: value }));
     };
 
     const handleFormSubmit = (e) => {

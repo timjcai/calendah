@@ -12,7 +12,7 @@ import { ExitButton, IconButton, StyledButton } from "../common/Button";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { Icon } from "../common/Icon";
 import { StyledForm } from "../Form/Form.styles";
-import { convert12to24time, mergeDateTime } from "../../utils";
+import { mergeDateTime } from "../../utils";
 import { ModalNavbar } from "./BaseModalComponents";
 import { ModalBox } from "./Modal.styles";
 

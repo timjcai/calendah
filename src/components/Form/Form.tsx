@@ -20,7 +20,7 @@ import {
     useFormContext,
     Controller,
 } from "react-hook-form";
-import { mergeDateTime, convert12to24time } from "../../utils";
+import { mergeDateTime, convert12toDateObject } from "../../utils";
 import { StyledInput } from "../common/Input";
 import { FormInputText } from "./FormInput";
 
@@ -102,8 +102,8 @@ export const InputForm = () => {
             description,
             guests,
         } = formValues;
-        mergeDateTime(startdate, convert12to24time(starttime));
-        mergeDateTime(enddate, convert12to24time(endtime));
+        mergeDateTime(startdate, convert12toDateObject(starttime));
+        mergeDateTime(enddate, convert12toDateObject(endtime));
         formValues["calendar_id"] = 1;
         delete formValues.startdate;
         delete formValues.enddate;

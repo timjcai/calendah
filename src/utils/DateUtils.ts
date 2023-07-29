@@ -1,5 +1,5 @@
 import { addDays, toDate } from "date-fns";
-import { addZero, convert12to24time, endDatePlusOne } from "./TimeUtils";
+import { addZero, endDatePlusOne } from "./TimeUtils";
 
 // sets the week and returns an array starting from Monday
 export const thisWeek = (input: Date, size: number): Date[] => {

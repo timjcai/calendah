@@ -49,7 +49,7 @@ export function convert24to12time(input: Date | string): string {
 }
 
 //  layout must be '5:15 AM'
-export function convert12to24time(input: string): Date {
+export function convert12toDateObject(input: string): Date {
   const array = input.split(/(?:\s|:)/);
   const specificTime = new Date();
   array[2] === "PM"
@@ -61,7 +61,7 @@ export function convert12to24time(input: string): Date {
 }
 
 // layout must be '5 AM'
-export function convert24stringto24time(input: string): Date {
+export function convert24stringtoDateObject(input: string): Date {
   const timeArray = input.split(" ");
   const specificTime = new Date();
   timeArray[1] === "PM"
@@ -70,6 +70,14 @@ export function convert24stringto24time(input: string): Date {
   specificTime.setMinutes(0);
   specificTime.setSeconds(0);
   return specificTime;
+}
+
+export const convert24hourtoDateObject = (input: string): Date => {
+  const timeArray = input.split(':');
+  const specificTime = new Date();
+  specificTime.setHours(parseInt(timeArray[0]))
+  specificTime.setMinutes(parseInt(timeArray[1]))
+  return specificTime
 }
 
 export const addZero = (input: number): string => {
@@ -143,7 +151,6 @@ export const DateObjectto1200Hour = (input: Date): string => {
     }else 
     return `${hours}:${minutes} AM`
   }
-
 }
 
 export const DateObjectto12Hour = (input: Date): string => {
@@ -160,7 +167,6 @@ export const DateObjectto12Hour = (input: Date): string => {
     }else 
     return `${hours} AM`
   }
-
 }
 
 export const DateObjectto24Hour = (input: Date): string => {
@@ -170,7 +176,6 @@ export const DateObjectto24Hour = (input: Date): string => {
 export const generateTimeArray = (displayInput: DisplayTimeSettings, timeInterval): string[] => {
   const newArray: string[] = [];
   const selectedTimes = timeInterval;
-  console.log(selectedTimes)
 
   if (displayInput === '12 hour') {
     selectedTimes.map((time) => {
@@ -190,3 +195,16 @@ export const generateTimeArray = (displayInput: DisplayTimeSettings, timeInterva
   return newArray
 }
 
+export const parseTimeStringtoDateObject = (displayInput: DisplayTimeSettings, timeString) => {
+  let output; 
+  if (displayInput === '12 hour') {
+    output = convert12toDateObject(timeString)
+  } else if (displayInput === '12:00 hour') {
+    output = convert12toDateObject(timeString)
+  } else if (displayInput === '24 hour') {
+    output = convert24hourtoDateObject(timeString)
+  } else {
+    return ['error']
+  }
+  return output
+}

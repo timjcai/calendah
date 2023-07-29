@@ -1,5 +1,5 @@
 import { APIDataObject, EventProps } from "../components/types/apidata";
-import { mergeDateTime, convert24stringto24time, convert12to24time } from "./TimeUtils";
+import { mergeDateTime, convert12toDateObject, convert24stringtoDateObject } from "./TimeUtils";
 
 export const calcIndividualColWidth = (
   viewSettings: number,
@@ -27,15 +27,15 @@ export const extractTime = (cellId: string): Date => {
   let result;
   if (cellId.includes(':')){
     if (cellId.includes('M')) {
-      result = convert12to24time(Time)
+      result = convert12toDateObject(Time)
     } else {
-      result = convert24stringto24time(Time)
+      result = convert24stringtoDateObject(Time)
     }
   } else {
     const hour = `${Time.split(' ')[0]}:00`
     const ampm = Time.split(' ')[1]
     const reconstructedTime = [hour,ampm].join(' ')
-    result = convert12to24time(reconstructedTime)
+    result = convert12toDateObject(reconstructedTime)
   }
   return result
 };
