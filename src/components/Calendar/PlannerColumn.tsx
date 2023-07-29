@@ -3,14 +3,18 @@ import {
     DisplayTimeContext,
     ViewSizeContext,
 } from "../../context/SettingsProvider";
-import { calcIndividualColWidth, generateTimeArray } from "../../utils";
+import {
+    allHours,
+    calcIndividualColWidth,
+    generateTimeArray,
+} from "../../utils";
 import { PlannerCell, StyledPlannerColumn } from "./Calendar.styles";
 import { EventCard } from "./EventCard";
 
 export const PlannerColumn = ({ id, dayContent }) => {
     const viewSize = useContext(ViewSizeContext);
     const displayTimes = useContext(DisplayTimeContext);
-    const displayHours = generateTimeArray(displayTimes);
+    const displayHours = generateTimeArray(displayTimes, allHours());
     const [windowSize, setWindowSize] = useState(window.innerWidth);
 
     useEffect(() => {

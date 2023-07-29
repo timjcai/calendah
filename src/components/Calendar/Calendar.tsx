@@ -21,7 +21,6 @@ import {
     createDateTimeonPosition,
     getEventId,
     searchEventId,
-    generateTimeArray,
     allHours,
 } from "../../utils";
 

@@ -21,7 +21,6 @@ export const SelectPicker = ({
     const handleSelect = (e) => {
         const value = e.target.getAttribute("value");
         setSelectItem(value);
-        console.log("in the select");
         onChange(e);
         setIsHidden(true);
     };
@@ -65,6 +64,7 @@ export const SelectPicker = ({
                 id="dropdownOptions"
                 role="listbox"
                 aria-label="Options"
+                label={label}
                 selected={selectItem}
                 list={list}
                 isHidden={isHidden}
@@ -143,7 +143,13 @@ export const SelectorLabel = styled.label<CommonStylingProps>`
     background-color: ${(props) => props.$bgcolor};
 `;
 
-export const PopupSelector = ({ list, isHidden, handleSelect, selected }) => {
+export const PopupSelector = ({
+    list,
+    isHidden,
+    handleSelect,
+    selected,
+    label,
+}) => {
     const isTrue = (item) => {
         return item === selected;
     };
@@ -154,7 +160,7 @@ export const PopupSelector = ({ list, isHidden, handleSelect, selected }) => {
                     list.map((items) => {
                         return (
                             <PopupMenuItem
-                                id="calendar_id"
+                                id={label}
                                 key={items}
                                 role="option"
                                 onClick={handleSelect}

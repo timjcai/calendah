@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import styled from "styled-components";
 import { FormCol, StyledForm } from "./Form.styles";
 import { FormInputText } from "./FormInput";
@@ -14,8 +14,13 @@ import {
 import { Icon } from "../common/Icon";
 import { iconMapping } from "../../Mapping";
 import { SelectPicker } from "../SelectPicker/SelectPicker";
+import { validateData } from "../../utils/FormUtils";
+import { SelectInput, TextInput, TitleInput } from "./NewFormInputs";
+import { allTimesEvery15min, generateTimeArray } from "../../utils";
+import { DisplayTimeContext } from "../../context/SettingsProvider";
 
 export const NewForm = () => {
+    const displayTimes = useContext(DisplayTimeContext);
     const formDefault = settings.newevent_default;
     const [payload, setPayload] = useState(formDefault);
     const [currentActive, setCurrentActive] = useState(null);
@@ -26,39 +31,11 @@ export const NewForm = () => {
         setPayload((prevState) => ({ ...prevState, [currentInput]: value }));
     };
 
-    const validateData = (formValues) => {
-        const {
-            title,
-            starttime,
-            endtime,
-            location,
-            meeting,
-            attachments,
-            description,
-            guests,
-            calendar_id,
-        } = formValues;
-        if (!title) {
-            console.log("no title provided");
-        }
-        if (!location) {
-            console.log("no location provided");
-        }
-        if (!meeting) {
-            console.log("no meeting provided");
-        }
-        if (!attachments) {
-            console.log("no attachments provided");
-        }
-        if (!description) {
-            console.log("no description provided");
-        }
-        if (calendar_id instanceof String) {
-            const idNumber = calendarNameIdMap[`${calendar_id}`];
-            console.log(idNumber);
-            formValues[`${calendar_id}`] = idNumber;
-        }
-        return formValues;
+    const dateTimeInputHandler = (e) => {
+        const currentInput = e.target.id;
+        const value = e.target.value;
+        console.log(currentInput);
+        console.log(value);
     };
 
     const handleFormSubmit = (e) => {
@@ -70,36 +47,48 @@ export const NewForm = () => {
     return (
         <form method="post" onSubmit={handleFormSubmit}>
             <div className="flex flex-col">
-                <StyledTitleInput
+                <TitleInput
                     label={"title"}
                     payload={payload}
                     onChange={customInputHandler}
-                ></StyledTitleInput>
-                <StyledTextInput
+                ></TitleInput>
+                <TextInput
                     label={"description"}
                     payload={payload}
                     onChange={customInputHandler}
                 />
-                <StyledTextInput
+                <TextInput
                     label={"location"}
                     payload={payload}
                     onChange={customInputHandler}
                 />
-                <StyledTextInput
+                <TextInput
                     label={"meeting"}
                     payload={payload}
                     onChange={customInputHandler}
                 />
-                <StyledTextInput
+                <TextInput
                     label={"attachments"}
                     payload={payload}
                     onChange={customInputHandler}
                 />
-                <StyledSelectInput
+                <SelectInput
                     label={"calendar_id"}
                     payload={payload}
                     onChange={customInputHandler}
                     data={calendarIds}
+                />
+                <SelectInput
+                    label={"starttime"}
+                    payload={payload}
+                    onChange={dateTimeInputHandler}
+                    data={generateTimeArray(displayTimes, allTimesEvery15min())}
+                />
+                <SelectInput
+                    label={"endtime"}
+                    payload={payload}
+                    onChange={dateTimeInputHandler}
+                    data={generateTimeArray(displayTimes, allTimesEvery15min())}
                 />
             </div>
             <button type="submit">Submit</button>
@@ -121,104 +110,7 @@ export const NewForm = () => {
     );
 };
 
-const IconBubble = styled.span`
-    align-items: center;
-    background-color: #1d1d1d;
-    color: white;
-    border-radius: 100%;
-    padding: 4px 2.5px 4px 2.5px;
-`;
-
-const StyledInputLabel = styled.label`
-    display: block;
-    padding: 5px 0px 5px 0px;
-    background-color: #212121;
-    border: 1px solid black;
-    border-radius: 6px;
-    width: 50vw;
-`;
-
-const StyledInput = styled.input<StyledInputProps>`
-    background: none;
-    outline: none;
-    color: white;
-    font-size: ${(props) => props.$fsize};
-    width: 94%;
-    margin-left: 5px;
-    text-overflow: ellipsis;
-`;
-
-export type StyledInputProps = {
-    id: formInput;
-    defaultValue: EventProps;
-    onChange?: Function;
-    $fsize?: string;
-};
-
-export const StyledTextInput: FC<FormInputProps> = ({
-    label,
-    payload,
-    onChange,
-}) => {
-    const selectedIcon = iconMapping[label];
-    return (
-        <StyledInputLabel>
-            <IconBubble>
-                <Icon icon={selectedIcon}></Icon>
-            </IconBubble>
-            <StyledInput
-                id={label}
-                defaultValue={payload[label]}
-                onChange={onChange}
-                $fsize={"16px"}
-            />
-        </StyledInputLabel>
-    );
-};
-
-export type FormInputProps = {
-    label: formInput;
-    payload: APIDataObject;
-    onChange: Function;
-    data?: string[];
-};
-
 // types of inputs: Text, Title, Links, Attachments
-
-export const StyledTitleInput: FC<FormInputProps> = ({
-    label,
-    payload,
-    onChange,
-}) => {
-    return (
-        <StyledInputLabel>
-            <StyledInput
-                id={label}
-                defaultValue={payload[label]}
-                onChange={onChange}
-                $fsize={"32px"}
-            />
-        </StyledInputLabel>
-    );
-};
-
-export const StyledSelectInput: FC<FormInputProps> = ({
-    label,
-    payload,
-    onChange,
-    data,
-}) => {
-    return (
-        <StyledInputLabel>
-            <SelectPicker
-                label={label}
-                placeholder={payload[label]}
-                list={data}
-                onChange={onChange}
-            />
-        </StyledInputLabel>
-    );
-};
 
 const calendarIds = [1, 2, 3, 4];
 

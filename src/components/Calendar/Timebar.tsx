@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { TimecellProps } from "../types/calendar";
 import { Paragraph } from "../common/Text/Text";
 import { DisplayTimeContext } from "../../context/SettingsProvider";
-import { generateTimeArray } from "../../utils";
+import { allHours, generateTimeArray } from "../../utils";
 
 export const TimebarWrapper = styled.div`
     display: flex;
@@ -34,7 +34,7 @@ export const Timecell: FC<TimecellProps> = ({ id, time }) => {
 
 export const Timebar: FC = () => {
     const displayTimes = useContext(DisplayTimeContext);
-    const displayHours = generateTimeArray(displayTimes);
+    const displayHours = generateTimeArray(displayTimes, allHours());
 
     return (
         <TimebarWrapper>

@@ -117,8 +117,16 @@ export const allHours = (): Date[] => {
       if (i % 4 === 0) {
           allHours.push(new Date(allTimes[i]));
       }
-    }
+    } 
     return allHours
+}
+
+export const allTimesEvery15min = (): Date[] => {
+  const allHours: Date[] = [];
+  for (let i = 0; i < allTimes.length; i++) {
+        allHours.push(new Date(allTimes[i]));
+  } 
+  return allHours
 }
 
 export const DateObjectto1200Hour = (input: Date): string => {
@@ -159,20 +167,20 @@ export const DateObjectto24Hour = (input: Date): string => {
   return `${input.getHours()}:${addZero(input.getMinutes())}`
 }
 
-export const generateTimeArray = (input: DisplayTimeSettings): string[] => {
+export const generateTimeArray = (displayInput: DisplayTimeSettings, timeInterval): string[] => {
   const newArray: string[] = [];
-  const selectedTimes = allHours();
+  const selectedTimes = timeInterval;
+  console.log(selectedTimes)
 
-  allHours()
-  if (input === '12 hour') {
+  if (displayInput === '12 hour') {
     selectedTimes.map((time) => {
       newArray.push(DateObjectto12Hour(time));
     });
-  } else if (input === '12:00 hour') {
+  } else if (displayInput === '12:00 hour') {
     selectedTimes.map((time) => {
       newArray.push(DateObjectto1200Hour(time));
     });
-  } else if (input === '24 hour') {
+  } else if (displayInput === '24 hour') {
     selectedTimes.map((time) => {
       newArray.push(DateObjectto24Hour(time));
     });
@@ -181,3 +189,4 @@ export const generateTimeArray = (input: DisplayTimeSettings): string[] => {
   }
   return newArray
 }
+

@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 
 import settings from "../db/settings.json";
 import { NewForm } from "../components/Form/NewForm";
+import { SettingsProvider } from "../context/SettingsProvider";
 
 export const Test = () => {
     return (
-        <div className="w-screen h-screen flex justify-center mx-10 flex-col">
-            <h1>Test page</h1>
-            <NewForm />
-        </div>
+        <SettingsProvider>
+            <div className="w-screen h-screen flex justify-center mx-10 flex-col">
+                <h1>Test page</h1>
+                <NewForm />
+            </div>
+        </SettingsProvider>
     );
 };
 
