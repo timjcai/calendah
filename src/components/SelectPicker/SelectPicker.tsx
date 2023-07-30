@@ -115,7 +115,7 @@ export const SelectButton = styled.button<CommonStylingProps>`
         cursor: pointer;
     }
     span {
-        margin-left: 6px;
+        margin-left: 5px;
     }
 `;
 

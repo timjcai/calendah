@@ -81,7 +81,7 @@ export const DateTimeInput: FC<FormInputProps> = ({
                 placeholder={payload["starttime"]}
                 list={data}
                 onChange={onChange}
-                width={"47px"}
+                width={"54px"}
             />
             <p>to</p>
             <DatePicker />
@@ -91,7 +91,7 @@ export const DateTimeInput: FC<FormInputProps> = ({
                 placeholder={payload["endtime"]}
                 list={data}
                 onChange={onChange}
-                width={"47px"}
+                width={"54px"}
             />
         </StyledInputLabel>
     );
