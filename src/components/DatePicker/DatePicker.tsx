@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { getAllDaysOfCurrentMonth } from "../../utils";
-import { DPCell, DPGrid, DPRow, DateBox } from "./DatePicker.styles";
+import { DPCell, DPGrid, DPRow, DateBox, Spanner } from "./DatePicker.styles";
 
 export const DatePicker = () => {
     const daysOfCurrentMonth = getAllDaysOfCurrentMonth();
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     const week1 = daysOfCurrentMonth.slice(0, 1);
     const week2 = daysOfCurrentMonth.slice(1, 8);
@@ -22,15 +23,14 @@ export const DatePicker = () => {
         "Friday",
         "Saturday",
     ];
+
     const generateWeeks = (dates: Date[]) => {
         const allWeeks: Date[][] = [];
         let thisWeek = new Array(7).fill(null);
         let week = 0;
-        console.log(dates.length);
         for (let i = 0; i < dates.length; i++) {
             const date = dates[i];
             const day = date.getDay();
-            console.log(thisWeek);
             if (day === 0) {
                 allWeeks[week] = thisWeek;
                 week++;
@@ -43,7 +43,14 @@ export const DatePicker = () => {
     };
 
     const weeklyBreakdown = generateWeeks(daysOfCurrentMonth);
-    console.log(weeklyBreakdown);
+
+    const handleClick = (e) => {
+        const target = e.target.id;
+        if (target !== null) {
+            console.log(new Date(target));
+            setSelectedDate(new Date(target));
+        }
+    };
 
     return (
         <DateBox>
@@ -53,12 +60,36 @@ export const DatePicker = () => {
             </div>
             <DPGrid>
                 <DatesHeaderRow />
-                <DatesRow dates={weeklyBreakdown[0]} />
-                <DatesRow dates={weeklyBreakdown[1]} />
-                <DatesRow dates={weeklyBreakdown[2]} />
-                <DatesRow dates={weeklyBreakdown[3]} />
-                <DatesRow dates={weeklyBreakdown[4]} />
-                <DatesRow dates={weeklyBreakdown[5]} />
+                <DatesRow
+                    dates={weeklyBreakdown[0]}
+                    row={1}
+                    onClick={handleClick}
+                />
+                <DatesRow
+                    dates={weeklyBreakdown[1]}
+                    row={2}
+                    onClick={handleClick}
+                />
+                <DatesRow
+                    dates={weeklyBreakdown[2]}
+                    row={3}
+                    onClick={handleClick}
+                />
+                <DatesRow
+                    dates={weeklyBreakdown[3]}
+                    row={4}
+                    onClick={handleClick}
+                />
+                <DatesRow
+                    dates={weeklyBreakdown[4]}
+                    row={5}
+                    onClick={handleClick}
+                />
+                <DatesRow
+                    dates={weeklyBreakdown[5]}
+                    row={6}
+                    onClick={handleClick}
+                />
             </DPGrid>
         </DateBox>
     );
@@ -92,26 +123,28 @@ export const DatesHeaderRow = () => {
     );
 };
 
-export const DatesRow = ({ dates }) => {
+export const DatesRow = ({ dates, row, onClick }) => {
     let count = 0;
 
     return (
         <DPRow>
             {dates.map((date) => {
+                count++;
                 if (date === null) {
                     return (
-                        <DPCell key={count}>
-                            <span></span>
+                        <DPCell key={`row_${row}${count}`} onClick={onClick}>
+                            <span style={{ pointerEvents: "none" }}></span>
                         </DPCell>
                     );
                 } else {
                     return (
-                        <DPCell id={date}>
-                            <span>{date.getDate()}</span>
+                        <DPCell id={date} onClick={onClick}>
+                            <span style={{ pointerEvents: "none" }}>
+                                {date.getDate()}
+                            </span>
                         </DPCell>
                     );
                 }
-                count++;
             })}
         </DPRow>
     );
