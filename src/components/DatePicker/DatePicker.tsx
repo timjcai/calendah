@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import styled from "styled-components";
 import { getAllDaysOfCurrentMonth } from "../../utils";
-import { DPCell, DPGrid, DPRow, DateBox, Spanner } from "./DatePicker.styles";
+import {
+    DPCell,
+    DPGrid,
+    DPRow,
+    DateBox,
+    DefaultDateSpan,
+    SelectedDateSpan,
+} from "./DatePicker.styles";
+import { monthMappingFromIndex } from "../../Mapping";
+import { SelectDateContext } from "../../context/Context";
+import { SelectedBubble } from "../Calendar/Headers";
+
+export const SelectedDateContext = createContext(new Date());
 
 export const DatePicker = () => {
-    const daysOfCurrentMonth = getAllDaysOfCurrentMonth();
     const [selectedDate, setSelectedDate] = useState(new Date());
-
-    const week1 = daysOfCurrentMonth.slice(0, 1);
-    const week2 = daysOfCurrentMonth.slice(1, 8);
-    const week3 = daysOfCurrentMonth.slice(8, 15);
-    const week4 = daysOfCurrentMonth.slice(15, 22);
-    const week5 = daysOfCurrentMonth.slice(22, 29);
-    const week6 = daysOfCurrentMonth.slice(29, 31);
-
     const daysofWeek = [
         "Sunday",
         "Monday",
@@ -41,8 +44,7 @@ export const DatePicker = () => {
         allWeeks[week] = thisWeek;
         return allWeeks;
     };
-
-    const weeklyBreakdown = generateWeeks(daysOfCurrentMonth);
+    const weeklyBreakdown = generateWeeks(getAllDaysOfCurrentMonth());
 
     const handleClick = (e) => {
         const target = e.target.id;
@@ -53,19 +55,29 @@ export const DatePicker = () => {
     };
 
     return (
-        <DateBox>
-            <h1>datepicker</h1>
-            <div>
-                <h1>(Month YYYY)</h1>
-            </div>
-            <DPGrid>
-                <DatesHeaderRow />
-                <DatesRow
-                    dates={weeklyBreakdown[0]}
-                    row={1}
-                    onClick={handleClick}
-                />
-                <DatesRow
+        <SelectedDateContext.Provider value={selectedDate}>
+            <DateBox>
+                <h1>datepicker</h1>
+                <button>
+                    <h1>
+                        {`${
+                            monthMappingFromIndex[selectedDate.getMonth()]
+                        } ${selectedDate.getFullYear()}`}
+                    </h1>
+                </button>
+                <DPGrid>
+                    <DatesHeaderRow />
+                    {weeklyBreakdown.map((week) => {
+                        return (
+                            <DatesRow
+                                dates={week}
+                                row={1}
+                                onClick={handleClick}
+                            />
+                        );
+                    })}
+
+                    {/* <DatesRow
                     dates={weeklyBreakdown[1]}
                     row={2}
                     onClick={handleClick}
@@ -89,9 +101,11 @@ export const DatePicker = () => {
                     dates={weeklyBreakdown[5]}
                     row={6}
                     onClick={handleClick}
-                />
-            </DPGrid>
-        </DateBox>
+                /> */}
+                </DPGrid>
+            </DateBox>
+            <p>{selectedDate.toString()}</p>
+        </SelectedDateContext.Provider>
     );
 };
 
@@ -114,7 +128,7 @@ export const DatesHeaderRow = () => {
         <DPRow>
             {days.map((day) => {
                 return (
-                    <DPCell id={day}>
+                    <DPCell id={day} key={day}>
                         <span>{firstletter(day)}</span>
                     </DPCell>
                 );
@@ -125,23 +139,83 @@ export const DatesHeaderRow = () => {
 
 export const DatesRow = ({ dates, row, onClick }) => {
     let count = 0;
+    const selectedDate = useContext(SelectedDateContext);
 
     return (
         <DPRow>
-            {dates.map((date) => {
+            {dates.map((singleDate) => {
                 count++;
-                if (date === null) {
+                // switch (singleDate) {
+                //     case null:
+                //         return (
+                //             <DPCell
+                //                 key={`row_${row}${count}`}
+                //                 onClick={onClick}
+                //             >
+                //                 <span style={{ pointerEvents: "none" }}></span>
+                //             </DPCell>
+                //         );
+                //     case selectedDate:
+                //         return (
+                //             <DPCell
+                //                 id={singleDate}
+                //                 key={`row_${row}${singleDate}`}
+                //                 onClick={onClick}
+                //             >
+                //                 <span
+                //                     id="hello"
+                //                     style={{
+                //                         pointerEvents: "none",
+                //                         padding: "5px 10px",
+                //                         backgroundColor: "var(--blue)",
+                //                         borderRadius: "6px",
+                //                     }}
+                //                 >
+                //                     {singleDate.getDate()}
+                //                 </span>
+                //             </DPCell>
+                //         );
+                //     default:
+                //         return (
+                //             <DPCell
+                //                 id={singleDate}
+                //                 key={`row_${row}${singleDate}`}
+                //                 onClick={onClick}
+                //             >
+                //                 <span style={{ pointerEvents: "none" }}>
+                //                     {singleDate.getDate()}
+                //                 </span>
+                //             </DPCell>
+                //         );
+                // }
+                if (singleDate === null) {
                     return (
                         <DPCell key={`row_${row}${count}`} onClick={onClick}>
-                            <span style={{ pointerEvents: "none" }}></span>
+                            <DefaultDateSpan></DefaultDateSpan>
+                        </DPCell>
+                    );
+                } else if (singleDate.getDate() === selectedDate.getDate()) {
+                    return (
+                        <DPCell
+                            id={singleDate}
+                            key={`row_${row}${singleDate}`}
+                            onClick={onClick}
+                        >
+                            <SelectedDateSpan>
+                                {singleDate.getDate()}
+                            </SelectedDateSpan>
                         </DPCell>
                     );
                 } else {
                     return (
-                        <DPCell id={date} onClick={onClick}>
-                            <span style={{ pointerEvents: "none" }}>
-                                {date.getDate()}
-                            </span>
+                        <DPCell
+                            id={singleDate}
+                            key={`row_${row}${singleDate}`}
+                            onClick={onClick}
+                        >
+                            <DefaultDateSpan>
+                                {singleDate.getDate()}
+                            </DefaultDateSpan>
                         </DPCell>
                     );
                 }
