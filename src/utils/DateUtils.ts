@@ -46,27 +46,21 @@ export const rubyDateConverter = (rubyDateString: string): Date => {
 };
 
 
-export const getAllDaysOfCurrentMonth = () => {
-  const currentDate = new Date();
+export const getAllDaysOfCurrentMonth = (currentDate: Date): Date[] => {
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
 
-  // Create a new Date object for the first day of the month
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
 
-  // Find the last day of the month
   const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
 
-  const allDays = [];
+  const allDays: Date[] = [];
   let currentDateInLoop = firstDayOfMonth;
 
-  // Loop through the dates from the first day to the last day
   while (currentDateInLoop <= lastDayOfMonth) {
-    allDays.push(new Date(currentDateInLoop)); // Create a new Date object to avoid any side effects
-    currentDateInLoop.setDate(currentDateInLoop.getDate() + 1); // Move to the next day
+    allDays.push(new Date(currentDateInLoop))
+    currentDateInLoop.setDate(currentDateInLoop.getDate() + 1);
   }
 
   return allDays;
 }
-
-// Call the function to get all days of the current month

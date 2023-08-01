@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { FC, createContext, useContext, useState } from "react";
 import styled from "styled-components";
 import { getAllDaysOfCurrentMonth } from "../../utils";
 import {
@@ -9,14 +9,17 @@ import {
     DefaultDateSpan,
     SelectedDateSpan,
 } from "./DatePicker.styles";
-import { monthMappingFromIndex } from "../../Mapping";
+import { monthAbbreviations, monthMappingFromIndex } from "../../Mapping";
 import { SelectDateContext } from "../../context/Context";
 import { SelectedBubble } from "../Calendar/Headers";
+import { DatesHeaderRow, DatesRow } from "./DateRow";
 
 export const SelectedDateContext = createContext(new Date());
 
 export const DatePicker = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
+
     const daysofWeek = [
         "Sunday",
         "Monday",
@@ -44,9 +47,11 @@ export const DatePicker = () => {
         allWeeks[week] = thisWeek;
         return allWeeks;
     };
-    const weeklyBreakdown = generateWeeks(getAllDaysOfCurrentMonth());
+    const weeklyBreakdown = generateWeeks(
+        getAllDaysOfCurrentMonth(selectedDate)
+    );
 
-    const handleClick = (e) => {
+    const handleSelectDate = (e) => {
         const target = e.target.id;
         if (target !== null) {
             console.log(new Date(target));
@@ -54,11 +59,28 @@ export const DatePicker = () => {
         }
     };
 
+    const openMonthModal = (e) => {
+        setIsMonthModalOpen((prevState) => !prevState);
+    };
+
+    const handleSelectMonth = (e) => {
+        const target = monthMappingFromIndex.indexOf(e.target.id);
+        console.log(target);
+        if (target !== null) {
+            const currentDate = selectedDate.getDate();
+            const newMonth = new Date();
+            newMonth.setMonth(target);
+            newMonth.setDate(currentDate);
+            console.log(newMonth);
+            setSelectedDate(newMonth);
+        }
+        setIsMonthModalOpen(false);
+    };
     return (
         <SelectedDateContext.Provider value={selectedDate}>
             <DateBox>
                 <h1>datepicker</h1>
-                <button>
+                <button onClick={openMonthModal}>
                     <h1>
                         {`${
                             monthMappingFromIndex[selectedDate.getMonth()]
@@ -72,154 +94,49 @@ export const DatePicker = () => {
                             <DatesRow
                                 dates={week}
                                 row={1}
-                                onClick={handleClick}
+                                onClick={handleSelectDate}
                             />
                         );
                     })}
-
-                    {/* <DatesRow
-                    dates={weeklyBreakdown[1]}
-                    row={2}
-                    onClick={handleClick}
-                />
-                <DatesRow
-                    dates={weeklyBreakdown[2]}
-                    row={3}
-                    onClick={handleClick}
-                />
-                <DatesRow
-                    dates={weeklyBreakdown[3]}
-                    row={4}
-                    onClick={handleClick}
-                />
-                <DatesRow
-                    dates={weeklyBreakdown[4]}
-                    row={5}
-                    onClick={handleClick}
-                />
-                <DatesRow
-                    dates={weeklyBreakdown[5]}
-                    row={6}
-                    onClick={handleClick}
-                /> */}
                 </DPGrid>
+                {isMonthModalOpen && (
+                    <MonthModal handleSelectMonth={handleSelectMonth} />
+                )}
             </DateBox>
             <p>{selectedDate.toString()}</p>
         </SelectedDateContext.Provider>
     );
 };
 
-export const DatesHeaderRow = () => {
-    const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ];
+type MonthModalProps = {
+    handleSelectMonth: (e: any) => void;
+};
 
-    const firstletter = (word: string): string => {
-        return word.charAt(0).toUpperCase().concat(word.charAt(1));
-    };
-
+export const MonthModal: FC<MonthModalProps> = ({ handleSelectMonth }) => {
+    const months = monthMappingFromIndex;
     return (
-        <DPRow>
-            {days.map((day) => {
+        <ModalGrid>
+            {months.map((month) => {
                 return (
-                    <DPCell id={day} key={day}>
-                        <span>{firstletter(day)}</span>
-                    </DPCell>
+                    <ModalCellButton onClick={handleSelectMonth} id={month}>
+                        {monthAbbreviations[month]}
+                    </ModalCellButton>
                 );
             })}
-        </DPRow>
+        </ModalGrid>
     );
 };
 
-export const DatesRow = ({ dates, row, onClick }) => {
-    let count = 0;
-    const selectedDate = useContext(SelectedDateContext);
+const ModalGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 80px);
+    gap: 0px;
+    width: 280px;
+    position: absolute;
+    background-color: rgba(255, 255, 20, 0.9);
+    z-index: 1;
+    color: black;
+`;
 
-    return (
-        <DPRow>
-            {dates.map((singleDate) => {
-                count++;
-                // switch (singleDate) {
-                //     case null:
-                //         return (
-                //             <DPCell
-                //                 key={`row_${row}${count}`}
-                //                 onClick={onClick}
-                //             >
-                //                 <span style={{ pointerEvents: "none" }}></span>
-                //             </DPCell>
-                //         );
-                //     case selectedDate:
-                //         return (
-                //             <DPCell
-                //                 id={singleDate}
-                //                 key={`row_${row}${singleDate}`}
-                //                 onClick={onClick}
-                //             >
-                //                 <span
-                //                     id="hello"
-                //                     style={{
-                //                         pointerEvents: "none",
-                //                         padding: "5px 10px",
-                //                         backgroundColor: "var(--blue)",
-                //                         borderRadius: "6px",
-                //                     }}
-                //                 >
-                //                     {singleDate.getDate()}
-                //                 </span>
-                //             </DPCell>
-                //         );
-                //     default:
-                //         return (
-                //             <DPCell
-                //                 id={singleDate}
-                //                 key={`row_${row}${singleDate}`}
-                //                 onClick={onClick}
-                //             >
-                //                 <span style={{ pointerEvents: "none" }}>
-                //                     {singleDate.getDate()}
-                //                 </span>
-                //             </DPCell>
-                //         );
-                // }
-                if (singleDate === null) {
-                    return (
-                        <DPCell key={`row_${row}${count}`} onClick={onClick}>
-                            <DefaultDateSpan></DefaultDateSpan>
-                        </DPCell>
-                    );
-                } else if (singleDate.getDate() === selectedDate.getDate()) {
-                    return (
-                        <DPCell
-                            id={singleDate}
-                            key={`row_${row}${singleDate}`}
-                            onClick={onClick}
-                        >
-                            <SelectedDateSpan>
-                                {singleDate.getDate()}
-                            </SelectedDateSpan>
-                        </DPCell>
-                    );
-                } else {
-                    return (
-                        <DPCell
-                            id={singleDate}
-                            key={`row_${row}${singleDate}`}
-                            onClick={onClick}
-                        >
-                            <DefaultDateSpan>
-                                {singleDate.getDate()}
-                            </DefaultDateSpan>
-                        </DPCell>
-                    );
-                }
-            })}
-        </DPRow>
-    );
-};
+const ModalCellButton = styled.button``;

@@ -6,7 +6,7 @@ export const DateBox = styled.div`
     align-items: center;
     border: 1px solid black;
     width: 280px;
-    max-height: 358px;
+    max-height: 360px;
 `;
 
 export const DPGrid = styled.div`
