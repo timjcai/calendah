@@ -45,7 +45,7 @@ export const DatesRow = ({ dates, row, onClick }) => {
                 count++;
                 if (singleDate === null) {
                     return (
-                        <DPCell key={`row_${row}${count}`} onClick={onClick}>
+                        <DPCell key={`row_${row}${count}`}>
                             <DefaultDateSpan></DefaultDateSpan>
                         </DPCell>
                     );

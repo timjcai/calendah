@@ -1,25 +1,16 @@
-import React, { FC, createContext, useContext, useState } from "react";
+import React, { FC, createContext, useRef, useState } from "react";
 import styled from "styled-components";
 import { getAllDaysOfCurrentMonth } from "../../utils";
-import {
-    DPCell,
-    DPGrid,
-    DPRow,
-    DateBox,
-    DefaultDateSpan,
-    SelectedDateSpan,
-} from "./DatePicker.styles";
-import { monthAbbreviations, monthMappingFromIndex } from "../../Mapping";
-import { SelectDateContext } from "../../context/Context";
-import { SelectedBubble } from "../Calendar/Headers";
+import { DPGrid, DateBox } from "./DatePicker.styles";
+import { monthMappingFromIndex } from "../../Mapping";
 import { DatesHeaderRow, DatesRow } from "./DateRow";
+import { MonthModal } from "./MonthPicker";
 
 export const SelectedDateContext = createContext(new Date());
 
 export const DatePicker = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
-
     const daysofWeek = [
         "Sunday",
         "Monday",
@@ -56,11 +47,17 @@ export const DatePicker = () => {
         if (target !== null) {
             console.log(new Date(target));
             setSelectedDate(new Date(target));
+        } else {
+            return setSelectedDate(selectedDate);
         }
     };
 
     const openMonthModal = (e) => {
         setIsMonthModalOpen((prevState) => !prevState);
+    };
+
+    const closeMonthModal = (e) => {
+        setIsMonthModalOpen(false);
     };
 
     const handleSelectMonth = (e) => {
@@ -80,8 +77,8 @@ export const DatePicker = () => {
         <SelectedDateContext.Provider value={selectedDate}>
             <DateBox>
                 <h1>datepicker</h1>
-                <button onClick={openMonthModal}>
-                    <h1>
+                <button onClick={openMonthModal} id="monthmodalbutton">
+                    <h1 style={{ pointerEvents: "none" }}>
                         {`${
                             monthMappingFromIndex[selectedDate.getMonth()]
                         } ${selectedDate.getFullYear()}`}
@@ -100,43 +97,14 @@ export const DatePicker = () => {
                     })}
                 </DPGrid>
                 {isMonthModalOpen && (
-                    <MonthModal handleSelectMonth={handleSelectMonth} />
+                    <MonthModal
+                        handleSelectMonth={handleSelectMonth}
+                        closeModal={closeMonthModal}
+                        isOpen={isMonthModalOpen}
+                    />
                 )}
             </DateBox>
             <p>{selectedDate.toString()}</p>
         </SelectedDateContext.Provider>
     );
 };
-
-type MonthModalProps = {
-    handleSelectMonth: (e: any) => void;
-};
-
-export const MonthModal: FC<MonthModalProps> = ({ handleSelectMonth }) => {
-    const months = monthMappingFromIndex;
-    return (
-        <ModalGrid>
-            {months.map((month) => {
-                return (
-                    <ModalCellButton onClick={handleSelectMonth} id={month}>
-                        {monthAbbreviations[month]}
-                    </ModalCellButton>
-                );
-            })}
-        </ModalGrid>
-    );
-};
-
-const ModalGrid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 80px);
-    gap: 0px;
-    width: 280px;
-    position: absolute;
-    background-color: rgba(255, 255, 20, 0.9);
-    z-index: 1;
-    color: black;
-`;
-
-const ModalCellButton = styled.button``;
