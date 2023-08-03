@@ -11,11 +11,13 @@ import { MonthModal } from "./MonthPicker";
 import { YearModal } from "./YearPicker";
 import { DatepickerNavbar } from "./DatePickerNavbar";
 import { StartDayContext } from "../../context/SettingsProvider";
+import { DateOpenButton } from "./DateOpenButton";
 
 export const SelectedDateContext = createContext(new Date());
 
 export const DatePicker = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
     const [isYearModalOpen, setIsYearModalOpen] = useState(false);
     const startDay = useContext(StartDayContext);
@@ -102,14 +104,24 @@ export const DatePicker = () => {
     const changeMonth = (e) => {
         const target = e.target.id;
         const currentDate = selectedDate.getDate();
-        const currentYear = selectedDate.getFullYear();
+        let currentYear = selectedDate.getFullYear();
         const currentMonth = selectedDate.getMonth();
         const newDate = new Date();
         let newMonth;
         if (target === "left") {
-            newMonth = currentMonth - 1;
+            if (currentMonth > 0) {
+                newMonth = currentMonth - 1;
+            } else {
+                newMonth = 11;
+                currentYear = currentYear - 1;
+            }
         } else {
-            newMonth = currentMonth + 1;
+            if (currentMonth < 11) {
+                newMonth = currentMonth + 1;
+            } else {
+                newMonth = 0;
+                currentYear = currentYear + 1;
+            }
         }
         newDate.setDate(currentDate);
         newDate.setMonth(newMonth);
@@ -117,43 +129,53 @@ export const DatePicker = () => {
         setSelectedDate(newDate);
     };
 
+    const handleOpenClose = (e) => {
+        console.log(e.target.getBoundingClientRect());
+        setIsDatePickerOpen((prevState) => !prevState);
+    };
+
     return (
         <SelectedDateContext.Provider value={selectedDate}>
-            <DateBox>
-                <h1>datepicker</h1>
-                <DatepickerNavbar
-                    openMonthModal={openMonthModal}
-                    openYearModal={openMonthModal}
-                    changeMonth={changeMonth}
-                />
-                <DPGrid>
-                    <DatesHeaderRow />
-                    {weeklyBreakdown.map((week) => {
-                        return (
-                            <DatesRow
-                                dates={week}
-                                row={1}
-                                onClick={handleSelectDate}
-                            />
-                        );
-                    })}
-                </DPGrid>
-                {isMonthModalOpen && (
-                    <MonthModal
-                        handleSelectMonth={handleSelectMonth}
-                        closeModal={closeMonthModal}
-                        isOpen={isMonthModalOpen}
+            <DateOpenButton
+                selectedDate={selectedDate}
+                onClick={handleOpenClose}
+            />
+            {isDatePickerOpen && (
+                <DateBox>
+                    <h1>datepicker</h1>
+                    <DatepickerNavbar
+                        openMonthModal={openMonthModal}
+                        openYearModal={openMonthModal}
+                        changeMonth={changeMonth}
                     />
-                )}
-                {isMonthModalOpen && (
-                    <YearModal
-                        handleSelectMonth={handleSelectYear}
-                        closeModal={closeYearModal}
-                        isOpen={isYearModalOpen}
-                    />
-                )}
-            </DateBox>
-            <p>{selectedDate.toString()}</p>
+                    <DPGrid>
+                        <DatesHeaderRow />
+                        {weeklyBreakdown.map((week) => {
+                            return (
+                                <DatesRow
+                                    dates={week}
+                                    row={1}
+                                    onClick={handleSelectDate}
+                                />
+                            );
+                        })}
+                    </DPGrid>
+                    {isMonthModalOpen && (
+                        <MonthModal
+                            handleSelectMonth={handleSelectMonth}
+                            closeModal={closeMonthModal}
+                            isOpen={isMonthModalOpen}
+                        />
+                    )}
+                    {isMonthModalOpen && (
+                        <YearModal
+                            handleSelectMonth={handleSelectYear}
+                            closeModal={closeYearModal}
+                            isOpen={isYearModalOpen}
+                        />
+                    )}
+                </DateBox>
+            )}
         </SelectedDateContext.Provider>
     );
 };
