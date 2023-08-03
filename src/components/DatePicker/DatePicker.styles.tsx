@@ -7,6 +7,7 @@ export const DateBox = styled.div`
     border: 1px solid black;
     width: 280px;
     max-height: 360px;
+    position: relative;
 `;
 
 export const DPNavbar = styled.div`
@@ -75,4 +76,12 @@ export const DPNavButton = styled.button`
         color: white;
         transition: 0.3s ease;
     }
+`;
+
+export const StyledOpenButton = styled.button`
+    padding: 8px 16px;
+    border-radius: 6px;
+    background-color: var(--blue);
+    color: var(--shell-line);
+    width: 180px;
 `;

@@ -3,7 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import settings from "../db/settings.json";
 import { NewForm } from "../components/Form/NewForm";
 import { SettingsProvider, StartDayContext } from "../context/SettingsProvider";
-import { DatePicker } from "../components/DatePicker/DatePicker";
+import { DatePicker, DateInputButton } from "../components/DatePicker";
+import { DateOpenButton } from "../components/DatePicker/DateOpenButton";
 
 export const Test = () => {
     const startDay = useContext(StartDayContext);
@@ -14,6 +15,7 @@ export const Test = () => {
                 <h1>Test page</h1>
                 <NewForm />
                 <DatePicker />
+                <DateInputButton />
             </div>
         </SettingsProvider>
     );

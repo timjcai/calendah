@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { SelectedDateContext } from "./DatePicker";
 import {
     DPCell,
     DPRow,
     DefaultDateSpan,
     SelectedDateSpan,
 } from "./DatePicker.styles";
+import { SelectedDateContext } from "./DatePicker";
 
 export const DatesHeaderRow = () => {
     const days = [

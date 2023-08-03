@@ -1,8 +1,8 @@
 import React, { FC, useContext } from "react";
 import { DPNavButton, DPNavbar } from "./DatePicker.styles";
 import { actionIconMapping, monthMappingFromIndex } from "../../Mapping";
-import { SelectedDateContext } from "./DatePicker";
 import { Icon } from "../common/Icon";
+import { SelectedDateContext } from "./DatePicker";
 
 export const DatepickerNavbar: FC<IDatepickerNavbar> = ({
     openMonthModal,

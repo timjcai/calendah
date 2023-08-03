@@ -1,6 +1,6 @@
 import { addDays, toDate } from "date-fns";
 import { addZero, endDatePlusOne } from "./TimeUtils";
-import { dayMappingFromIndex } from "../Mapping";
+import { dayMappingFromIndex, monthMappingFromIndex } from "../Mapping";
 
 // sets the week and returns an array starting from Monday
 export const thisWeek = (input: Date, size: number): Date[] => {
@@ -32,6 +32,14 @@ export const getYYYYMMDD = (input: Date): string => {
   const year = input.getFullYear();
 
   return `${year}-${month}-${date}`;
+};
+
+export const getDDMMYYYY = (input: Date): string => {
+  const date = addZero(input.getDate());
+  const month = input.getMonth();
+  const year = input.getFullYear();
+
+  return `${date} ${monthMappingFromIndex[month]} ${year}`;
 };
 
 export const generateStartandEndDate = (input: Date[]): string[] => {
