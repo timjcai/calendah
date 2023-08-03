@@ -83,14 +83,4 @@ export function getLastXdayOfPreviousMonth(day, selecteddate: Date) {
   return currentDate;
 }
 
-export function get42day(startday) {
-  const allDays: number[] = [];
-  let currentDate = startday
-  for (let i=0; i < 42; i++){
-    allDays.push(currentDate)
-    currentDate.setDate(currentDate.getDate() + 1)
-  }
-  console.log(allDays)
-}
-
 // Call the function and format the output

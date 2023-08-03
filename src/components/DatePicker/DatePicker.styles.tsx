@@ -52,9 +52,14 @@ export const SelectedDateSpan = styled.span`
     transition: background-color 5s ease;
 `;
 
-export const DefaultDateSpan = styled.span`
+interface IDefaultDateSpan {
+    color: string;
+}
+
+export const DefaultDateSpan = styled.span<IDefaultDateSpan>`
     pointer-events: none;
     transition: background-color 5s ease;
+    color: ${(props) => props.color};
 `;
 
 export const DPNavButton = styled.button`

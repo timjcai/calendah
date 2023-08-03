@@ -43,13 +43,22 @@ export const DatesRow = ({ dates, row, onClick }) => {
         <DPRow>
             {dates.map((singleDate) => {
                 count++;
-                if (singleDate === null) {
+                if (singleDate.getMonth() !== selectedDate.getMonth()) {
                     return (
-                        <DPCell key={`row_${row}${count}`}>
-                            <DefaultDateSpan></DefaultDateSpan>
+                        <DPCell
+                            id={singleDate}
+                            key={`row_${row}${singleDate}`}
+                            onClick={onClick}
+                        >
+                            <DefaultDateSpan color={"var(--shell-line)"}>
+                                {singleDate.getDate()}
+                            </DefaultDateSpan>
                         </DPCell>
                     );
-                } else if (singleDate.getDate() === selectedDate.getDate()) {
+                } else if (
+                    singleDate.getDate() === selectedDate.getDate() &&
+                    singleDate.getMonth() === selectedDate.getMonth()
+                ) {
                     return (
                         <DPCell
                             id={singleDate}
@@ -68,7 +77,7 @@ export const DatesRow = ({ dates, row, onClick }) => {
                             key={`row_${row}${singleDate}`}
                             onClick={onClick}
                         >
-                            <DefaultDateSpan>
+                            <DefaultDateSpan color={"black"}>
                                 {singleDate.getDate()}
                             </DefaultDateSpan>
                         </DPCell>
