@@ -4,18 +4,18 @@ import settings from "../db/settings.json";
 import { NewForm } from "../components/Form/NewForm";
 import { SettingsProvider, StartDayContext } from "../context/SettingsProvider";
 import { DatePicker } from "../components/DatePicker/DatePicker";
-import { getLastXdayOfPreviousMonth } from "../utils";
+import { get42day, getLastXdayOfPreviousMonth } from "../utils";
 
 export const Test = () => {
     const startDay = useContext(StartDayContext);
     console.log(startDay);
+    console.log(get42day(new Date()));
     return (
         <SettingsProvider>
             <div className="w-screen h-screen flex justify-center mx-10 flex-col">
                 <h1>Test page</h1>
                 <NewForm />
                 <DatePicker />
-                <p>{getLastXdayOfPreviousMonth(startDay).toDateString()}</p>
             </div>
         </SettingsProvider>
     );

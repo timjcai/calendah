@@ -1,12 +1,16 @@
-import React, { FC, createContext, useRef, useState } from "react";
+import React, { FC, createContext, useContext, useRef, useState } from "react";
 import styled from "styled-components";
-import { getAllDaysOfCurrentMonth } from "../../utils";
+import {
+    getAllDaysOfCurrentMonth,
+    getLastXdayOfPreviousMonth,
+} from "../../utils";
 import { DPGrid, DPNavButton, DPNavbar, DateBox } from "./DatePicker.styles";
 import { monthMappingFromIndex } from "../../Mapping";
 import { DatesHeaderRow, DatesRow } from "./DateRow";
 import { MonthModal } from "./MonthPicker";
 import { YearModal } from "./YearPicker";
 import { DatepickerNavbar } from "./DatePickerNavbar";
+import { StartDayContext } from "../../context/SettingsProvider";
 
 export const SelectedDateContext = createContext(new Date());
 
@@ -14,6 +18,7 @@ export const DatePicker = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
     const [isYearModalOpen, setIsYearModalOpen] = useState(false);
+    const startDay = useContext(StartDayContext);
 
     const generateWeeks = (dates: Date[]) => {
         const allWeeks: Date[][] = [];
@@ -22,19 +27,20 @@ export const DatePicker = () => {
         for (let i = 0; i < dates.length; i++) {
             const date = dates[i];
             const day = date.getDay();
-            if (day === 0) {
+            thisWeek[day] = date;
+            if (day === 6) {
                 allWeeks[week] = thisWeek;
                 week++;
                 thisWeek = new Array(7).fill(null);
             }
-            thisWeek[day] = date;
         }
-        allWeeks[week] = thisWeek;
-        console.log(allWeeks);
         return allWeeks;
     };
     const weeklyBreakdown = generateWeeks(
-        getAllDaysOfCurrentMonth(selectedDate)
+        getAllDaysOfCurrentMonth(
+            selectedDate,
+            getLastXdayOfPreviousMonth(startDay, selectedDate)
+        )
     );
 
     const handleSelectDate = (e) => {

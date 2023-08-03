@@ -47,14 +47,15 @@ export const rubyDateConverter = (rubyDateString: string): Date => {
 };
 
 
-export const getAllDaysOfCurrentMonth = (currentDate: Date): Date[] => {
+export const getAllDaysOfCurrentMonth = (currentDate: Date, startDate: Date): Date[] => {
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
+  const startYear = startDate.getFullYear();
+  const startMonth = startDate.getMonth();
+  const startdate = startDate.getDate();
 
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-
-  const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
-
+  const firstDayOfMonth = startDate;
+  const lastDayOfMonth = new Date(startYear, startMonth, startdate + 42)
   const allDays: Date[] = [];
   let currentDateInLoop = firstDayOfMonth;
 
@@ -62,13 +63,18 @@ export const getAllDaysOfCurrentMonth = (currentDate: Date): Date[] => {
     allDays.push(new Date(currentDateInLoop))
     currentDateInLoop.setDate(currentDateInLoop.getDate() + 1);
   }
+
+  // for (let i = 0; i < length; i++){
+  //   allDays.push(new Date(currentDateInLoop))
+  //   currentDateInLoop.setDate(currentDateInLoop.getDate() + 1);
+  // }
   return allDays;
 }
 
-export function getLastXdayOfPreviousMonth(day) {
+export function getLastXdayOfPreviousMonth(day, selecteddate: Date) {
   const startDay = dayMappingFromIndex.indexOf(day)
-  let currentDate = new Date();
-  currentDate.setMonth(currentDate.getMonth());
+  let currentDate = new Date()
+  currentDate.setMonth(selecteddate.getMonth());
   currentDate.setDate(0);
   while (currentDate.getDay() !== startDay) {
     currentDate.setDate(currentDate.getDate() - 1);
@@ -77,5 +83,14 @@ export function getLastXdayOfPreviousMonth(day) {
   return currentDate;
 }
 
+export function get42day(startday) {
+  const allDays: number[] = [];
+  let currentDate = startday
+  for (let i=0; i < 42; i++){
+    allDays.push(currentDate)
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+  console.log(allDays)
+}
 
 // Call the function and format the output
