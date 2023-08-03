@@ -6,19 +6,20 @@ type MonthModalProps = {
     handleSelectMonth: (e: any) => void;
     closeModal: (e: any) => void;
     isOpen: boolean;
+    id: string;
 };
 
 export const MonthModal: FC<MonthModalProps> = ({
     handleSelectMonth,
     closeModal,
     isOpen,
+    id,
 }) => {
     const months = monthMappingFromIndex;
     const ModalRef = useRef(null);
 
     useEffect(() => {
         const handleCloseModal = (e) => {
-            console.log(ModalRef.current);
             if (isOpen === true) {
                 if (e.target.id === "monthmodalbutton") {
                     return;
@@ -34,10 +35,14 @@ export const MonthModal: FC<MonthModalProps> = ({
         };
     });
     return (
-        <ModalGrid ref={ModalRef}>
+        <ModalGrid ref={ModalRef} id={id}>
             {months.map((month) => {
                 return (
-                    <ModalCellButton onClick={handleSelectMonth} id={month}>
+                    <ModalCellButton
+                        type="button"
+                        onClick={handleSelectMonth}
+                        id={month}
+                    >
                         {monthAbbreviations[month]}
                     </ModalCellButton>
                 );
@@ -53,7 +58,7 @@ const ModalGrid = styled.div`
     gap: 0px;
     width: 280px;
     position: absolute;
-    background-color: rgba(255, 255, 20, 0.9);
+    background-color: #ffffff;
     z-index: 1;
     color: black;
     height: auto;

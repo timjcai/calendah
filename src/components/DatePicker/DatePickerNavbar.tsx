@@ -14,23 +14,39 @@ export const DatepickerNavbar: FC<IDatepickerNavbar> = ({
     return (
         <DPNavbar>
             <div>
-                <DatepickerNavButton label={"left"} onClick={changeMonth} />
+                <DatepickerNavButton
+                    type="button"
+                    label={"left"}
+                    onClick={changeMonth}
+                />
             </div>
             <div>
-                <button onClick={openMonthModal} id="monthmodalbutton">
+                <button
+                    type="button"
+                    onClick={openMonthModal}
+                    id="monthmodalbutton"
+                >
                     <h1 style={{ pointerEvents: "none" }}>
                         {`${monthMappingFromIndex[selectedDate.getMonth()]}`}
                     </h1>
                 </button>
                 <span> </span>
-                <button onClick={openMonthModal} id="monthmodalbutton">
+                <button
+                    type="button"
+                    onClick={openMonthModal}
+                    id="monthmodalbutton"
+                >
                     <h1 style={{ pointerEvents: "none" }}>
                         {`${selectedDate.getFullYear()}`}
                     </h1>
                 </button>
             </div>
             <div>
-                <DatepickerNavButton label={"right"} onClick={changeMonth} />
+                <DatepickerNavButton
+                    type="button"
+                    label={"right"}
+                    onClick={changeMonth}
+                />
             </div>
         </DPNavbar>
     );
@@ -45,11 +61,12 @@ interface IDatepickerNavbar {
 export const DatepickerNavButton: FC<IDatepickerNavButton> = ({
     label,
     onClick,
+    type,
 }) => {
     const icon = actionIconMapping[label];
     const color = "var(--shell-line)";
     return (
-        <DPNavButton id={label} onClick={onClick}>
+        <DPNavButton type={type} id={label} onClick={onClick}>
             <Icon
                 icon={icon}
                 color={color}
@@ -62,4 +79,5 @@ export const DatepickerNavButton: FC<IDatepickerNavButton> = ({
 interface IDatepickerNavButton {
     label: string;
     onClick: (e: any) => void;
+    type: string;
 }

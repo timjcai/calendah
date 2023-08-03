@@ -86,7 +86,6 @@ export const DateTimeInput: FC<FormInputProps> = ({
                 width={"54px"}
             />
             <p>to</p>
-            <DatePicker label={"end date"} />
             <SelectPicker
                 label={"endtime"}
                 color={color}

@@ -8,6 +8,7 @@ export const DateOpenButton = ({
     closeModal,
     isOpen,
     id,
+    exceptions,
 }) => {
     const ModalRef = useRef(null);
 
@@ -16,8 +17,12 @@ export const DateOpenButton = ({
             if (isOpen) {
                 if (e.target.id === id) {
                     return;
+                } else if (exceptions.includes(e.target.id)) {
+                    console.log(e.target.id);
                 } else if (e.target.id !== ModalRef.current) {
                     closeModal(e);
+                } else {
+                    return;
                 }
             }
         };
@@ -30,7 +35,7 @@ export const DateOpenButton = ({
 
     return (
         <>
-            <StyledOpenButton onClick={onClick} id={id}>
+            <StyledOpenButton type="button" onClick={onClick} id={id}>
                 {getDDMMYYYY(selectedDate)}
             </StyledOpenButton>
         </>

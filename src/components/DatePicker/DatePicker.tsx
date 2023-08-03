@@ -45,6 +45,8 @@ export const DatePicker = ({ label }) => {
 
     useEffect(() => {});
 
+    const exceptions = ["monthmodalbutton"];
+
     const handleSelectDate = (e) => {
         const target = e.target.id;
         if (target !== null) {
@@ -71,8 +73,8 @@ export const DatePicker = ({ label }) => {
             const newMonth = new Date();
             newMonth.setMonth(target);
             newMonth.setDate(currentDate);
-            console.log(newMonth);
             setSelectedDate(newMonth);
+            console.log(isDatePickerOpen);
         }
         setIsMonthModalOpen(false);
     };
@@ -146,6 +148,7 @@ export const DatePicker = ({ label }) => {
                     onClick={handleOpenClose}
                     closeModal={closeDP}
                     isOpen={isDatePickerOpen}
+                    exceptions={exceptions}
                 />
                 {isDatePickerOpen && (
                     <DateBox>
@@ -169,18 +172,19 @@ export const DatePicker = ({ label }) => {
                         </DPGrid>
                         {isMonthModalOpen && (
                             <MonthModal
+                                id={label}
                                 handleSelectMonth={handleSelectMonth}
                                 closeModal={closeMonthModal}
                                 isOpen={isMonthModalOpen}
                             />
                         )}
-                        {isMonthModalOpen && (
+                        {/* {isMonthModalOpen && (
                             <YearModal
                                 handleSelectMonth={handleSelectYear}
                                 closeModal={closeYearModal}
                                 isOpen={isYearModalOpen}
                             />
-                        )}
+                        )} */}
                     </DateBox>
                 )}
             </DatepickerWrapper>
