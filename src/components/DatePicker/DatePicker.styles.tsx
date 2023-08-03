@@ -27,6 +27,7 @@ export const DPRow = styled.div`
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
+    transition:;
 `;
 
 export const DPCell = styled.div`
@@ -43,12 +44,11 @@ export const SelectedDateSpan = styled.span`
     justify-content: center;
     pointer-events: none;
     background-color: var(--blue);
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     line-height: 24px;
     border-radius: 50%;
     position: relative;
-    padding-left: 2px;
     transition: background-color 5s ease;
 `;
 
