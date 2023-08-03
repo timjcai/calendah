@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import settings from "../db/settings.json";
 import { NewForm } from "../components/Form/NewForm";
-import { SettingsProvider } from "../context/SettingsProvider";
+import { SettingsProvider, StartDayContext } from "../context/SettingsProvider";
 import { DatePicker } from "../components/DatePicker/DatePicker";
+import { getLastXdayOfPreviousMonth } from "../utils";
 
 export const Test = () => {
+    const startDay = useContext(StartDayContext);
+    console.log(startDay);
     return (
         <SettingsProvider>
             <div className="w-screen h-screen flex justify-center mx-10 flex-col">
                 <h1>Test page</h1>
                 <NewForm />
                 <DatePicker />
+                <p>{getLastXdayOfPreviousMonth(startDay).toDateString()}</p>
             </div>
         </SettingsProvider>
     );

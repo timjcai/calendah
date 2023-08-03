@@ -1,5 +1,6 @@
 import { addDays, toDate } from "date-fns";
 import { addZero, endDatePlusOne } from "./TimeUtils";
+import { dayMappingFromIndex } from "../Mapping";
 
 // sets the week and returns an array starting from Monday
 export const thisWeek = (input: Date, size: number): Date[] => {
@@ -63,3 +64,18 @@ export const getAllDaysOfCurrentMonth = (currentDate: Date): Date[] => {
   }
   return allDays;
 }
+
+export function getLastXdayOfPreviousMonth(day) {
+  const startDay = dayMappingFromIndex.indexOf(day)
+  let currentDate = new Date();
+  currentDate.setMonth(currentDate.getMonth());
+  currentDate.setDate(0);
+  while (currentDate.getDay() !== startDay) {
+    currentDate.setDate(currentDate.getDate() - 1);
+  }
+
+  return currentDate;
+}
+
+
+// Call the function and format the output
