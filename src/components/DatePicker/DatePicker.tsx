@@ -1,25 +1,19 @@
 import React, { FC, createContext, useRef, useState } from "react";
 import styled from "styled-components";
 import { getAllDaysOfCurrentMonth } from "../../utils";
-import { DPGrid, DateBox } from "./DatePicker.styles";
+import { DPGrid, DPNavButton, DPNavbar, DateBox } from "./DatePicker.styles";
 import { monthMappingFromIndex } from "../../Mapping";
 import { DatesHeaderRow, DatesRow } from "./DateRow";
 import { MonthModal } from "./MonthPicker";
+import { YearModal } from "./YearPicker";
+import { DatepickerNavbar } from "./DatePickerNavbar";
 
 export const SelectedDateContext = createContext(new Date());
 
 export const DatePicker = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
-    const daysofWeek = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ];
+    const [isYearModalOpen, setIsYearModalOpen] = useState(false);
 
     const generateWeeks = (dates: Date[]) => {
         const allWeeks: Date[][] = [];
@@ -36,6 +30,7 @@ export const DatePicker = () => {
             thisWeek[day] = date;
         }
         allWeeks[week] = thisWeek;
+        console.log(allWeeks);
         return allWeeks;
     };
     const weeklyBreakdown = generateWeeks(
@@ -73,17 +68,58 @@ export const DatePicker = () => {
         }
         setIsMonthModalOpen(false);
     };
+
+    const openYearModal = (e) => {
+        setIsYearModalOpen((prevState) => !prevState);
+    };
+
+    const closeYearModal = (e) => {
+        setIsYearModalOpen(false);
+    };
+
+    const handleSelectYear = (e) => {
+        const target = e.target.id;
+        console.log(target);
+        if (target !== null) {
+            const currentDate = selectedDate.getDate();
+            const currentMonth = selectedDate.getMonth();
+            const newYear = new Date();
+            newYear.setFullYear(target);
+            newYear.setMonth(currentMonth);
+            newYear.setDate(currentDate);
+            console.log(newYear);
+            setSelectedDate(newYear);
+        }
+        setIsMonthModalOpen(false);
+    };
+
+    const changeMonth = (e) => {
+        const target = e.target.id;
+        const currentDate = selectedDate.getDate();
+        const currentYear = selectedDate.getFullYear();
+        const currentMonth = selectedDate.getMonth();
+        const newDate = new Date();
+        let newMonth;
+        if (target === "left") {
+            newMonth = currentMonth - 1;
+        } else {
+            newMonth = currentMonth + 1;
+        }
+        newDate.setDate(currentDate);
+        newDate.setMonth(newMonth);
+        newDate.setFullYear(currentYear);
+        setSelectedDate(newDate);
+    };
+
     return (
         <SelectedDateContext.Provider value={selectedDate}>
             <DateBox>
                 <h1>datepicker</h1>
-                <button onClick={openMonthModal} id="monthmodalbutton">
-                    <h1 style={{ pointerEvents: "none" }}>
-                        {`${
-                            monthMappingFromIndex[selectedDate.getMonth()]
-                        } ${selectedDate.getFullYear()}`}
-                    </h1>
-                </button>
+                <DatepickerNavbar
+                    openMonthModal={openMonthModal}
+                    openYearModal={openMonthModal}
+                    changeMonth={changeMonth}
+                />
                 <DPGrid>
                     <DatesHeaderRow />
                     {weeklyBreakdown.map((week) => {
@@ -101,6 +137,13 @@ export const DatePicker = () => {
                         handleSelectMonth={handleSelectMonth}
                         closeModal={closeMonthModal}
                         isOpen={isMonthModalOpen}
+                    />
+                )}
+                {isMonthModalOpen && (
+                    <YearModal
+                        handleSelectMonth={handleSelectYear}
+                        closeModal={closeYearModal}
+                        isOpen={isYearModalOpen}
                     />
                 )}
             </DateBox>

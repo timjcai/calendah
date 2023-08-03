@@ -61,6 +61,5 @@ export const getAllDaysOfCurrentMonth = (currentDate: Date): Date[] => {
     allDays.push(new Date(currentDateInLoop))
     currentDateInLoop.setDate(currentDateInLoop.getDate() + 1);
   }
-
   return allDays;
 }

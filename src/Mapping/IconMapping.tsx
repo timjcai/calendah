@@ -8,6 +8,10 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import {
     faAddressCard,
+    faAngleDown,
+    faAngleLeft,
+    faAngleRight,
+    faAngleUp,
     faC,
     faCircleXmark,
     faClock,
@@ -26,7 +30,7 @@ import {
     faTrash,
     faVideo,
 } from "@fortawesome/free-solid-svg-icons";
-import { InputType, SettingsType } from "../components/types";
+import { ActionType, InputType, SettingsType } from "../components/types";
 
 export const iconMapping: { [key in InputType]: IconDefinition } = {
     location: faLocationDot,
@@ -56,4 +60,15 @@ export const settingsIconMapping: { [key in SettingsType]: IconDefinition } = {
     Notifications: faBell,
     "Keyboard Shortcuts": faKeyboard,
     Integrations: faLink,
+};
+
+export const actionIconMapping: { [key in ActionType]: IconDefinition } = {
+    edit: faPenToSquare,
+    exit: faCircleXmark,
+    settings: faGear,
+    delete: faTrash,
+    left: faAngleLeft,
+    right: faAngleRight,
+    down: faAngleDown,
+    up: faAngleUp,
 };

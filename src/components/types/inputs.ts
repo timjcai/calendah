@@ -20,4 +20,8 @@ export type ActionType =
 | "edit"
 | "exit"
 | "settings"
-| "delete";
+| "delete"
+| "left"
+| "right"
+| "up"
+| "down"

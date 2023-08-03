@@ -9,6 +9,14 @@ export const DateBox = styled.div`
     max-height: 360px;
 `;
 
+export const DPNavbar = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0px 14px;
+`;
+
 export const DPGrid = styled.div`
     display: flex;
     flex-direction: column;
@@ -47,4 +55,19 @@ export const SelectedDateSpan = styled.span`
 export const DefaultDateSpan = styled.span`
     pointer-events: none;
     transition: background-color 5s ease;
+`;
+
+export const DPNavButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--shell-line);
+    &:hover {
+        background-color: var(--blue);
+        color: white;
+        transition: 0.3s ease;
+    }
 `;
