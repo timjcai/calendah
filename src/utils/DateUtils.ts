@@ -79,7 +79,7 @@ export const getAllDaysOfCurrentMonth = (currentDate: Date, startDate: Date): Da
   return allDays;
 }
 
-export function getLastXdayOfPreviousMonth(day, selecteddate: Date) {
+export const getLastXdayOfPreviousMonth = (day, selecteddate: Date): Date => {
   const startDay = dayMappingFromIndex.indexOf(day)
   let currentDate = new Date()
   currentDate.setMonth(selecteddate.getMonth());
@@ -92,3 +92,20 @@ export function getLastXdayOfPreviousMonth(day, selecteddate: Date) {
 }
 
 // Call the function and format the output
+
+export const generateWeeks = (dates: Date[]): Date[][] => {
+  const allWeeks: Date[][] = [];
+  let thisWeek = new Array(7).fill(null);
+  let week = 0;
+  for (let i = 0; i < dates.length; i++) {
+      const date = dates[i];
+      const day = date.getDay();
+      thisWeek[day] = date;
+      if (day === 6) {
+          allWeeks[week] = thisWeek;
+          week++;
+          thisWeek = new Array(7).fill(null);
+      }
+  }
+  return allWeeks;
+};

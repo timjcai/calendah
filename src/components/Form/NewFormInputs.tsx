@@ -8,7 +8,7 @@ import {
 import { SelectPicker } from "../SelectPicker/SelectPicker";
 import { iconMapping } from "../../Mapping";
 import { Icon } from "../common/Icon";
-import { DatePicker } from "react-widgets/cjs";
+import { DatePicker } from "../DatePicker";
 
 export const TextInput: FC<FormInputProps> = ({ label, payload, onChange }) => {
     const selectedIcon = iconMapping[label];
@@ -74,7 +74,9 @@ export const DateTimeInput: FC<FormInputProps> = ({
 }) => {
     return (
         <StyledInputLabel>
-            <DatePicker />
+            <div>
+                <DatePicker label={"start date"} />
+            </div>
             <SelectPicker
                 label={"starttime"}
                 color={color}
@@ -84,7 +86,7 @@ export const DateTimeInput: FC<FormInputProps> = ({
                 width={"54px"}
             />
             <p>to</p>
-            <DatePicker />
+            <DatePicker label={"end date"} />
             <SelectPicker
                 label={"endtime"}
                 color={color}

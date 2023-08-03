@@ -1,10 +1,24 @@
-import React, { FC, createContext, useContext, useRef, useState } from "react";
+import React, {
+    FC,
+    createContext,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import styled from "styled-components";
 import {
+    generateWeeks,
     getAllDaysOfCurrentMonth,
     getLastXdayOfPreviousMonth,
 } from "../../utils";
-import { DPGrid, DPNavButton, DPNavbar, DateBox } from "./DatePicker.styles";
+import {
+    DPGrid,
+    DPNavButton,
+    DPNavbar,
+    DateBox,
+    DatepickerWrapper,
+} from "./DatePicker.styles";
 import { monthMappingFromIndex } from "../../Mapping";
 import { DatesHeaderRow, DatesRow } from "./DateRow";
 import { MonthModal } from "./MonthPicker";
@@ -15,29 +29,13 @@ import { DateOpenButton } from "./DateOpenButton";
 
 export const SelectedDateContext = createContext(new Date());
 
-export const DatePicker = () => {
+export const DatePicker = ({ label }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
     const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
     const [isYearModalOpen, setIsYearModalOpen] = useState(false);
     const startDay = useContext(StartDayContext);
 
-    const generateWeeks = (dates: Date[]) => {
-        const allWeeks: Date[][] = [];
-        let thisWeek = new Array(7).fill(null);
-        let week = 0;
-        for (let i = 0; i < dates.length; i++) {
-            const date = dates[i];
-            const day = date.getDay();
-            thisWeek[day] = date;
-            if (day === 6) {
-                allWeeks[week] = thisWeek;
-                week++;
-                thisWeek = new Array(7).fill(null);
-            }
-        }
-        return allWeeks;
-    };
     const weeklyBreakdown = generateWeeks(
         getAllDaysOfCurrentMonth(
             selectedDate,
@@ -45,10 +43,12 @@ export const DatePicker = () => {
         )
     );
 
+    useEffect(() => {});
+
     const handleSelectDate = (e) => {
         const target = e.target.id;
         if (target !== null) {
-            console.log(new Date(target));
+            // console.log(new Date(target));
             setSelectedDate(new Date(target));
         } else {
             return setSelectedDate(selectedDate);
@@ -83,6 +83,10 @@ export const DatePicker = () => {
 
     const closeYearModal = (e) => {
         setIsYearModalOpen(false);
+    };
+
+    const closeDP = (e) => {
+        setIsDatePickerOpen(false);
     };
 
     const handleSelectYear = (e) => {
@@ -130,52 +134,56 @@ export const DatePicker = () => {
     };
 
     const handleOpenClose = (e) => {
-        console.log(e.target.getBoundingClientRect());
         setIsDatePickerOpen((prevState) => !prevState);
     };
 
     return (
         <SelectedDateContext.Provider value={selectedDate}>
-            <DateOpenButton
-                selectedDate={selectedDate}
-                onClick={handleOpenClose}
-            />
-            {isDatePickerOpen && (
-                <DateBox>
-                    <h1>datepicker</h1>
-                    <DatepickerNavbar
-                        openMonthModal={openMonthModal}
-                        openYearModal={openMonthModal}
-                        changeMonth={changeMonth}
-                    />
-                    <DPGrid>
-                        <DatesHeaderRow />
-                        {weeklyBreakdown.map((week) => {
-                            return (
-                                <DatesRow
-                                    dates={week}
-                                    row={1}
-                                    onClick={handleSelectDate}
-                                />
-                            );
-                        })}
-                    </DPGrid>
-                    {isMonthModalOpen && (
-                        <MonthModal
-                            handleSelectMonth={handleSelectMonth}
-                            closeModal={closeMonthModal}
-                            isOpen={isMonthModalOpen}
+            <DatepickerWrapper id={label}>
+                <DateOpenButton
+                    id={label}
+                    selectedDate={selectedDate}
+                    onClick={handleOpenClose}
+                    closeModal={closeDP}
+                    isOpen={isDatePickerOpen}
+                />
+                {isDatePickerOpen && (
+                    <DateBox>
+                        <h1>datepicker</h1>
+                        <DatepickerNavbar
+                            openMonthModal={openMonthModal}
+                            openYearModal={openMonthModal}
+                            changeMonth={changeMonth}
                         />
-                    )}
-                    {isMonthModalOpen && (
-                        <YearModal
-                            handleSelectMonth={handleSelectYear}
-                            closeModal={closeYearModal}
-                            isOpen={isYearModalOpen}
-                        />
-                    )}
-                </DateBox>
-            )}
+                        <DPGrid>
+                            <DatesHeaderRow />
+                            {weeklyBreakdown.map((week) => {
+                                return (
+                                    <DatesRow
+                                        dates={week}
+                                        row={1}
+                                        onClick={handleSelectDate}
+                                    />
+                                );
+                            })}
+                        </DPGrid>
+                        {isMonthModalOpen && (
+                            <MonthModal
+                                handleSelectMonth={handleSelectMonth}
+                                closeModal={closeMonthModal}
+                                isOpen={isMonthModalOpen}
+                            />
+                        )}
+                        {isMonthModalOpen && (
+                            <YearModal
+                                handleSelectMonth={handleSelectYear}
+                                closeModal={closeYearModal}
+                                isOpen={isYearModalOpen}
+                            />
+                        )}
+                    </DateBox>
+                )}
+            </DatepickerWrapper>
         </SelectedDateContext.Provider>
     );
 };

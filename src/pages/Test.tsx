@@ -14,7 +14,7 @@ export const Test = () => {
             <div className="w-screen h-screen flex justify-center mx-10 flex-col">
                 <h1>Test page</h1>
                 <NewForm />
-                <DatePicker />
+                <DatePicker label="test" />
                 <DateInputButton />
             </div>
         </SettingsProvider>

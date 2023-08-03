@@ -3,11 +3,14 @@ import styled from "styled-components";
 export const DateBox = styled.div`
     display: flex;
     flex-direction: column;
+    background: white;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid white;
+    border-radius: 6px;
     width: 280px;
     max-height: 360px;
-    position: relative;
+    position: absolute;
+    z-index: 5;
 `;
 
 export const DPNavbar = styled.div`
@@ -84,4 +87,8 @@ export const StyledOpenButton = styled.button`
     background-color: var(--blue);
     color: var(--shell-line);
     width: 180px;
+`;
+
+export const DatepickerWrapper = styled.div`
+    position: relative;
 `;
