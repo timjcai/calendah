@@ -9,6 +9,7 @@ import { SelectPicker } from "../SelectPicker/SelectPicker";
 import { iconMapping } from "../../Mapping";
 import { Icon } from "../common/Icon";
 import { DatePicker } from "../DatePicker";
+import { closest15min } from "../../utils";
 
 export const TextInput: FC<FormInputProps> = ({ label, payload, onChange }) => {
     const selectedIcon = iconMapping[label];
@@ -72,10 +73,11 @@ export const DateTimeInput: FC<FormInputProps> = ({
     onChange,
     data,
 }) => {
+    const startTime = closest15min(new Date(payload["starttime"]));
     return (
         <StyledInputLabel>
             <div>
-                <DatePicker label={"start date"} />
+                <DatePicker label={"startdate"} />
             </div>
             <SelectPicker
                 label={"starttime"}

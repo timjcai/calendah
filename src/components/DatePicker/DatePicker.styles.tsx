@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const DateBox = styled.div`
+interface IDateBox {
+    isopen?: boolean;
+}
+
+export const DateBox = styled.div<IDateBox>`
     display: flex;
     flex-direction: column;
     background: white;
@@ -11,6 +15,7 @@ export const DateBox = styled.div`
     max-height: 360px;
     position: absolute;
     z-index: 5;
+    display: ${(props) => (props.isopen ? "block" : "none")};
 `;
 
 export const DPNavbar = styled.div`
@@ -90,5 +95,5 @@ export const StyledOpenButton = styled.button`
 `;
 
 export const DatepickerWrapper = styled.div`
-    position: relative;
+    width: fit-content;
 `;

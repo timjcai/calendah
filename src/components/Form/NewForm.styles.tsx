@@ -25,7 +25,7 @@ export const IconBubble = styled.span`
     padding: 2px 4px 2px 4px;
 `;
 
-export const StyledInputLabel = styled.label`
+export const StyledInputLabel = styled.div`
     display: flex;
     padding: 8px 0px 8px 8px;
     background-color: #212121;

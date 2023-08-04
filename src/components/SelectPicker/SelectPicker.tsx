@@ -9,7 +9,7 @@ interface ISelectPicker {
     onChange: () => void;
 }
 
-export const SelectPicker = ({
+export const SelectPicker: FC<ISelectPicker> = ({
     label,
     placeholder,
     list,
@@ -48,7 +48,7 @@ export const SelectPicker = ({
         return () => {
             document.removeEventListener("click", closePopup);
         };
-    });
+    }, []);
 
     return (
         <Selector
@@ -166,7 +166,7 @@ export const PopupSelector = ({
         return item === selected;
     };
     return (
-        <PopupWrapper isHidden={isHidden} onClick={(e) => e.stopPropagation}>
+        <PopupWrapper ishidden={isHidden} onClick={(e) => e.stopPropagation}>
             <PopupMenu>
                 {list &&
                     list.map((items) => {
@@ -199,13 +199,13 @@ export const PopupWrapper = styled.div<PWProps>`
     position: absolute;
     z-index: 2;
     width: 100px;
-    display: ${(props) => (props.isHidden ? "none" : "block")};
+    display: ${(props) => (props.ishidden ? "none" : "block")};
 `;
 
 type PWProps = {
     top?: string;
     left?: string;
-    isHidden?: boolean;
+    ishidden?: boolean;
 };
 
 export const PopupMenu = styled.ul`
@@ -225,6 +225,8 @@ export const PopupMenu = styled.ul`
     background-color: #2f2f2f;
     color: white;
     width: 128px;
+    height: 200px;
+    overflow-y: scroll;
 `;
 
 export const PopupMenuItem = styled.li`

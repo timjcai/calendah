@@ -35,7 +35,12 @@ export const DateOpenButton = ({
 
     return (
         <>
-            <StyledOpenButton type="button" onClick={onClick} id={id}>
+            <StyledOpenButton
+                type="button"
+                onClick={onClick}
+                id={id}
+                aria-controls="dropdownOptions"
+            >
                 {getDDMMYYYY(selectedDate)}
             </StyledOpenButton>
         </>

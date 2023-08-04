@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FormCol, StyledForm } from "./Form.styles";
 import { FormInputText } from "./FormInput";
@@ -35,6 +35,14 @@ export const NewForm = () => {
     const [payload, setPayload] = useState(formDefault);
     const [currentActive, setCurrentActive] = useState(null);
     const [formColor, setFormColor] = useState("#212121");
+
+    useEffect(() => {
+        const currentTime = new Date();
+        setPayload((prevState) => ({
+            ...prevState,
+            ["starttime"]: currentTime,
+        }));
+    }, []);
 
     const customInputHandler = (e) => {
         const currentInput = e.target.id;
@@ -96,21 +104,6 @@ export const NewForm = () => {
                     label={"guests"}
                     payload={payload}
                     onChange={customInputHandler}
-                />
-
-                <SelectInput
-                    label={"starttime"}
-                    color={"#212121"}
-                    payload={payload}
-                    onChange={dateTimeInputHandler}
-                    data={generateTimeArray(displayTimes, allTimesEvery15min())}
-                />
-                <SelectInput
-                    label={"endtime"}
-                    color={"#212121"}
-                    payload={payload}
-                    onChange={dateTimeInputHandler}
-                    data={generateTimeArray(displayTimes, allTimesEvery15min())}
                 />
                 <SelectInput
                     label={"calendar_id"}
