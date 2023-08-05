@@ -96,4 +96,5 @@ export const StyledOpenButton = styled.button`
 
 export const DatepickerWrapper = styled.div`
     width: fit-content;
+    margin-right: 1em;
 `;

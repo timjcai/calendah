@@ -208,3 +208,26 @@ export const parseTimeStringtoDateObject = (displayInput: DisplayTimeSettings, t
   }
   return output
 }
+
+export const closest15minDOtoDO = (dateInput: Date): Date => {
+  const returnDate = new Date()
+  const minutes = (Math.round(dateInput.getMinutes() / 15) * 15);
+  const hours = dateInput.getHours();
+  returnDate.setHours(hours)
+  returnDate.setMinutes(minutes)
+
+  return returnDate
+}
+
+export const dateObjecttoString = (dateInput: Date, displaySettings): string => {
+  if (displaySettings === '12 hour') {
+    return DateObjectto12Hour(dateInput)
+  } else if (displaySettings === '12:00 hour') {
+    return DateObjectto1200Hour(dateInput)
+  } else if (displaySettings === '24 hour'){
+    return DateObjectto24Hour(dateInput)
+  } else {
+    console.log('error')
+    return ""
+  }
+}

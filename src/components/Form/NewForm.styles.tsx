@@ -29,10 +29,10 @@ export const StyledInputLabel = styled.div`
     display: flex;
     padding: 8px 0px 8px 8px;
     background-color: #212121;
-    border: 1px solid black;
     border-radius: 6px;
     width: 50vw;
     margin-bottom: 5px;
+    color: #9298a5;
 `;
 
 export const StyledInput = styled.input<StyledInputProps>`
@@ -47,7 +47,8 @@ export const StyledInput = styled.input<StyledInputProps>`
 
 export const FormActionButton = styled.button`
     background-color: var(--blue);
-    padding: 5px 10px;
+    padding: 8px 16px;
     color: white;
     border-radius: 6px;
+    width: 180px;
 `;

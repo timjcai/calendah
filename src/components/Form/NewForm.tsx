@@ -18,6 +18,7 @@ import { validateData } from "../../utils/FormUtils";
 import {
     DateTimeInput,
     SelectInput,
+    SubmitButtonSection,
     TextInput,
     TitleInput,
 } from "./NewFormInputs";
@@ -36,14 +37,6 @@ export const NewForm = () => {
     const [currentActive, setCurrentActive] = useState(null);
     const [formColor, setFormColor] = useState("#212121");
 
-    useEffect(() => {
-        const currentTime = new Date();
-        setPayload((prevState) => ({
-            ...prevState,
-            ["starttime"]: currentTime,
-        }));
-    }, []);
-
     const customInputHandler = (e) => {
         const currentInput = e.target.id;
         const value = e.target.value;
@@ -51,6 +44,7 @@ export const NewForm = () => {
     };
 
     const dateTimeInputHandler = (e) => {
+        console.log(e.target.id);
         const currentInput = e.target.id;
         const value = parseTimeStringtoDateObject(
             displayTimes,
@@ -105,14 +99,11 @@ export const NewForm = () => {
                     payload={payload}
                     onChange={customInputHandler}
                 />
-                <SelectInput
-                    label={"calendar_id"}
-                    color={"#212121"}
+                <SubmitButtonSection
                     payload={payload}
                     onChange={customInputHandler}
                     data={calendarIds}
                 />
-                <FormActionButton type="submit">Submit</FormActionButton>
             </div>
 
             <br />

@@ -5,10 +5,14 @@ import { NewForm } from "../components/Form/NewForm";
 import { SettingsProvider, StartDayContext } from "../context/SettingsProvider";
 import { DatePicker, DateInputButton } from "../components/DatePicker";
 import { DateOpenButton } from "../components/DatePicker/DateOpenButton";
+import { closest15minDOtoDO } from "../utils";
 
 export const Test = () => {
     const startDay = useContext(StartDayContext);
     console.log(startDay);
+    const time = new Date();
+    time.setMinutes(58);
+    console.log(closest15minDOtoDO(time));
     return (
         <SettingsProvider>
             <div className="w-screen h-screen flex justify-center mx-10 flex-col">

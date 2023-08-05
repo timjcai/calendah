@@ -1,5 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import {
+    FormActionButton,
     FormInputProps,
     IconBubble,
     StyledInput,
@@ -9,7 +10,12 @@ import { SelectPicker } from "../SelectPicker/SelectPicker";
 import { iconMapping } from "../../Mapping";
 import { Icon } from "../common/Icon";
 import { DatePicker } from "../DatePicker";
-import { closest15min } from "../../utils";
+import {
+    closest15min,
+    closest15minDOtoDO,
+    dateObjecttoString,
+} from "../../utils";
+import { DisplayTimeContext } from "../../context/SettingsProvider";
 
 export const TextInput: FC<FormInputProps> = ({ label, payload, onChange }) => {
     const selectedIcon = iconMapping[label];
@@ -73,7 +79,12 @@ export const DateTimeInput: FC<FormInputProps> = ({
     onChange,
     data,
 }) => {
-    const startTime = closest15min(new Date(payload["starttime"]));
+    const displayTimeSetting = useContext(DisplayTimeContext);
+    payload["starttime"] = new Date();
+    payload["endtime"] = new Date();
+    const startTime = closest15minDOtoDO(payload["starttime"]);
+    let endTime = closest15minDOtoDO(payload["endtime"]);
+    endTime = new Date(endTime.setHours(endTime.getHours() + 1));
     return (
         <StyledInputLabel>
             <div>
@@ -82,20 +93,39 @@ export const DateTimeInput: FC<FormInputProps> = ({
             <SelectPicker
                 label={"starttime"}
                 color={color}
-                placeholder={payload["starttime"]}
+                placeholder={dateObjecttoString(startTime, displayTimeSetting)}
                 list={data}
                 onChange={onChange}
                 width={"54px"}
             />
-            <p>to</p>
+            <p className="mr-4">to</p>
             <SelectPicker
                 label={"endtime"}
                 color={color}
-                placeholder={payload["endtime"]}
+                placeholder={dateObjecttoString(endTime, displayTimeSetting)}
                 list={data}
                 onChange={onChange}
                 width={"54px"}
             />
+        </StyledInputLabel>
+    );
+};
+
+export const SubmitButtonSection: FC<FormInputProps> = ({
+    payload,
+    onChange,
+    data,
+}) => {
+    return (
+        <StyledInputLabel>
+            <SelectPicker
+                label={"calendar_id"}
+                color={"#212121"}
+                payload={payload["calendar_id"]}
+                onChange={onChange}
+                list={data}
+            />
+            <FormActionButton type="submit">Submit</FormActionButton>
         </StyledInputLabel>
     );
 };

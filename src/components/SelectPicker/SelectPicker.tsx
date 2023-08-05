@@ -83,7 +83,9 @@ export const SelectPicker: FC<ISelectPicker> = ({
     );
 };
 
-export const Selector = styled.div``;
+export const Selector = styled.div`
+    margin-right: 1em;
+`;
 
 // export const SelectInput = styled.input`
 //     padding: 0;
@@ -225,7 +227,8 @@ export const PopupMenu = styled.ul`
     background-color: #2f2f2f;
     color: white;
     width: 128px;
-    height: 200px;
+    height: auto;
+    max-height: 200px;
     overflow-y: scroll;
 `;
 
