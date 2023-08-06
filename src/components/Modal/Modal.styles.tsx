@@ -9,6 +9,7 @@ interface ModalBoxProps {
 export const ModalBox = styled.div<ModalBoxProps>`
     border: 1px solid black;
     border-radius: 16px;
+    padding: 6px 12px;
     height: auto;
     max-width: 448px;
     width: 448px;

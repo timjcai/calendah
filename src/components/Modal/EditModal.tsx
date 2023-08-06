@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { FormInputText } from "../Form";
+import {
+    FormInputText,
+    SubmitButtonSection,
+    TextInput,
+    TitleInput,
+} from "../Form";
+import settings from "../../db/settings.json";
 import {
     useForm,
     FormProvider,
@@ -17,7 +23,8 @@ import { ModalNavbar } from "./BaseModalComponents";
 import { ModalBox } from "./Modal.styles";
 
 export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
-    const methods = useForm();
+    const formDefault = settings.newevent_default;
+    const [payload, setPayload] = useState(formDefault);
 
     const {
         id,
@@ -31,6 +38,12 @@ export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
         attachments,
         meeting,
     } = eventCardData;
+
+    const customInputHandler = (e) => {
+        const currentInput = e.target.id;
+        const value = e.target.value;
+        setPayload((prevState) => ({ ...prevState, [currentInput]: value }));
+    };
 
     const validateData = (formValues) => {
         const {
@@ -85,45 +98,80 @@ export const EditModal = ({ setActiveCard, top, left, eventCardData }) => {
             });
     };
 
+    const calendarIds = [1, 2, 3, 4];
+
+    const calendarNameIdMap = {
+        Work: 1,
+        "Side Projects": 2,
+        Family: 3,
+        Exercise: 4,
+    };
+
+    const test = ["Work", "Side Projects", "Family", "Exercise"];
+
     return (
         <ModalBox $top={top} $left={left}>
-            <FormProvider {...methods}>
-                <form
-                    method="post"
-                    onSubmit={methods.handleSubmit(handleFormSubmit)}
-                >
-                    <FormInputText
-                        label={"title"}
-                        margin={"5px"}
-                        defaultValue={title}
-                        readOnly={false}
-                        pointerEvents={"auto"}
-                    />
-                    <FormInputText
-                        label={"guests"}
-                        margin={"5px"}
-                        defaultValue={guests}
-                        readOnly={false}
-                        pointerEvents={"auto"}
-                    />
-                    <FormInputText
-                        label={"location"}
-                        margin={"5px"}
-                        defaultValue={location}
-                        readOnly={false}
-                        pointerEvents={"auto"}
-                    />
-                    <FormInputText
-                        label={"attachments"}
-                        margin={"5px"}
-                        defaultValue={attachments}
-                        readOnly={false}
-                        pointerEvents={"auto"}
-                    />
-                    <TimeInput eventData={eventCardData} />
-                    <StyledButton type="submit">Save</StyledButton>
-                </form>
-            </FormProvider>
+            <form method="post" onSubmit={handleFormSubmit}>
+                <TitleInput
+                    label={"title"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                ></TitleInput>
+                <TextInput
+                    label={"description"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                />
+                <TextInput
+                    label={"location"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                />
+                <TextInput
+                    label={"meeting"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                />
+                <TextInput
+                    label={"attachments"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                />
+
+                <TextInput
+                    label={"guests"}
+                    payload={payload}
+                    onChange={customInputHandler}
+                />
+                {/* <FormInputText
+                    label={"guests"}
+                    margin={"5px"}
+                    defaultValue={guests}
+                    readOnly={false}
+                    pointerEvents={"auto"}
+                />
+                <FormInputText
+                    label={"location"}
+                    margin={"5px"}
+                    defaultValue={location}
+                    readOnly={false}
+                    pointerEvents={"auto"}
+                />
+                <FormInputText
+                    label={"attachments"}
+                    margin={"5px"}
+                    defaultValue={attachments}
+                    readOnly={false}
+                    pointerEvents={"auto"}
+                /> */}
+                {/* <TimeInput eventData={eventCardData} /> */}
+                <SubmitButtonSection
+                    payload={payload}
+                    onChange={customInputHandler}
+                    data={calendarIds}
+                />
+                {/* <StyledButton type="submit">Save</StyledButton> */}
+            </form>
         </ModalBox>
     );
 };

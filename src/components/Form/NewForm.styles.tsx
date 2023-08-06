@@ -30,7 +30,8 @@ export const StyledInputLabel = styled.div`
     padding: 8px 0px 8px 8px;
     background-color: #212121;
     border-radius: 6px;
-    width: 50vw;
+    width: auto;
+    max-width: 50vw;
     margin-bottom: 5px;
     color: #9298a5;
 `;
