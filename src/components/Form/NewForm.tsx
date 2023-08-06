@@ -29,6 +29,10 @@ import {
 } from "../../utils";
 import { DisplayTimeContext } from "../../context/SettingsProvider";
 import { FormActionButton } from "./NewForm.styles";
+import {
+    UserCalendarIndexContext,
+    UserCalendarMappingContext,
+} from "../../context";
 
 export const NewForm = () => {
     const displayTimes = useContext(DisplayTimeContext);
@@ -36,10 +40,20 @@ export const NewForm = () => {
     const [payload, setPayload] = useState(formDefault);
     const [currentActive, setCurrentActive] = useState(null);
     const [formColor, setFormColor] = useState("#212121");
+    const calendarIndexData = useContext(UserCalendarIndexContext);
+    const calendarIdMap = useContext(UserCalendarMappingContext);
 
     const customInputHandler = (e) => {
         const currentInput = e.target.id;
         const value = e.target.value;
+        setPayload((prevState) => ({ ...prevState, [currentInput]: value }));
+    };
+
+    const calendarIdHandler = (e) => {
+        const currentInput = e.target.id;
+        console.log(currentInput);
+        const value = calendarIdMap[e.target.innerHTML];
+        console.log(value);
         setPayload((prevState) => ({ ...prevState, [currentInput]: value }));
     };
 
@@ -101,34 +115,12 @@ export const NewForm = () => {
                 />
                 <SubmitButtonSection
                     payload={payload}
-                    onChange={customInputHandler}
-                    data={calendarIds}
+                    onChange={calendarIdHandler}
+                    data={calendarIndexData}
                 />
             </div>
 
             <br />
-            <br />
-            {/* <p>{payload.title}</p>
-            <p>{payload.starttime}</p>
-            <p>{payload.endtime}</p>
-            <p>{payload.meeting}</p>
-            <p>{payload.location}</p>
-            <p>{payload.attachments}</p>
-            <p>{payload.guests}</p>
-            <p>{payload.description}</p> */}
         </form>
     );
 };
-
-// types of inputs: Text, Title, Links, Attachments
-
-const calendarIds = [1, 2, 3, 4];
-
-const calendarNameIdMap = {
-    Work: 1,
-    "Side Projects": 2,
-    Family: 3,
-    Exercise: 4,
-};
-
-const test = ["Work", "Side Projects", "Family", "Exercise"];

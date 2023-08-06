@@ -6,19 +6,18 @@ import { SettingsProvider, StartDayContext } from "../context/SettingsProvider";
 import { DatePicker, DateInputButton } from "../components/DatePicker";
 import { DateOpenButton } from "../components/DatePicker/DateOpenButton";
 import { closest15minDOtoDO } from "../utils";
+import { UserDataProvider } from "../context/UserDataProvider";
 
 export const Test = () => {
     const startDay = useContext(StartDayContext);
-    console.log(startDay);
-    const time = new Date();
-    time.setMinutes(58);
-    console.log(closest15minDOtoDO(time));
     return (
         <SettingsProvider>
-            <div className="w-screen h-screen flex justify-center mx-10 flex-col">
-                <h1>Test page</h1>
-                <NewForm />
-            </div>
+            <UserDataProvider>
+                <div className="w-screen h-screen flex justify-center mx-10 flex-col">
+                    <h1>Test page</h1>
+                    <NewForm />
+                </div>
+            </UserDataProvider>
         </SettingsProvider>
     );
 };

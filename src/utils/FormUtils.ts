@@ -10,6 +10,7 @@ export const validateData = (formValues) => {
         guests,
         calendar_id,
     } = formValues;
+
     if (!title) {
         console.log("no title provided");
     }
