@@ -1,49 +1,43 @@
-import { faTerminal } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
+
 import { PaddedDiv, StyledHeader } from "./Header.styles";
 import { CalendarTagWrapper } from "./CalendarHeader.styles";
 import { CalendarColorSquare } from "../../Modal/Modal.styles";
-import settings from "../../../db/settings.json";
+
 import { Paragraph } from "../../common/Text";
 import { ViewSizeContext } from "../../../context/Context";
 import { calcIndividualColWidth } from "../../../utils";
+
+import settings from "../../../db/settings.json";
 import { NotificationBubble } from "../../common/Notification";
+import { CalendarData, ICalendarData } from "../../types";
+import { AllUserCalendarContext } from "../../../context/UserDataProvider";
 
-export const CalendarHeader = () => {
-    const [allCalendars, setAllCalendars] = useState([]);
-    useEffect(() => {
-        fetch(`http://localhost:3000/api/v1/calendars/`)
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw response;
-            })
-            .then((data) => {
-                setAllCalendars(data);
-            })
-            .catch((error) => {
-                console.log("Error fetching data: ", error);
-            });
-    }, []);
-
+export const CalendarHeader: FC = (): React.JSX.Element => {
+    const allCalendars = useContext(AllUserCalendarContext);
+    console.log(allCalendars);
     return (
         <StyledHeader>
             <PaddedDiv></PaddedDiv>
             {allCalendars.map((calendar) => {
-                return <CalendarTag calendarData={calendar} />;
+                const { id, tag } = calendar;
+                return <CalendarTag key={tag} id={id} tag={tag} />;
             })}
         </StyledHeader>
     );
 };
 
-export const CalendarTag = ({ calendarData }) => {
+export const CalendarTag: FC<CalendarData> = ({
+    id,
+    tag,
+    created_at,
+    updated_at,
+}): React.JSX.Element => {
     const viewSize = useContext(ViewSizeContext);
     const [active, setActive] = useState(false);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
 
-    const color = settings.calendar_color_settings[calendarData.id].color;
-    const label = calendarData.tag;
+    const color = settings.calendar_color_settings[`${id}`].color;
 
     useEffect(() => {
         function handleResize() {
@@ -66,7 +60,7 @@ export const CalendarTag = ({ calendarData }) => {
             width={calcIndividualColWidth(viewSize, windowSize)}
         >
             <CalendarColorSquare $bgcolor={color} />
-            <Paragraph>{label}</Paragraph>
+            <Paragraph>{tag}</Paragraph>
             <NotificationBubble>1</NotificationBubble>
         </CalendarTagWrapper>
     );

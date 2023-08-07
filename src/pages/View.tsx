@@ -17,6 +17,7 @@ import DatePicker from "react-widgets/DatePicker";
 import Calendar from "react-widgets/Calendar";
 import settings from "../db/settings.json";
 import { SettingsProvider } from "../context/SettingsProvider";
+import { UserDataProvider } from "../context";
 
 export const View = () => {
     const [viewSize, setViewSize] = useState(settings.view_size);
@@ -70,47 +71,51 @@ export const View = () => {
     if (error) return "Error!";
 
     return (
-        <SettingsProvider>
-            <WeekContext.Provider value={dateRange}>
-                <TodayContext.Provider value={todayDate}>
-                    <SelectDateContext.Provider value={selectedDate}>
-                        <EventContext.Provider value={calendarEvents}>
-                            <NavWrapper>
-                                <NavButton navigation={NavMapping["new"]} />
-                                <div>
-                                    <DatePicker
-                                        defaultValue={todayDate}
-                                        valueFormat={{ dateStyle: "medium" }}
-                                        onChange={(
-                                            value: Date | null | undefined
-                                        ) => updateInputValue(value)}
-                                    />
+        <UserDataProvider>
+            <SettingsProvider>
+                <WeekContext.Provider value={dateRange}>
+                    <TodayContext.Provider value={todayDate}>
+                        <SelectDateContext.Provider value={selectedDate}>
+                            <EventContext.Provider value={calendarEvents}>
+                                <NavWrapper>
+                                    <NavButton navigation={NavMapping["new"]} />
+                                    <div>
+                                        <DatePicker
+                                            defaultValue={todayDate}
+                                            valueFormat={{
+                                                dateStyle: "medium",
+                                            }}
+                                            onChange={(
+                                                value: Date | null | undefined
+                                            ) => updateInputValue(value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <NavButton
+                                            navigation={NavMapping["calendar"]}
+                                        />
+                                        <NavButton
+                                            navigation={NavMapping["settings"]}
+                                        />
+                                        <NavButton
+                                            navigation={NavMapping["test"]}
+                                        />
+                                    </div>
+                                </NavWrapper>
+                                <div className="flex flex-row w-screen h-screen">
+                                    <Sidebar>
+                                        <Calendar
+                                            defaultValue={todayDate}
+                                            onChange={updateInputValue}
+                                        />
+                                    </Sidebar>
+                                    <BaseCalendar />
                                 </div>
-                                <div>
-                                    <NavButton
-                                        navigation={NavMapping["calendar"]}
-                                    />
-                                    <NavButton
-                                        navigation={NavMapping["settings"]}
-                                    />
-                                    <NavButton
-                                        navigation={NavMapping["test"]}
-                                    />
-                                </div>
-                            </NavWrapper>
-                            <div className="flex flex-row w-screen h-screen">
-                                <Sidebar>
-                                    <Calendar
-                                        defaultValue={todayDate}
-                                        onChange={updateInputValue}
-                                    />
-                                </Sidebar>
-                                <BaseCalendar />
-                            </div>
-                        </EventContext.Provider>
-                    </SelectDateContext.Provider>
-                </TodayContext.Provider>
-            </WeekContext.Provider>
-        </SettingsProvider>
+                            </EventContext.Provider>
+                        </SelectDateContext.Provider>
+                    </TodayContext.Provider>
+                </WeekContext.Provider>
+            </SettingsProvider>
+        </UserDataProvider>
     );
 };

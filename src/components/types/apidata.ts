@@ -28,3 +28,14 @@ export type formInput =
     | "updated_at"
     | "starttime"
     | "endtime"
+
+export interface ICalendarData {
+        calendarData: CalendarData[];
+    }
+    
+export interface CalendarData {
+        id: number;
+        tag: string;
+        created_at?: Date;
+        updated_at?: Date;
+    };
