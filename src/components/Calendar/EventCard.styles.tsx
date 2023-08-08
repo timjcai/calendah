@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export interface CardWrapperProps {
+    id?: string;
     $height?: string;
     $top?: string;
     $left?: string;
@@ -9,6 +10,10 @@ export interface CardWrapperProps {
     $active?: boolean;
     $width?: string;
     $pointerEvents?: boolean;
+    onPointerDown?: Event;
+    onPointerUp?: Event;
+    onPointerLeave?: Event;
+    onPointerMove?: Event;
 }
 
 export const CardWrapper = styled.div<CardWrapperProps>`

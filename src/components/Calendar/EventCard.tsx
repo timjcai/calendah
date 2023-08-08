@@ -90,31 +90,34 @@ export const HoverEventCard = ({
     left,
     pointerEvents,
     width = "inherit",
+    id,
+    onPointerDown,
+    onPointerUp,
+    onPointerLeave,
 }) => {
-    const {
-        id,
-        starttime,
-        endtime,
-        title,
-        location,
-        description,
-        calendar_id,
-    } = eventData;
+    const { starttime, endtime, title, location, description, calendar_id } =
+        eventData;
     return (
         <CardWrapper
+            id={id}
             $bgcolor={"#ffffff"}
-            $zindex={id}
+            $zindex={999999}
             $width={width}
             $top={`${top}px`}
             $left={`${left}px`}
             $pointerEvents={pointerEvents}
             role="button"
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerLeave={onPointerLeave}
         >
-            <p>
+            <p style={{ pointerEvents: "none", userSelect: "none" }}>
                 <strong>{title}</strong>
             </p>
             <br />
-            <p>{location}</p>
+            <p style={{ pointerEvents: "none", userSelect: "none" }}>
+                {location}
+            </p>
         </CardWrapper>
     );
 };

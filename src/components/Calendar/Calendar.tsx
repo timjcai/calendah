@@ -79,12 +79,11 @@ export const BaseCalendar: FC<ViewProps> = () => {
         };
     }, [handleKeyPress]);
 
-    const startGrabbingCard = (e) => {
+    const toggleHoverCard = (e) => {
         const selectedItem = e.target;
         if (activeCard === null) {
             if (selectedItem.id.includes("eventcard")) {
                 // opens editor
-                setGrabbing(true);
                 const cardId = getEventId(e.target.id);
                 setActiveCard(cardId);
                 const baseData = selectedItem.getBoundingClientRect();
@@ -96,7 +95,6 @@ export const BaseCalendar: FC<ViewProps> = () => {
             } else {
                 // create new event
                 setActiveCard("placeholder");
-                setGrabbing(true);
                 const canvas = e.target.getBoundingClientRect();
                 setMousePosX(e.clientX);
                 setMousePosY(e.clientY);
@@ -109,36 +107,52 @@ export const BaseCalendar: FC<ViewProps> = () => {
             }
         } else {
             // exit editor or exit new event
-            if (activeCard === "placeholder") {
-                const canvas = e.target.getBoundingClientRect();
-                setMousePosX(e.clientX);
-                setMousePosY(e.clientY);
-                setHoverEventCardWidth(canvas.width - 5);
-                setHoverEventCardLeft(canvas.x);
-                setModalPos({
-                    top: mousePosY,
-                    left: ModalLeftOrRight(canvas),
-                });
-                const startTime = createDateTimeonPosition(e);
-                const endTime = new Date(
-                    createDateTimeonPosition(e).setHours(
-                        startTime.getHours() + 1
-                    )
-                );
-                newEventDefault.starttime = startTime;
-                newEventDefault.endtime = endTime;
-                newEventDefault.calendar_id = 1; // hardcoding calendar - need to handle this later - currently only 1 calendar can be created
-                setNewEventDefault(newEventDefault);
-                console.log(newEventDefault);
-                setGrabbing(false);
-            } else {
-                console.log("exit editor or new event modal");
-                return setActiveCard(null);
-            }
+            // const canvas = e.target.getBoundingClientRect();
+            // setMousePosX(e.clientX);
+            // setMousePosY(e.clientY);
+            // setHoverEventCardWidth(canvas.width - 5);
+            // setHoverEventCardLeft(canvas.x);
+            // setModalPos({
+            //     top: mousePosY,
+            //     left: ModalLeftOrRight(canvas),
+            // });
+            // const startTime = createDateTimeonPosition(e);
+            // const endTime = new Date(
+            //     createDateTimeonPosition(e).setHours(
+            //         startTime.getHours() + 1
+            //     )
+            // );
+            // newEventDefault.starttime = startTime;
+            // newEventDefault.endtime = endTime;
+            // newEventDefault.calendar_id = 1; // hardcoding calendar - need to handle this later - currently only 1 calendar can be created
+            // setNewEventDefault(newEventDefault);
+            // console.log(newEventDefault);
+            // setGrabbing(false);
+
+            console.log("exit editor or new event modal");
+            return setActiveCard(null);
+        }
+    };
+
+    const startGrabbing = (e) => {
+        if (activeCard === "placeholder") {
+            console.log("activecardPlaceholder");
+            setGrabbing(true);
+        } else {
+            return;
+        }
+    };
+
+    const continueGrabbing = (e) => {
+        if (grabbing === true) {
+            setGrabbing(true);
+        } else {
+            setGrabbing(false);
         }
     };
 
     const stopGrabbingCard = (e) => {
+        console.log("stop grabbing");
         if (grabbing) {
             setGrabbing(false);
             const startTime = createDateTimeonPosition(e);
@@ -158,6 +172,7 @@ export const BaseCalendar: FC<ViewProps> = () => {
 
     const moveHoverEventCard = (e) => {
         if (grabbing) {
+            console.log("on the move");
             const canvas = e.target.getBoundingClientRect();
             setMousePosX(e.clientX);
             setMousePosY(e.clientY);
@@ -187,15 +202,16 @@ export const BaseCalendar: FC<ViewProps> = () => {
         <MousePosProvider value={MousePos}>
             <StyledCalendar>
                 <div>
+                    <p>{grabbing.toString()}</p>
                     <CalendarHeader />
                     <DateHeader thisWeek={thisWeekdata} />
                 </div>
                 <PlannerWrapper onClick={doubleClickHandler}>
                     <Timebar />
                     <CalendarColumnWrapper
-                        onPointerDown={startGrabbingCard}
+                        onClick={toggleHoverCard}
                         onPointerMove={moveHoverEventCard}
-                        onPointerLeave={stopGrabbingCard}
+                        onPointerUp={stopGrabbingCard}
                     >
                         {thisWeekdata.map((date) => {
                             const dayContent = eventData[getYYYYMMDD(date)];
@@ -210,11 +226,15 @@ export const BaseCalendar: FC<ViewProps> = () => {
                     </CalendarColumnWrapper>
                     {activeCard === "placeholder" && (
                         <HoverEventCard
+                            id="placeholder"
                             eventData={newEventDefault}
                             top={mousePosY}
                             left={hoverEventCardLeft}
-                            pointerEvents={false}
+                            pointerEvents={true}
                             width={`${hoverEventCardWidth}px`}
+                            onPointerDown={startGrabbing}
+                            onPointerLeave={continueGrabbing}
+                            onPointerUp={stopGrabbingCard}
                         />
                     )}
                     {activeCard !== null && activeCard !== "placeholder" && (

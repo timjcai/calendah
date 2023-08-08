@@ -15,7 +15,6 @@ import { AllUserCalendarContext } from "../../../context/UserDataProvider";
 
 export const CalendarHeader: FC = (): React.JSX.Element => {
     const allCalendars = useContext(AllUserCalendarContext);
-    console.log(allCalendars);
     return (
         <StyledHeader>
             <PaddedDiv></PaddedDiv>
