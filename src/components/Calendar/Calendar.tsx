@@ -245,14 +245,6 @@ export const BaseCalendar: FC<ViewProps> = () => {
                             eventCardData={activeCardDetails}
                         />
                     )}
-                    {activeCard === "placeholder" && grabbing && (
-                        <EditModal
-                            top={mousePosY}
-                            left={modalPos.left}
-                            setActiveCard={setActiveCard}
-                            eventCardData={newEventDefault}
-                        />
-                    )}
                     {activeCard === "placeholder" && !grabbing && (
                         <EditModal
                             top={mousePosY}
