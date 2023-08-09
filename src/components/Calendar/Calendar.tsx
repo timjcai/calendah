@@ -8,16 +8,9 @@ import { HoverEventCard } from "./EventCard";
 
 import { EventContext, WeekContext } from "../../context/Context";
 
-import {
-    generateColumnId,
-    thisWeek,
-    getYYYYMMDD,
-    mergeDateTime,
-} from "../../utils/DateUtils";
+import { generateColumnId, getYYYYMMDD } from "../../utils/DateUtils";
 import {
     ModalLeftOrRight,
-    calcIndividualColWidth,
-    closest15min,
     createDateTimeonPosition,
     getEventId,
     searchEventId,
@@ -26,9 +19,7 @@ import {
 
 import {
     StyledCalendar,
-    StyledPlannerColumn,
     PlannerWrapper,
-    PlannerCell,
     CalendarColumnWrapper,
 } from "./Calendar.styles";
 
@@ -128,15 +119,12 @@ export const BaseCalendar: FC<ViewProps> = () => {
             // setNewEventDefault(newEventDefault);
             // console.log(newEventDefault);
             // setGrabbing(false);
-
-            console.log("exit editor or new event modal");
             return setActiveCard(null);
         }
     };
 
     const startGrabbing = (e) => {
         if (activeCard === "placeholder") {
-            console.log("activecardPlaceholder");
             setGrabbing(true);
         } else {
             return;
@@ -152,17 +140,8 @@ export const BaseCalendar: FC<ViewProps> = () => {
     };
 
     const stopGrabbingCard = (e) => {
-        console.log("stop grabbing");
         if (grabbing) {
             setGrabbing(false);
-            const startTime = createDateTimeonPosition(e);
-            const endTime = new Date(
-                createDateTimeonPosition(e).setHours(startTime.getHours() + 1)
-            );
-            newEventDefault.starttime = startTime;
-            newEventDefault.endtime = endTime;
-            newEventDefault.calendar_id = 1; // hardcoding calendar - need to handle this later - currently only 1 calendar can be created
-            setNewEventDefault(newEventDefault);
             console.log(newEventDefault);
             // EventPostRequest(newEventDefault);
         } else {
@@ -172,7 +151,6 @@ export const BaseCalendar: FC<ViewProps> = () => {
 
     const moveHoverEventCard = (e) => {
         if (grabbing) {
-            console.log("on the move");
             const canvas = e.target.getBoundingClientRect();
             setMousePosX(e.clientX);
             setMousePosY(e.clientY);
@@ -190,7 +168,6 @@ export const BaseCalendar: FC<ViewProps> = () => {
             newEventDefault.endtime = endTime;
             newEventDefault.calendar_id = 1; // hardcoding calendar - need to handle this later - currently only 1 calendar can be created
             setNewEventDefault(newEventDefault);
-            console.log(newEventDefault);
         } else {
             return;
         }
@@ -202,7 +179,6 @@ export const BaseCalendar: FC<ViewProps> = () => {
         <MousePosProvider value={MousePos}>
             <StyledCalendar>
                 <div>
-                    <p>{grabbing.toString()}</p>
                     <CalendarHeader />
                     <DateHeader thisWeek={thisWeekdata} />
                 </div>
